@@ -11,4 +11,11 @@ class Plugin extends PluginBase {
     public function onEnable(){
         self::$instance = $this;
     }
+
+    /**
+     * @return mixed
+     */
+    public static function getInstance() : Plugin {
+        return self::$instance;
+    }
 }
