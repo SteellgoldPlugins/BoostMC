@@ -1,0 +1,6 @@
+name: MuseumCore
+description: Plugin Core for Museum OP Faction Server
+version: 0.1-DEV
+main: Steellg0ld\Museum\Plugin
+author: Steellg0ld
+prefix: Museum
