@@ -2,6 +2,8 @@
 
 namespace Steellg0ld\Museum\base;
 
-class MPlayer extends \pocketmine\Player {
+use pocketmine\Player;
+
+class MPlayer extends Player {
 
 }
