@@ -22,7 +22,7 @@ class Utils{
      * @return array|string|string[]
      */
     public static function createMessage(String $message, array $search = [], array $values = []){
-        $default = str_replace(["{PRIMARY}", "{SECONDARY}", "{ERROR}", "{PREFIX}", "{ECONOMY_SYMBOL}"], [self::SUCCESS_COLOR, self::TEXT_COLOR, self::ERROR_COLOR, self::PREFIX, self::ECONOMY_SYMBOL], self::MESSAGE_FORMAT);
+        $default = str_replace(["{DANGER}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{PREFIX}", "{ECONOMY_SYMBOL}"], [self::DANGER_COLOR, self::SUCCESS_COLOR, self::TEXT_COLOR, self::ERROR_COLOR, self::PREFIX, self::ECONOMY_SYMBOL], self::MESSAGE_FORMAT);
         return $search !== null ? str_replace($search, $values, $default) : $default;
     }
 }
