@@ -6,7 +6,6 @@ class Utils{
     CONST CONSOLE_ERROR = "Vous n'êtes pas joueur, connectez vous en jeu pour pouvoir executer cette commande";
     CONST PERMISSION_ERROR = "Vous n'avez pas la permission d'utiliser ce système/commande";
 
-    CONST MESSAGE_FORMAT = "{PRIMARY}{PREFIX} {SECONDARY}{MESSAGE}";
     CONST SUCCESS_COLOR = "§a";
     CONST TEXT_COLOR = "§f";
     CONST ERROR_COLOR = "§c";
@@ -22,7 +21,7 @@ class Utils{
      * @return array|string|string[]
      */
     public static function createMessage(String $message, array $search = [], array $values = []){
-        $default = str_replace(["{DANGER}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{PREFIX}", "{ECONOMY_SYMBOL}"], [self::DANGER_COLOR, self::SUCCESS_COLOR, self::TEXT_COLOR, self::ERROR_COLOR, self::PREFIX, self::ECONOMY_SYMBOL], self::MESSAGE_FORMAT);
+        $default = str_replace(["{DANGER}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{PREFIX}", "{ECONOMY_SYMBOL}"], [self::DANGER_COLOR, self::SUCCESS_COLOR, self::TEXT_COLOR, self::ERROR_COLOR, self::PREFIX, self::ECONOMY_SYMBOL], $message);
         return $search !== null ? str_replace($search, $values, $default) : $default;
     }
 }
