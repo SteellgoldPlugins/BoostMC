@@ -2,8 +2,8 @@
 
 namespace Steellg0ld\Museum;
 
-use pocketmine\event\Listener;
 use pocketmine\plugin\PluginBase;
+use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
 
 class Plugin extends PluginBase {
@@ -18,5 +18,19 @@ class Plugin extends PluginBase {
      */
     public static function getInstance() : Plugin {
         return self::$instance;
+    }
+
+    /**
+     * @return Config
+     */
+    public function getFactions() : Config {
+        return new Config(Plugin::getInstance()->getDataFolder() . "factions.yml", Config::YAML);
+    }
+
+    /**
+     * @return Database
+     */
+    public function getDatabase(): Database{
+        return new Database();
     }
 }
