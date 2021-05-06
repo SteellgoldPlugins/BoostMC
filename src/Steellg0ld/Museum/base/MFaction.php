@@ -15,17 +15,19 @@ class MFaction{
     }
 
     /**
-     * @param $int
+     * @param String $faction
+     * @return bool
      */
-    public static function exist(String $faction_name) : bool {
-        return true;
+    public static function factionExist(String $faction): bool{
+        $factions = Plugin::getInstance()->getFactions();
+        return $factions->exists($faction);
     }
 
     /**
      * @return bool
      */
     public function getName(): bool{
-        return $this->faction_id !== null;
+        return (self::factionExist($this->faction_name) ? $this->faction_name : "Faction introuvable");
     }
 
     /**
