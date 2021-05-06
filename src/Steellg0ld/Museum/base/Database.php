@@ -24,11 +24,6 @@ class Database{
         $this->getDatabase()->query("INSERT INTO factions (identifier, name, members, owner) VALUES ('$identifier', '$name', '$owner', '$owner')");
     }
 
-    public function exist(String $faction): bool{
-        $factions = Plugin::getInstance()->getFactions();
-        return $factions->exists($faction);
-    }
-
     public function getPlayerData(String $name){
     $data = array();
     $query = self::getDatabase()->query("SELECT * FROM players WHERE name = '$name'");

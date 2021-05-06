@@ -17,6 +17,7 @@ class PlayerListeners implements Listener {
         $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
         if(!$player->hasPlayedBefore()) $player->register();
+        $player->dataConnect();
     }
 
     public function onQuit(PlayerQuitEvent $event){
