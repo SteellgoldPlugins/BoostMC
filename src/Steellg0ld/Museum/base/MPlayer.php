@@ -4,6 +4,7 @@ namespace Steellg0ld\Museum\base;
 
 use pocketmine\Player;
 use pocketmine\Server;
+use Steellg0ld\Museum\commands\faction\FactionCommand;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -24,7 +25,7 @@ class MPlayer extends Player {
         $this->rank = $data["rank"];
         $this->money = $data["money"];
         $this->faction_id = $data["faction"];
-        if($data["faction"] !== "none"){
+        if($data["faction"] !== "none") {
             $this->faction_role = 2;
         }
     }
