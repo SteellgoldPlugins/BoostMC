@@ -12,12 +12,12 @@ class Database{
     }
 
     public function init(){
-        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, rank INT, faction TEXT)");
+        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, rank INT, money INT, faction TEXT)");
         $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT)");
     }
 
     public function playerRegister(String $name){
-        $this->getDatabase()->query("INSERT INTO players (player, rank, faction) VALUES ('$name', 0, 'none')");
+        $this->getDatabase()->query("INSERT INTO players (player, rank, money, faction) VALUES ('$name', 0, 0, 'none')");
     }
 
     public function factionRegister(String $identifier, String $name, String $owner){
@@ -26,7 +26,7 @@ class Database{
 
     public function getPlayerData(String $name){
     $data = array();
-    $query = self::getDatabase()->query("SELECT * FROM players WHERE name = '$name'");
+    $query = self::getDatabase()->query("SELECT * FROM players WHERE player = '$name'");
         while ($res = $query->fetchArray(1)){
             array_push($data,$res);
         }
