@@ -13,6 +13,10 @@ class Database{
 
     public function init(){
         $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, rank INT, faction TEXT)");
-        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, claims_file TEXT, owner TEXT)");
+        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT)");
+    }
+
+    public function exist(){
+        return true;
     }
 }
