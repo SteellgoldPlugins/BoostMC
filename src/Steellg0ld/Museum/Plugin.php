@@ -14,6 +14,7 @@ class Plugin extends PluginBase {
 
     public function onEnable(){
         self::$instance = $this;
+        $this->getDatabase()->init();
 
         $this->getServer()->getCommandMap()->registerAll("museum", [
             new FactionCommand("f","§aOuvrir la page principale du plugin faction",["faction"])
