@@ -10,8 +10,10 @@ class Utils{
     CONST SUCCESS_COLOR = "§a";
     CONST TEXT_COLOR = "§f";
     CONST ERROR_COLOR = "§c";
+    CONST DANGER_COLOR = "§e";
     CONST PREFIX = ":";
     CONST ECONOMY_SYMBOL = "$";
+    CONST FACTION_CREATE_PRICE = 500;
 
     /**
      * @param String $message
