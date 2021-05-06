@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\forms;
 
 use pocketmine\Server;
+use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\api\CustomForm;
 use Steellg0ld\Museum\forms\api\Form;
@@ -17,8 +18,12 @@ class FactionForm {
                     if ($data !== null) {
                         if($p->getMoney() >= Utils::FACTION_CREATE_PRICE){
                             if(isset($data[1])){
-                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}".$data[1]));
-                                if($data[2]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . " {SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
+                                if(!MFaction::exist($data[1])){
+                                    $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}".$data[1]));
+                                    if($data[2]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . " {SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
+                                }else{
+                                    $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}La faction {ERROR}" . $data[1] . " {SECONDARY}existe déjà !"));
+                                }
                             }else{
                                 $p->sendMessage("{ERROR}- {SECONDARY}Vous n'avez pas préciser le nom de {ERROR}votre faction");
                             }
