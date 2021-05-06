@@ -4,7 +4,6 @@
     <include_path>
       <path value="$PROJECT_DIR$/../Librairies/FormAPI" />
       <path value="$PROJECT_DIR$/../Librairies/PocketMine-MP" />
-      <path value="$USER_HOME$/Desktop/PocketMine-MP/src" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.4" />
