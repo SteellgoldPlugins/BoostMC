@@ -62,7 +62,7 @@ class FactionForm {
             $form->setTitle(Form::FACTION_TITLE);
             $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Votre faction: {PRIMARY}".$player->getFaction()->getName()."{SECONDARY}")."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Claim(s) actif(s): {SECONDARY}".$player->getFaction()->getFactionClaims(true))."\n".
-                Utils::createMessage("{PRIMARY}> {ERROR}Claim(s) inactif(s): {SECONDARY}".$player->getFaction()->getFactionClaims(false)));
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Claim(s) inactif(s): {SECONDARY}".$player->getFaction()->getFactionClaims(false)));
             $form->addButton("§cQuitter la {FACTION}" . $player->getFaction()->getName());
             $form->addButton("Gérer les membres\n" . $player->getFaction()->getFactionAccess($player));
             $form->addButton("Gérer la faction\n" . $player->getFaction()->getFactionAccess($player));
