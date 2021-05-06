@@ -8,6 +8,7 @@ use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\api\CustomForm;
 use Steellg0ld\Museum\forms\api\Form;
 use Steellg0ld\Museum\forms\api\SimpleForm;
+use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionForm {
@@ -19,7 +20,13 @@ class FactionForm {
                         if($p->getMoney() >= Utils::FACTION_CREATE_PRICE){
                             if(isset($data[1])){
                                 if(!MFaction::exist($data[1])){
+                                    $faction_id = uniqid("FACTION-");
                                     $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}".$data[1]));
+
+                                    $factions = Plugin::getInstance()->getFactions();
+                                    $factions->set($faction_id, $p->getName());
+                                    $factions->save();
+
                                     if($data[2]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . " {SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
                                 }else{
                                     $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}La faction {ERROR}" . $data[1] . " {SECONDARY}existe déjà !"));
@@ -37,6 +44,7 @@ class FactionForm {
             $form->setTitle(Form::FACTION_TITLE);
             $form->addLabel(Utils::createMessage("{PRIMARY}- {SECONDARY}Pour créer une faction cela vous coûtera {PRIMARY}500{ECONOMY_SYMBOL}"));
             $form->addInput("Nom de la faction","LesProduitsLaitiers");
+            $form->addToggle("Annoncer la création",false);
             $player->sendForm($form);
         }
     }
