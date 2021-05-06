@@ -8,8 +8,6 @@ use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class MPlayer extends Player {
-    public array $data = [];
-
     public int $rank = 0;
     public int $money = 0;
 
@@ -29,11 +27,6 @@ class MPlayer extends Player {
         if($data["faction"] !== "none"){
             $this->faction_role = 2;
         }
-        var_dump($this->data);
-    }
-
-    public function getData(): array{
-        return $this->data;
     }
 
     public function getFaction(): MFaction {
