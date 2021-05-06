@@ -10,19 +10,25 @@ use Steellg0ld\Museum\utils\Utils;
 class MPlayer extends Player {
     public array $data = [];
 
-    public string $rank = "";
+    public int $rank = 0;
     public int $money = 0;
 
     public string $faction_id = "";
     public string $faction_role = "";
 
     public function register(){
-        Server::getInstance()->broadcastMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Bienvenu(e) à {PRIMAR}".$this->getName()."{SECONDARY}, qui se connecte pour la première fois"));
+        Server::getInstance()->broadcastMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Bienvenu(e) à {PRIMARY}".$this->getName()."{SECONDARY}, qui se connecte pour la première fois"));
         Plugin::getInstance()->getDatabase()->playerRegister($this->getName());
     }
 
     public function dataConnect(){
-        $this->data = Plugin::getInstance()->getDatabase()->getPlayerData($this->getName());
+        $data = Plugin::getInstance()->getDatabase()->getPlayerData($this->getName());
+        $this->rank = $data["rank"];
+        $this->money = $data["money"];
+        $this->faction_id = $data["faction"];
+        if($data["faction"] !== "none"){
+            $this->faction_role = 2;
+        }
         var_dump($this->data);
     }
 
@@ -38,7 +44,7 @@ class MPlayer extends Player {
      * @return bool
      */
     public function hasFaction(): bool {
-        return $this->faction_id !== null;
+        return $this->faction_id !== "none";
     }
 
     /**
