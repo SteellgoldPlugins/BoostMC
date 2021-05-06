@@ -2,6 +2,8 @@
 
 namespace Steellg0ld\Museum\base;
 
+use Steellg0ld\Museum\Plugin;
+
 class MFaction{
 
     public string $faction_id;
@@ -13,6 +15,13 @@ class MFaction{
     }
 
     /**
+     * @param $int
+     */
+    public static function exist(String $faction_name) : bool {
+        return true;
+    }
+
+    /**
      * @return bool
      */
     public function getName(): bool{
@@ -20,6 +29,7 @@ class MFaction{
     }
 
     /**
+     * @param MPlayer $player
      * @return string
      */
     public function getFactionRole(MPlayer $player): string {
@@ -27,6 +37,7 @@ class MFaction{
     }
 
     /**
+     * @param MPlayer $player
      * @param string ...$role
      * @return string
      */
