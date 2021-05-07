@@ -5,7 +5,7 @@ namespace Steellg0ld\Museum\commands\faction;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use Steellg0ld\Museum\base\MPlayer;
-use Steellg0ld\Museum\commands\faction\subcommands\InviteCommand;
+use Steellg0ld\Museum\commands\faction\subcommands\InviteSubCommand;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -20,7 +20,7 @@ class FactionCommand extends Command{
             return;
         }
 
-        $invite = new InviteCommand();
+        $invite = new InviteSubCommand();
 
         if(isset($args[0])){
             switch ($args[0]){
