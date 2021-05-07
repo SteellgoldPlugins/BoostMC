@@ -4,20 +4,31 @@ namespace Steellg0ld\Museum\base;
 
 use pocketmine\Player;
 use pocketmine\Server;
-use Steellg0ld\Museum\commands\faction\FactionCommand;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class MPlayer extends Player {
     public int $rank = 0;
     public int $money = 0;
+    public string $code = "";
+    public bool $hasJoinedWithCode = false;
+    public string $enterCodeWaitEnd = "0";
+    public string $encodedAddress = "";
 
     public string $faction_id = "";
     public string $faction_role = "";
 
+    public bool $hasFactionInvite;
+    public array $invitations_infos = [
+        "expiration" => "",
+        "invitor" => "",
+        "faction" => "",
+        "role" => ""
+    ];
+
     public function register(){
         Server::getInstance()->broadcastMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Bienvenu(e) à {PRIMARY}".$this->getName()."{SECONDARY}, qui se connecte pour la première fois"));
-        Plugin::getInstance()->getDatabase()->playerRegister($this->getName());
+        Plugin::getInstance()->getDatabase()->playerRegister($this->getName(), $this->getAddress());
     }
 
     public function dataConnect(){
@@ -28,6 +39,9 @@ class MPlayer extends Player {
         if($data["faction"] !== "none") {
             $this->faction_role = 2;
         }
+        $this->code = $data["code"];
+        $this->hasJoinedWithCode = $data["hasJoinedWithCode"];
+        $this->enterCodeWaitEnd = $data["enterCodeWaitEnd"];
     }
 
     public function getFaction(): MFaction {
@@ -57,5 +71,17 @@ class MPlayer extends Player {
 
     public function hasRank(String ...$ranks): bool{
         return in_array($this->rank, $ranks);
+    }
+
+    public function getSponsorCode(): string{
+        return $this->code;
+    }
+
+    public function hasJoinedCode(): bool{
+        return $this->hasJoinedWithCode;
+    }
+
+    public function getDecodedAddress(){
+        return base64_decode(base64_decode(base64_decode(base64_decode($this->encodedAddress))));
     }
 }
