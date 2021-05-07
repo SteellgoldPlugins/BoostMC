@@ -70,6 +70,8 @@ class FactionForm {
             $form->addButton("Gérer les membres\n" . $player->getFaction()->getFactionAccess($player));
             $form->addButton("Gérer la faction\n" . $player->getFaction()->getFactionAccess($player));
             $form->addButton("Gérer les claims\n" . $player->getFaction()->getFactionAccess($player));
+            $form->addButton("Gérer le coffre\n" . $player->getFaction()->getFactionAccess($player));
+            $form->addButton("Améliorations de faction\n" . $player->getFaction()->getFactionAccess($player));
             $player->sendForm($form);
         }
     }
