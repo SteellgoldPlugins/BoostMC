@@ -5,9 +5,10 @@ namespace Steellg0ld\Museum;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
+use Steellg0ld\Museum\base\MEconomy;
+use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
 use Steellg0ld\Museum\listeners\PlayerListeners;
-use Steellg0ld\Museum\utils\Utils;
 
 class Plugin extends PluginBase {
     public static $instance;
@@ -17,7 +18,8 @@ class Plugin extends PluginBase {
         $this->getDatabase()->init();
 
         $this->getServer()->getCommandMap()->registerAll("museum", [
-            new FactionCommand("f","§aOuvrir la page principale du plugin faction",["faction"])
+            new FactionCommand("f","§aOuvrir la page principale du plugin faction",["faction"]),
+            new CodeCommand("c","§aOuvrir la page pour utiliser un code",["code"])
         ]);
 
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
@@ -35,6 +37,17 @@ class Plugin extends PluginBase {
      */
     public function getFactions() : Config {
         return new Config(Plugin::getInstance()->getDataFolder() . "factions.yml", Config::YAML);
+    }
+
+    /**
+     * @return Config
+     */
+    public function getCodes() : Config {
+        return new Config(Plugin::getInstance()->getDataFolder() . "codes.yml", Config::YAML);
+    }
+
+    public function getEconomyAPI(): MEconomy{
+        return new MEconomy();
     }
 
     /**
