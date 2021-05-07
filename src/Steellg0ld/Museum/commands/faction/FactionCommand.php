@@ -5,6 +5,7 @@ namespace Steellg0ld\Museum\commands\faction;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use Steellg0ld\Museum\base\MPlayer;
+use Steellg0ld\Museum\commands\faction\subcommands\InviteCommand;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -19,10 +20,24 @@ class FactionCommand extends Command{
             return;
         }
 
-        if(!$sender->hasFaction()){
-            FactionForm::createFaction($sender);
+        $invite = new InviteCommand();
+
+        if(isset($args[0])){
+            switch ($args[0]){
+                case "a":
+                case "accept":
+                    $invite->execute_accept();
+                    break;
+                case "d":
+                case "deny":
+                    break;
+            }
         }else{
-            FactionForm::factionForm($sender);
+            if(!$sender->hasFaction()){
+                FactionForm::createFaction($sender);
+            }else{
+                FactionForm::factionForm($sender);
+            }
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\forms;
 
 use pocketmine\Server;
+use raklib\server\ServerInstance;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\api\CustomForm;
@@ -23,11 +24,7 @@ class FactionForm {
                                     $faction_id = uniqid();
                                     $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}".$data[1]));
 
-                                    $factions = Plugin::getInstance()->getFactions();
-                                    $factions->set($data[1],$faction_id);
-                                    $factions->save();
-
-                                    $p->money = $p->money - Utils::FACTION_CREATE_PRICE;
+                                    Plugin::getInstance()->getEconomyAPI()->delMoney($p, 500);
                                     $p->faction_id = $faction_id;
                                     Plugin::getInstance()->getDatabase()->factionRegister($faction_id,$data[1],$p->getName());
                                     if($data[2]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . "{SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
@@ -72,6 +69,49 @@ class FactionForm {
             $form->addButton("Gérer les claims\n" . $player->getFaction()->getFactionAccess($player));
             $form->addButton("Gérer le coffre\n" . $player->getFaction()->getFactionAccess($player));
             $form->addButton("Améliorations de faction\n" . $player->getFaction()->getFactionAccess($player));
+            $player->sendForm($form);
+        }
+    }
+
+    public static function invite(MPlayer $player){
+        {
+            $form = new CustomForm(
+                function (MPlayer $p, $data) {
+                    if ($data !== null) {
+                        $s = Server::getInstance()->getPlayer($data[1]);
+                        if($s instanceof MPlayer) {
+                            $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
+                            $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
+                        }
+                    }
+                }
+            );
+
+            $form->setTitle(Form::FACTION_TITLE);
+            $form->addLabel("A faire");
+            $form->addInput("Nom du joueur");
+            $form->addDropdown("Grade", ["Recrue", "Membre", "Officier"]);
+            $player->sendForm($form);
+        }
+    }
+
+    public static function members(MPlayer $player){
+        {
+            $form = new SimpleForm(
+                function (MPlayer $p, $data) {
+                    if ($data !== null) {
+
+                    }
+                }
+            );
+
+            $form->setTitle(Form::FACTION_TITLE);
+            $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Les membres de la faction: {PRIMARY}".$player->getFaction()->getName()."{SECONDARY}")."\n".
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) actif(s): {SECONDARY}".$player->getFaction()->getMembersCount(true))."\n".
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) inactif(s): {SECONDARY}".$player->getFaction()->getMembersCount(false)));
+            foreach ($player->getFaction()->getMembers() as $member){
+                $form->addButton($member . "\n" . MFaction::playerStatus($member));
+            }
             $player->sendForm($form);
         }
     }
