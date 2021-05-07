@@ -6,6 +6,7 @@ use pocketmine\Player;
 
 abstract class Form implements IForm{
     CONST FACTION_TITLE = "Faction";
+    CONST CODE_TITLE = "Code";
 
     /** @var array */
     protected $data = [];
