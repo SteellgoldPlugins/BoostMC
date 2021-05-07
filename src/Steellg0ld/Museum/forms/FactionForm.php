@@ -54,7 +54,11 @@ class FactionForm {
             $form = new SimpleForm(
                 function (MPlayer $p, $data) {
                     if ($data !== null) {
-
+                        switch ($data){
+                            case 1:
+                                self::members($p);
+                                break;
+                        }
                     }
                 }
             );
@@ -109,6 +113,7 @@ class FactionForm {
             $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Les membres de la faction: {PRIMARY}".$player->getFaction()->getName()."{SECONDARY}")."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) actif(s): {SECONDARY}".$player->getFaction()->getMembersCount(true))."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) inactif(s): {SECONDARY}".$player->getFaction()->getMembersCount(false)));
+            $form->addButton("Inviter un joueur");
             foreach ($player->getFaction()->getMembers() as $member){
                 $form->addButton($member . "\n" . MFaction::playerStatus($member));
             }
