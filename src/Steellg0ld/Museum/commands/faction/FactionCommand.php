@@ -26,10 +26,11 @@ class FactionCommand extends Command{
             switch ($args[0]){
                 case "a":
                 case "accept":
-                    $invite->execute_accept();
+                    $invite->execute_accept($sender);
                     break;
                 case "d":
                 case "deny":
+                    $invite->execute_deny($sender);
                     break;
             }
         }else{
