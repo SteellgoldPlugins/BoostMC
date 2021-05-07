@@ -85,6 +85,10 @@ class FactionForm {
                         $s = Server::getInstance()->getPlayer($data[1]);
                         if($s instanceof MPlayer) {
                             $s->hasFactionInvite = true;
+                            $s->invitations_infos["expiration"] = time() + 60 * 1;
+                            $s->invitations_infos["invitor"] = $p->getName();
+                            $s->invitations_infos["faction"] = $p->getFaction()->getName();
+                            $s->invitations_infos["role"] = $data[2];
                             $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
                             $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
                         }else{

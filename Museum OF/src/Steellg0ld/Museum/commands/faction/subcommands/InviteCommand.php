@@ -17,22 +17,23 @@ class InviteCommand{
         $invitor = Server::getInstance()->getPlayer($invited->invitations_infos["invitor"]);
         if($invitor instanceof MPlayer) $faction = $invitor->getFaction();
 
+        var_dump("1");
         if($invited->invitations_infos["expiration"] >= time()){
-            unset($invited->invitations_infos);
-            $invited->hasFactionInvite = false;
+            var_dump("2");
             $invited->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez accepté(e) la demande, bienvenue dans la faction {PRIMARY}{FACTION}{SECONDARY}, en tant que {PRIMARY}{ROLE}", ["{FACTION}", "{ROLE}"], [$invited->invitations_infos["faction"], MFaction::ROLES[$invited->invitations_infos["role"]]]));
             if($invitor instanceof MPlayer) $invitor->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME} a accepté votre invitation, il est désormais dans votre faction en tant que {PRIMARY}{ROLE}", ["{ROLE}", "{FACTION}"], [MFaction::ROLES[$invited->invitations_infos["role"]]]));
 
+            var_dump("3");
             $members = explode(" ", $faction->data["members"]);
             array_push($members, $invited->getName());
             $members = implode(" ",$members);
-            Plugin::getInstance()->getDatabase->updateFactionMembers($members, $faction->data["identifier"]);
+            Plugin::getInstance()->getDatabase()->updateFactionMembers($members, $faction->data["identifier"]);
         }else{
             $invited->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}L'invitation de {NAME} à expirée, veuillez lui demander de vous réinviter"));
             if($invitor instanceof MPlayer) $invitor->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}L'invitation à expirée"));
         }
 
-        unset($invited->invitations_infos);
+        $invited->invitations_infos = [];
         $invited->hasFactionInvite = false;
     }
 
@@ -50,7 +51,7 @@ class InviteCommand{
             if($invitor instanceof MPlayer) $invitor->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}L'invitation à expirée"));
         }
 
-        unset($invited->invitations_infos);
+        $invited->invitations_infos = [];
         $invited->hasFactionInvite = false;
     }
 }
