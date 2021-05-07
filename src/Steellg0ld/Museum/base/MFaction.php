@@ -2,10 +2,18 @@
 
 namespace Steellg0ld\Museum\base;
 
+use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
 
 class MFaction{
     public $data;
+
+    CONST ROLES = [
+        0 => "Recrue",
+        1 => "Membre",
+        2 => "Officier",
+        3 => "Chef"
+    ];
 
     /**
      * MFaction constructor.
@@ -39,11 +47,41 @@ class MFaction{
         return $this->data["name"];
     }
 
+    public function getMembers(){
+        return $this->data["members"];
+    }
+
     /**
      * @param bool $active
      * @return int
      */
     public function getFactionClaims(bool $active): int{
         return $active ? 9 : 6;
+    }
+
+    /**
+     * @param bool $connected
+     * @return int
+     */
+    public function getMembersCount(bool $connected): int{
+        return $connected ? 8 : 3;
+    }
+
+    /**
+     * @param String $identifier
+     * @return bool
+     */
+    public static function factionExist(String $identifier): bool{
+        $factions = Plugin::getInstance()->getFactions();
+        return $factions->exists($identifier);
+    }
+
+    public static function playerStatus($member){
+        $player = Server::getInstance()->getPlayer($member);
+        if($player instanceof MPlayer){
+            return "§a§lCONNECTÉ";
+        }else{
+            return "§c§lDÉCONNECTÉ";
+        }
     }
 }
