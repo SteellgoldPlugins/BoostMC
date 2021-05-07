@@ -8,6 +8,7 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
+use Steellg0ld\Museum\commands\faction\InviteSubCommand;
 use Steellg0ld\Museum\listeners\PlayerListeners;
 
 class Plugin extends PluginBase {
