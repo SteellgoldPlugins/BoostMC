@@ -40,7 +40,7 @@ class PlayerListeners implements Listener {
         $event->setQuitMessage("");
         $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
-        Plugin::getInstance()->getDatabase()->updatePlayer($player->getName(),$player->rank, $player->money, $player->faction_id,$player->code,$player->hasJoinedWithCode, $player->enterCodeWaitEnd);
+        Plugin::getInstance()->getDatabase()->updatePlayer($player->getName(),$player->rank, $player->money, $player->faction_id, $player->faction_role,$player->code,$player->hasJoinedWithCode, $player->enterCodeWaitEnd);
         Server::getInstance()->broadcastTip(Utils::createMessage("{ERROR}- {SECONDARY}".$player->getName() . " {ERROR}-"));
     }
 }
