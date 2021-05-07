@@ -84,8 +84,11 @@ class FactionForm {
                     if ($data !== null) {
                         $s = Server::getInstance()->getPlayer($data[1]);
                         if($s instanceof MPlayer) {
+                            $s->hasFactionInvite = true;
                             $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
                             $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
+                        }else{
+                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME}{SECONDARY} n'existe pas ou n'est pas connecté"));
                         }
                     }
                 }
@@ -104,7 +107,11 @@ class FactionForm {
             $form = new SimpleForm(
                 function (MPlayer $p, $data) {
                     if ($data !== null) {
-
+                        switch ($data){
+                            case 0:
+                                self::invite($p);
+                                break;
+                        }
                     }
                 }
             );
@@ -114,7 +121,8 @@ class FactionForm {
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) actif(s): {SECONDARY}".$player->getFaction()->getMembersCount(true))."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) inactif(s): {SECONDARY}".$player->getFaction()->getMembersCount(false)));
             $form->addButton("Inviter un joueur");
-            foreach ($player->getFaction()->getMembers() as $member){
+            var_dump($player->getFaction()->getMembers());
+            foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
                 $form->addButton($member . "\n" . MFaction::playerStatus($member));
             }
             $player->sendForm($form);

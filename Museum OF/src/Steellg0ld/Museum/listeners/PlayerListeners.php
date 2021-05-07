@@ -32,7 +32,7 @@ class PlayerListeners implements Listener {
         }
 
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}".$player->getName() . " {PRIMARY}+"));
-
+        $player->hasFactionInvite = false;
         $player->dataConnect();
     }
 
