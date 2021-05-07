@@ -84,15 +84,14 @@ class FactionForm {
                     if ($data !== null) {
                         $s = Server::getInstance()->getPlayer($data[1]);
                         if($s instanceof MPlayer) {
-                            $s->hasFactionInvite = true;
-                            $s->invitations_infos["expiration"] = time() + 60 * 1;
-                            $s->invitations_infos["invitor"] = $p->getName();
-                            $s->invitations_infos["faction"] = $p->getFaction()->getName();
-                            $s->invitations_infos["role"] = $data[2];
-                            $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
-                            $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
+                            if(!$s->hasFaction()) {
+                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
+                                $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
+                            }else{
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME} {SECONDARY}à déjà une faction ({ERROR}{FACTION}{SECONDARY})",["{NAME}", "{FACTION}"], [$p->getName(), $p->getFaction()->getName()]));
+                            }
                         }else{
-                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME}{SECONDARY} n'existe pas ou n'est pas connecté"));
+                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME}{SECONDARY} n'existe pas ou n'est pas connecté",["{NAME}"],[$data[1]]));
                         }
                     }
                 }
@@ -108,12 +107,20 @@ class FactionForm {
 
     public static function members(MPlayer $player){
         {
+            $members = array();
+            foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
+                array_push($members, ["name"=>$member, "status" => MFaction::playerStatus($member)]);
+            }
+
             $form = new SimpleForm(
-                function (MPlayer $p, $data) {
+                function (MPlayer $p, $data) use ($members) {
                     if ($data !== null) {
                         switch ($data){
                             case 0:
                                 self::invite($p);
+                                break;
+                            default:
+                                self::member($p, $members[$data - 1]["name"]);
                                 break;
                         }
                     }
@@ -125,9 +132,36 @@ class FactionForm {
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) actif(s): {SECONDARY}".$player->getFaction()->getMembersCount(true))."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) inactif(s): {SECONDARY}".$player->getFaction()->getMembersCount(false)));
             $form->addButton("Inviter un joueur");
-            var_dump($player->getFaction()->getMembers());
-            foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
-                $form->addButton($member . "\n" . MFaction::playerStatus($member));
+            foreach ($members as $member){
+                $form->addButton($member["name"]."\n".$member["status"]);
+            }
+            $player->sendForm($form);
+        }
+    }
+
+    public static function member(MPlayer $player, String $member){
+        {
+            $form = new SimpleForm(
+                function (MPlayer $p, $data) use ($member) {
+                    if ($data !== null) {
+                        switch ($data){
+                            case 0:
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'expulser {PRIMARY}{NAME} {SECONDARY}de la faction",["{NAME}"], [$member]));
+                                $s = Server::getInstance()->getPlayer($member);
+                                if($s instanceof MPlayer) $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'être expulser de la faction {PRIMARY}{FACTION} {SECONDARY}par {PRIMARY}{NAME}",["{FACTION}", "{NAME}"], [$p->getFaction()->getName(), $p->getName()]));
+                                break;
+                        }
+                    }
+                }
+            );
+
+            $form->setTitle(Form::FACTION_TITLE);
+            $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Membre: {PRIMARY}".$member."\n".
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Actuellement: ".MFaction::playerStatus($member)."\n".
+                Utils::createMessage("§r{PRIMARY}> {SECONDARY}Invité le: {SECONDARY}".$player->getFaction()->getInvitedDate($member))."\n".
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Role: {SECONDARY}".MFaction::ROLES[$player->getFaction()->getOfflinePlayerFactionRole($member)]))));
+            if($player->faction_role >= 2){
+                $form->addButton("§cExpulser");
             }
             $player->sendForm($form);
         }
