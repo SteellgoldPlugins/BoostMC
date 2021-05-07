@@ -32,6 +32,14 @@ class MFaction{
     }
 
     /**
+     * @param String $player
+     * @return int
+     */
+    public function getOfflinePlayerFactionRole(String $player): Int {
+        return Plugin::getInstance()->getDatabase()->getPlayerData($player)["faction_role"];
+    }
+
+    /**
      * @param MPlayer $player
      * @param string ...$role
      * @return string
@@ -65,6 +73,14 @@ class MFaction{
      */
     public function getMembersCount(bool $connected): int{
         return $connected ? 8 : 3;
+    }
+
+    /**
+     * @param String $member
+     * @return string
+     */
+    public function getInvitedDate(String $member): string{
+        return "25 Janvier 2021";
     }
 
     /**
