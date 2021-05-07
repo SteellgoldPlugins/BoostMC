@@ -16,7 +16,7 @@ class MPlayer extends Player {
     public string $encodedAddress = "";
 
     public string $faction_id = "";
-    public string $faction_role = "";
+    public int $faction_role = 0;
 
     public bool $hasFactionInvite;
     public array $invitations_infos = [
