@@ -16,7 +16,7 @@ class Database{
     }
 
     public function init(){
-        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT)");
+        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT)");
         $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT)");
     }
 
@@ -27,7 +27,7 @@ class Database{
     public function playerRegister(String $name, String $address){
         $time = time() + 60 * 60 * 24 * 3;
         $address = base64_encode(base64_encode(base64_encode(base64_encode($address))));
-        $this->getDatabase()->query("INSERT INTO players (player, address, rank, money, faction, code, hasJoinedWithCode, enterCodeWaitEnd) VALUES ('$name', '$address', 0, 0, 'none', 'none', 'none', '$time')");
+        $this->getDatabase()->query("INSERT INTO players (player, address, rank, money, faction, faction_role, code, hasJoinedWithCode, enterCodeWaitEnd) VALUES ('$name', '$address', 0, 0, 'none', 0, 'none', 'none', '$time')");
     }
 
     /**
@@ -78,8 +78,8 @@ class Database{
      * @param bool $hasJoinedWithCode
      * @param string $enterCodeWaitEnd
      */
-    public function updatePlayer(String $name, Int $rank = 0, Int $money = 250, String $faction = "none", String $code = "none", Bool $hasJoinedWithCode = false, String $enterCodeWaitEnd = "0"){
-        $this->getDatabase()->query("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', code = '$code$', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
+    public function updatePlayer(String $name, Int $rank = 0, Int $money = 250, String $faction = "none", Int $faction_role = 0, String $code = "none", Bool $hasJoinedWithCode = false, String $enterCodeWaitEnd = "0"){
+        $this->getDatabase()->query("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code$', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
     }
 
     /**
