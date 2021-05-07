@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\base;
 
 
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
 
@@ -15,15 +16,18 @@ class Database{
     }
 
     public function init(){
-        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, rank INT, money INT, faction TEXT)");
+        $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT)");
         $this->getDatabase()->query("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT)");
     }
 
     /**
      * @param String $name
+     * @param String $address
      */
-    public function playerRegister(String $name){
-        $this->getDatabase()->query("INSERT INTO players (player, rank, money, faction) VALUES ('$name', 0, 0, 'none')");
+    public function playerRegister(String $name, String $address){
+        $time = time() + 60 * 60 * 24 * 3;
+        $address = base64_encode(base64_encode(base64_encode(base64_encode($address))));
+        $this->getDatabase()->query("INSERT INTO players (player, address, rank, money, faction, code, hasJoinedWithCode, enterCodeWaitEnd) VALUES ('$name', '$address', 0, 0, 'none', 'none', 'none', '$time')");
     }
 
     /**
@@ -32,6 +36,10 @@ class Database{
      * @param String $owner
      */
     public function factionRegister(String $identifier, String $name, String $owner){
+        $factions = Plugin::getInstance()->getFactions();
+        $factions->set($name,$identifier);
+        $factions->save();
+
         $this->getDatabase()->query("INSERT INTO factions (identifier, name, members, owner) VALUES ('$identifier', '$name', '$owner', '$owner')");
     }
 
@@ -65,9 +73,20 @@ class Database{
      * @param String $name
      * @param Int $rank
      * @param Int $money
+     * @param string $faction
+     * @param string $code
+     * @param bool $hasJoinedWithCode
+     * @param string $enterCodeWaitEnd
+     */
+    public function updatePlayer(String $name, Int $rank = 0, Int $money = 250, String $faction = "none", String $code = "none", Bool $hasJoinedWithCode = false, String $enterCodeWaitEnd = "0"){
+        $this->getDatabase()->query("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', code = '$code$', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
+    }
+
+    /**
+     * @param String $members
      * @param String $faction
      */
-    public function updatePlayer(String $name, Int $rank, Int $money, String $faction){
-        $this->getDatabase()->query("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction' WHERE player = '$name'");
+    public function updateFactionMembers(String $members, String $faction){
+        $this->getDatabase()->query("UPDATE factions SET members = '$members' WHERE identifier = '$faction'");
     }
 }
