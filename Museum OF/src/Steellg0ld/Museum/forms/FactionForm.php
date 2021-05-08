@@ -26,6 +26,7 @@ class FactionForm {
 
                                     Plugin::getInstance()->getEconomyAPI()->delMoney($p, 500);
                                     $p->faction_id = $faction_id;
+                                    $p->faction_role = 3;
                                     Plugin::getInstance()->getDatabase()->factionRegister($faction_id,$data[1],$p->getName());
                                     if($data[2]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . "{SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
                                 }else{
@@ -85,10 +86,14 @@ class FactionForm {
                         $s = Server::getInstance()->getPlayer($data[1]);
                         if($s instanceof MPlayer) {
                             if(!$s->hasFaction()) {
-                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME} {SECONDARY}dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
+                                $s->invitations_infos["expiration"] = time() + 60 * 1;
+                                $s->invitations_infos["invitor"] = $p->getName();
+                                $s->invitations_infos["faction"] = $p->getFaction()->getName();
+                                $s->invitations_infos["role"] = $data[2];
+                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez invité {PRIMARY}{NAME}{SECONDARY} dans votre faction, il à une minute pour accepter", ["{NAME}"], [$s->getName()]));
                                 $s->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Le joueur {PRIMARY}{NAME}{SECONDARY}, vous a invité dans la faction {PRIMARY}{FACTION_NAME}, faite {PRIMARY}/f accept:deny {SECONDARY}pour accepter ou refusé la demande, vous avez {PRIMARY}1 minute {SECONDARY}top chrono !", ["{NAME}", "{FACTION_NAME}"], [$p->getName(), $p->getFaction()->getName()]));
                             }else{
-                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME} {SECONDARY}à déjà une faction ({ERROR}{FACTION}{SECONDARY})",["{NAME}", "{FACTION}"], [$p->getName(), $p->getFaction()->getName()]));
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME} {SECONDARY}à déjà une faction ({ERROR}{FACTION}{SECONDARY})",["{NAME}", "{FACTION}"], [$s->getName(), $s->getFaction()->getName()]));
                             }
                         }else{
                             $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le joueur {ERROR}{NAME}{SECONDARY} n'existe pas ou n'est pas connecté",["{NAME}"],[$data[1]]));
@@ -151,9 +156,10 @@ class FactionForm {
                     if ($data !== null) {
                         switch ($data){
                             case 0:
-                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'expulser {PRIMARY}{NAME} {SECONDARY}de la faction",["{NAME}"], [$member]));
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'expulser {ERROR}{NAME} {SECONDARY}de la faction",["{NAME}"], [$member]));
                                 $s = Server::getInstance()->getPlayer($member);
-                                if($s instanceof MPlayer) $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'être expulser de la faction {PRIMARY}{FACTION} {SECONDARY}par {PRIMARY}{NAME}",["{FACTION}", "{NAME}"], [$p->getFaction()->getName(), $p->getName()]));
+                                $p->getFaction()->removeMember($member);
+                                if($s instanceof MPlayer) $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous venez d'être expulser de la faction {ERROR}{FACTION} {SECONDARY}par {ERROR}{NAME}",["{FACTION}", "{NAME}"], [$p->getFaction()->getName(), $p->getName()]));
                                 break;
                         }
                     }
@@ -165,8 +171,10 @@ class FactionForm {
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Actuellement: ".MFaction::playerStatus($member)."\n".
                 Utils::createMessage("§r{PRIMARY}> {SECONDARY}Invité le: {SECONDARY}".$player->getFaction()->getInvitedDate($member))."\n".
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Role: {SECONDARY}".MFaction::ROLES[$player->getFaction()->getOfflinePlayerFactionRole($member)]))));
-            if($player->faction_role >= 2){
-                $form->addButton("§cExpulser");
+            if(!$player->getName() == $member){
+                if($player->faction_role >= 2){
+                    $form->addButton("§cExpulser");
+                }
             }
             $player->sendForm($form);
         }
