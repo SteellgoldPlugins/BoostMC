@@ -21,6 +21,7 @@ class MFaction{
      */
     public function __construct(String $faction_id){
         $this->data = Plugin::getInstance()->getDatabase()->getFactionData($faction_id);
+        var_dump($this->data["members"]);
     }
 
     /**
@@ -53,6 +54,20 @@ class MFaction{
      */
     public function getName(){
         return $this->data["name"];
+    }
+
+    public function addMember(String $player) {
+        $members = explode(" ", $this->data["members"]);
+        array_push($members, $player);
+        $members = implode(" ",$members);
+        Plugin::getInstance()->getDatabase()->updateFactionMembers($members, $this->data["identifier"]);
+    }
+
+    public function removeMember(String $player) {
+        $array = explode(' ', $this->data["members"]);
+        unset($array[array_search($player, $array)]);
+        $new = implode(" ", $array);
+        Plugin::getInstance()->getDatabase()->updateFactionMembers($new, $this->data["identifier"]);
     }
 
     public function getMembers(){
@@ -99,5 +114,9 @@ class MFaction{
         }else{
             return "§c§lDÉCONNECTÉ";
         }
+    }
+
+    public function getIdentifier(){
+        return $this->data["identifier"];
     }
 }
