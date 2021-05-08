@@ -21,7 +21,6 @@ class MFaction{
      */
     public function __construct(String $faction_id){
         $this->data = Plugin::getInstance()->getDatabase()->getFactionData($faction_id);
-        var_dump($this->data["members"]);
     }
 
     /**

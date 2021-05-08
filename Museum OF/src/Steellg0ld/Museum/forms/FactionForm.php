@@ -112,14 +112,9 @@ class FactionForm {
 
     public static function members(MPlayer $player){
         {
-            if($player->getFaction()->getMembers() !== null){
-                $members = array();
-                foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
-                    if($member == " ") return;
-                    array_push($members, ["name"=>$member, "status" => MFaction::playerStatus($member)]);
-                }
-            }else{
-                $player->sendMessage("An error encured, please contact the developper's staff");
+            $members = array();
+            foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
+                array_push($members, ["name"=>$member, "status" => MFaction::playerStatus($member)]);
             }
 
             $form = new SimpleForm(
@@ -143,7 +138,11 @@ class FactionForm {
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Membre(s) inactif(s): {SECONDARY}".$player->getFaction()->getMembersCount(false)));
             $form->addButton("Inviter un joueur");
             foreach ($members as $member){
-                $form->addButton($member["name"]."\n".$member["status"]);
+                if($member["name"] == ""){
+                    $form->addButton("caca");
+                }else{
+                    $form->addButton($member["name"]."\n".$member["status"]);
+                }
             }
             $player->sendForm($form);
         }
