@@ -31,6 +31,7 @@ class PlayerListeners implements Listener {
             CodeForm::enterCode($player);
         }
 
+        $player->money = 5000;
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}".$player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
         $player->dataConnect();
