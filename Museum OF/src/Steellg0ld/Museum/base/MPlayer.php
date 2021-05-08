@@ -37,7 +37,7 @@ class MPlayer extends Player {
         $this->money = $data["money"];
         $this->faction_id = $data["faction"];
         if($data["faction"] !== "none") {
-            $this->faction_role = 2;
+            $this->faction_role = $data["faction_role"];
         }
         $this->code = $data["code"];
         $this->hasJoinedWithCode = $data["hasJoinedWithCode"];
