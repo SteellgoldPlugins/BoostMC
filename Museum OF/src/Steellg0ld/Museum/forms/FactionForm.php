@@ -107,9 +107,14 @@ class FactionForm {
 
     public static function members(MPlayer $player){
         {
-            $members = array();
-            foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
-                array_push($members, ["name"=>$member, "status" => MFaction::playerStatus($member)]);
+            if($player->getFaction()->getMembers() !== null){
+                $members = array();
+                foreach (explode(" ", $player->getFaction()->getMembers()) as $member){
+                    if($member == " ") return;
+                    array_push($members, ["name"=>$member, "status" => MFaction::playerStatus($member)]);
+                }
+            }else{
+                $player->sendMessage("An error encured, please contact the developper's staff");
             }
 
             $form = new SimpleForm(
