@@ -9,24 +9,26 @@ use Steellg0ld\Museum\forms\api\ModalForm;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
-class CodeForm{
-    public static function open(MPlayer $player){
+class CodeForm
+{
+    public static function open(MPlayer $player)
+    {
         {
             $form = new ModalForm(
                 function (MPlayer $p, $data) {
                     if ($data !== null) {
-                        switch ($data){
+                        switch ($data) {
                             case 1:
-                                if($p->enterCodeWaitEnd >= time()){
+                                if ($p->enterCodeWaitEnd >= time()) {
                                     self::enterCode($p);
-                                }else{
+                                } else {
                                     $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Votre délai est expiré, vous ne pouvez plus définir de code"));
                                 }
                                 break;
                             case 0:
-                                if(!$p->enterCodeWaitEnd >= time()){
+                                if (!$p->enterCodeWaitEnd >= time()) {
                                     self::createCode($p);
-                                }else{
+                                } else {
                                     $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Votre délai n'est pas encore expiré, vous ne pouvez pas encore crée(e)r de code"));
                                 }
                                 break;
@@ -43,23 +45,24 @@ class CodeForm{
         }
     }
 
-    public static function enterCode(MPlayer $player){
+    public static function enterCode(MPlayer $player)
+    {
         $form = new CustomForm(
             function (MPlayer $p, $data) {
-                if($data !== null) {
-                    if(Plugin::getInstance()->getCodes()->exists($data[1])) {
-                        if(!$p->hasJoinedWithCode){
-                            if(Plugin::getInstance()->getCodes()->get($p->getName()) == $data[1]) {
+                if ($data !== null) {
+                    if (Plugin::getInstance()->getCodes()->exists($data[1])) {
+                        if (!$p->hasJoinedWithCode) {
+                            if (Plugin::getInstance()->getCodes()->get($p->getName()) == $data[1]) {
                                 $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous ne pouvez pas entré votre propre code"));
                             }
 
                             $p->code = strtolower($data[1]);
                             $p->hasJoinedWithCode = true;
                             $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez entré le code {PRIMARY}{CODE}{SECONDARY} avec succès, mais vous ne pourrez plus en utiliser", ["{CODE}"], [$data[1]]));
-                        }else {
+                        } else {
                             $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous avez déjà entré un code, vous ne pouvez donc plus en utiliser"));
                         }
-                    }else{
+                    } else {
                         $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Le code {CODE} n'existe pas, veuillez réessayer", ["{CODE}"], [$data[1]]));
                     }
                 }
@@ -72,7 +75,8 @@ class CodeForm{
         $player->sendForm($form);
     }
 
-    public static function createCode(MPlayer $player){
+    public static function createCode(MPlayer $player)
+    {
         {
             $form = new CustomForm(
                 function (MPlayer $p, $data) {
@@ -90,7 +94,7 @@ class CodeForm{
 
             $form->setTitle(Form::CODE_TITLE);
             $form->addLabel(Utils::createMessage("{PRIMARY}- {SECONDARY}Mettez ici le code que vous voulez que le joueur précise pour recevoir de l'argent de départ, "));
-            $form->addInput("Que voulez-vous définir comme code ?","10 caractères maximums");
+            $form->addInput("Que voulez-vous définir comme code ?", "10 caractères maximums");
             $player->sendForm($form);
         }
     }
