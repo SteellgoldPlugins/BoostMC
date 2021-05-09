@@ -35,13 +35,10 @@ class MFaction
     }
 
     public static function getAllFactions(): array{
-        $data = array();
-        $query = Plugin::getInstance()->getDatabase()->getDatabase()->query("SELECT identifier FROM `factions`");
-        while ($res = $query->fetchArray()) {
-            array_push($data, $res);
-        }
-
-        return $data;
+        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT identifier FROM `factions`", [], function (array $rows) {
+            var_dump($rows);
+            return $rows;
+        });
     }
 
     public static function getDataByIdentifier(String $identifier) {

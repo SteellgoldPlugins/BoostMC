@@ -3,12 +3,12 @@
 namespace Steellg0ld\Museum;
 
 use pocketmine\plugin\PluginBase;
-use pocketmine\tile\Tile;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\api\Claims;
+use Steellg0ld\Museum\api\libasynql\DataConnector;
+use Steellg0ld\Museum\api\libasynql\libasynql;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\MEconomy;
-use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
 use Steellg0ld\Museum\listeners\FactionListeners;
@@ -17,10 +17,17 @@ use Steellg0ld\Museum\listeners\PlayerListeners;
 class Plugin extends PluginBase
 {
     public static $instance;
+    private $database;
 
     public function onEnable()
     {
         self::$instance = $this;
+
+        $this->saveConfig();
+        $this->database = libasynql::create($this, $this->getConfigFile("config")->get("database"), [
+            "sqlite" => "sqlite.sql",
+            "mysql" => "mysql.sql"
+        ]);
         $this->getDatabase()->init();
 
         $this->getServer()->getCommandMap()->registerAll("museum", [
@@ -35,15 +42,17 @@ class Plugin extends PluginBase
 
     public function onDisable()
     {
-
+        if(isset($this->database)) $this->database->close();
     }
 
-    /**
-     * @return Database
-     */
     public function getDatabase(): Database
     {
         return new Database();
+    }
+
+    public function getAsyncDatabase(): DataConnector
+    {
+        return $this->database;
     }
 
     /**
@@ -89,5 +98,13 @@ class Plugin extends PluginBase
     public function getEconomyAPI(): MEconomy
     {
         return new MEconomy();
+    }
+
+    /**
+     * @param String $config
+     * @return Config
+     */
+    public function getConfigFile(string $config): Config{
+        return new Config($this->getDataFolder() . $config . ".yml", Config::YAML);
     }
 }
