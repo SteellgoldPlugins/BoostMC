@@ -19,8 +19,8 @@ exports.Version = "v1.0"
 
 exports.Client = new Discord.Client()
 exports.Client.commands = new Discord.Collection();
-exports.Config = require('./resources/Config.json')
-exports.Colors = require('colors')
+exports.Config = require('./datafolder/config.json');
+exports.Colors = require('colors');
 
 const CommandRegistry = require('./commands/CommandRegister')
 CommandRegistry.registerCommand(exports.Client.commands, "link", true, "commands/minecraft/", "LinkCommand", exports.Colors)
