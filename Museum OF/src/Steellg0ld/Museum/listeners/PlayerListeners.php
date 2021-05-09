@@ -2,6 +2,8 @@
 
 namespace Steellg0ld\Museum\listeners;
 
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
@@ -57,6 +59,9 @@ class PlayerListeners implements Listener
     {
         $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
+        $config = Plugin::getInstance()->getClaimsMessages();
+        $level = $player->getLevel()->getFolderName();
+
         $toPos = $player->getLevel()->getChunkAtPosition($event->getTo());
         $chunkXP = $toPos->getX();
         $chunkZP = $toPos->getZ();
