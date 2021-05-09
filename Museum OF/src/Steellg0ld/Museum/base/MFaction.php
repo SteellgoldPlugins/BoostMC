@@ -49,6 +49,10 @@ class MFaction
         return Plugin::getInstance()->getDatabase()->getFactionData($identifier);
     }
 
+    public static function getNameByIdentifier($faction){
+        return Plugin::getInstance()->getDatabase()->getFactionData($faction)["name"];
+    }
+
     public static function playerStatus($member)
     {
         $player = Server::getInstance()->getPlayer($member);
