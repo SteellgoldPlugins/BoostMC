@@ -1,12 +1,15 @@
 <?php
+
 namespace Steellg0ld\Museum\forms\api;
 
 use pocketmine\form\Form as IForm;
 use pocketmine\Player;
 
-abstract class Form implements IForm{
-    CONST FACTION_TITLE = "Faction";
-    CONST CODE_TITLE = "Code";
+abstract class Form implements IForm
+{
+    const FACTION_TITLE = "Faction";
+    const CODE_TITLE = "Code";
+    const ECONOMY_TITLE = "Economie";
 
     /** @var array */
     protected $data = [];
@@ -16,40 +19,47 @@ abstract class Form implements IForm{
     /**
      * @param callable|null $callable
      */
-    public function __construct(?callable $callable) {
+    public function __construct(?callable $callable)
+    {
         $this->callable = $callable;
     }
 
     /**
-     * @deprecated
+     * @param Player $player
      * @see Player::sendForm()
      *
-     * @param Player $player
+     * @deprecated
      */
-    public function sendToPlayer(Player $player) : void {
+    public function sendToPlayer(Player $player): void
+    {
         $player->sendForm($this);
     }
 
-    public function getCallable() : ?callable {
-        return $this->callable;
-    }
-
-    public function setCallable(?callable $callable) {
-        $this->callable = $callable;
-    }
-
-    public function handleResponse(Player $player, $data) : void {
+    public function handleResponse(Player $player, $data): void
+    {
         $this->processData($data);
         $callable = $this->getCallable();
-        if($callable !== null) {
+        if ($callable !== null) {
             $callable($player, $data);
         }
     }
 
-    public function processData(&$data) : void {
+    public function processData(&$data): void
+    {
     }
 
-    public function jsonSerialize(){
+    public function getCallable(): ?callable
+    {
+        return $this->callable;
+    }
+
+    public function setCallable(?callable $callable)
+    {
+        $this->callable = $callable;
+    }
+
+    public function jsonSerialize()
+    {
         return $this->data;
     }
 }
