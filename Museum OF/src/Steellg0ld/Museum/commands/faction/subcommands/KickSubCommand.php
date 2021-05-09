@@ -7,7 +7,8 @@ use Steellg0ld\Museum\base\MPlayer;
 
 class KickSubCommand
 {
-    public function execute(MPlayer $toKick, MFaction $faction, Array $kickInformations) {
+    public function execute(MPlayer $toKick, MFaction $faction, array $kickInformations)
+    {
         $faction->removeMember($toKick);
     }
 }
