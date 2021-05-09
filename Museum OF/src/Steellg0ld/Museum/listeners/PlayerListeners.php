@@ -9,6 +9,8 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
+use Steellg0ld\Museum\api\Claims;
+use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\CodeForm;
 use Steellg0ld\Museum\Plugin;
@@ -55,12 +57,25 @@ class PlayerListeners implements Listener
     {
         $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
+        $toPos = $player->getLevel()->getChunkAtPosition($event->getTo());
+        $chunkXP = $toPos->getX();
+        $chunkZP = $toPos->getZ();
+        if(Plugin::getInstance()->getClaims()->isInClaim($player->getLevel(), $chunkXP, $chunkZP)){
+            $config = Plugin::getInstance()->getClaimsMessages();
+            $level = $player->getLevel()->getFolderName();
+            $a = "{$chunkXP}:{$chunkZP}:{$level}";
+            if($config->get($a) !== null) {
+                $player->sendTip("§fVous êtes dans le claim de §a" . MFaction::getNameByIdentifier(Plugin::getInstance()->getClaims()->getFactionClaim($player->getLevel(), $chunkXP, $chunkZP)));
+            }
+        }
     }
 
+    /**
     public function onChat(PlayerChatEvent $event){
         $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
         $colors = explode(" ", MPlayer::RANKS_COLOR[$player->getRank()]);
         $event->setFormat($colors[0] . "[".$colors[1].$player->getFaction()->getName().$colors[0]."] ".$player->getName().$colors[1].": ".$colors[1].$event->getMessage());
     }
+     */
 }
