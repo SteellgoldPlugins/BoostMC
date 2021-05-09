@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\base;
 
+use pocketmine\event\Event;
 use pocketmine\Player;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
@@ -14,6 +15,7 @@ class MPlayer extends Player
     public string $code = "";
     public bool $hasJoinedWithCode = false;
     public string $enterCodeWaitEnd = "0";
+    public string $oldChunk = "0";
     public string $encodedAddress = "";
 
     public string $faction_id = "";
@@ -110,4 +112,9 @@ class MPlayer extends Player
     {
         return base64_decode(base64_decode(base64_decode(base64_decode($this->encodedAddress))));
     }
+
+    public function sendTipFaction(Int $chunkXP, Int $chunkZP, String $msg){
+        $this->sendTip("§fVous êtes dans le claim de §a" . MFaction::getNameByIdentifier(Plugin::getInstance()->getClaims()->getFactionClaim($this->getLevel(), $chunkXP, $chunkZP)) . $msg);
+    }
+
 }
