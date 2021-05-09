@@ -13,8 +13,8 @@ class Claims
 
     public function initClaim() {
         foreach (MFaction::getAllFactions() as $faction) {
-            $fac = MFaction::getDataByIdentifier($faction);
-            self::$claims[$faction] = unserialize(base64_decode($fac['claims']));
+            $fac = MFaction::getDataByIdentifier($faction["identifier"]);
+            self::$claims[$faction["identifier"]] = unserialize(base64_decode($fac['claims']));
         }
     }
 
@@ -34,10 +34,8 @@ class Claims
         $config = Plugin::getInstance()->getClaimsMessages();
         if($message !== null){
             $config->set("{$chunkX}:{$chunkZ}:{$world}", $message);
-            $config->save();
         }else{
             $config->set("{$chunkX}:{$chunkZ}:{$world}", $faction);
-            $config->save();
         }
         $config->save();
     }
