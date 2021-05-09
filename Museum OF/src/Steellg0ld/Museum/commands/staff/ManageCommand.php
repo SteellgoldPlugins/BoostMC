@@ -12,6 +12,7 @@ class ManageCommand extends Command
         parent::__construct($name, $description, $usageMessage, $aliases);
     }
 
-    public function execute(CommandSender $player, string $commandLabel, array $args){
+    public function execute(CommandSender $player, string $commandLabel, array $args)
+    {
     }
 }
