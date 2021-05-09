@@ -5,6 +5,7 @@ namespace Steellg0ld\Museum\api;
 use pocketmine\level\Level;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
+use Steellg0ld\Museum\Plugin;
 
 class Claims
 {
@@ -21,7 +22,7 @@ class Claims
      * @param MPlayer $player
      * @param String $faction
      */
-    public function claim(MPlayer $player, String $faction){
+    public function claim(MPlayer $player, String $faction, string $message = null){
         $chunk = $player->getLevel()->getChunkAtPosition($player);
         $chunkX = $chunk->getX();
         $chunkZ = $chunk->getZ();
@@ -29,6 +30,16 @@ class Claims
         $claims = self::$claims[$faction];
         array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
         self::$claims[$faction] = $claims;
+
+        $config = Plugin::getInstance()->getClaimsMessages();
+        if($message !== null){
+            $config->set("{$chunkX}:{$chunkZ}:{$world}", $message);
+            $config->save();
+        }else{
+            $config->set("{$chunkX}:{$chunkZ}:{$world}", $faction);
+            $config->save();
+        }
+        $config->save();
     }
 
     /**
