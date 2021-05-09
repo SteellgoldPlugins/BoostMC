@@ -5,29 +5,66 @@ namespace Steellg0ld\Museum\base;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
 
-class MFaction{
-    public $data;
-
-    CONST ROLES = [
+class MFaction
+{
+    const ROLES = [
         0 => "Recrue",
         1 => "Membre",
         2 => "Officier",
         3 => "Chef"
     ];
+    public $data;
 
     /**
      * MFaction constructor.
      * @param String $faction_id
      */
-    public function __construct(String $faction_id){
+    public function __construct(string $faction_id)
+    {
         $this->data = Plugin::getInstance()->getDatabase()->getFactionData($faction_id);
+    }
+
+    /**
+     * @param String $identifier
+     * @return bool
+     */
+    public static function factionExist(string $identifier): bool
+    {
+        $factions = Plugin::getInstance()->getFactions();
+        return $factions->exists($identifier);
+    }
+
+    public static function getAllFactions() {
+        $data = array();
+        $query = Plugin::getInstance()->getDatabase()->getDatabase()->query("SELECT identifier FROM `factions`");
+        while ($res = $query->fetchArray(1)) {
+            array_push($data, $res);
+        }
+        if(!$data) return [];
+
+        return $data[0];
+    }
+
+    public static function getDataByIdentifier(String $identifier) {
+        return Plugin::getInstance()->getDatabase()->getFactionData($identifier);
+    }
+
+    public static function playerStatus($member)
+    {
+        $player = Server::getInstance()->getPlayer($member);
+        if ($player instanceof MPlayer) {
+            return "§a§lCONNECTÉ";
+        } else {
+            return "§c§lDÉCONNECTÉ";
+        }
     }
 
     /**
      * @param MPlayer $player
      * @return string
      */
-    public function getFactionRole(MPlayer $player): string {
+    public function getFactionRole(MPlayer $player): string
+    {
         return $player->faction_role !== null;
     }
 
@@ -35,7 +72,8 @@ class MFaction{
      * @param String $player
      * @return int
      */
-    public function getOfflinePlayerFactionRole(String $player): Int {
+    public function getOfflinePlayerFactionRole(string $player): int
+    {
         return Plugin::getInstance()->getDatabase()->getPlayerData($player)["faction_role"];
     }
 
@@ -44,32 +82,37 @@ class MFaction{
      * @param string ...$role
      * @return string
      */
-    public function getFactionAccess(MPlayer $player, string ...$role): string {
+    public function getFactionAccess(MPlayer $player, string ...$role): string
+    {
         return in_array($player->faction_role, $role) ? "§a§lACCÈS" : "§c§lNON-ACCÈS";
     }
 
     /**
      * @return mixed
      */
-    public function getName(){
+    public function getName()
+    {
         return $this->data["name"];
     }
 
-    public function addMember(String $player) {
+    public function addMember(string $player)
+    {
         $members = explode(" ", $this->data["members"]);
         array_push($members, $player);
-        $members = implode(" ",$members);
+        $members = implode(" ", $members);
         Plugin::getInstance()->getDatabase()->updateFactionMembers($members, $this->data["identifier"]);
     }
 
-    public function removeMember(String $player) {
+    public function removeMember(string $player)
+    {
         $array = explode(' ', $this->data["members"]);
         unset($array[array_search($player, $array)]);
         $new = implode(" ", $array);
         Plugin::getInstance()->getDatabase()->updateFactionMembers($new, $this->data["identifier"]);
     }
 
-    public function getMembers(){
+    public function getMembers()
+    {
         return $this->data["members"];
     }
 
@@ -77,7 +120,8 @@ class MFaction{
      * @param bool $active
      * @return int
      */
-    public function getFactionClaims(bool $active): int{
+    public function getFactionClaims(bool $active): int
+    {
         return $active ? 9 : 6;
     }
 
@@ -85,37 +129,32 @@ class MFaction{
      * @param bool $connected
      * @return int
      */
-    public function getMembersCount(bool $connected): int{
-        return $connected ? 8 : 3;
+    public function getMembersCount(bool $connected): int
+    {
+        $playerConnecteds = 0;
+        $playerDisconnecteds = 0;
+        foreach (explode(' ', $this->data["members"]) as $member) {
+            var_dump($member);
+            if (Server::getInstance()->getPlayer($member) instanceof MPlayer) {
+                $playerConnecteds++;
+            } else {
+                $playerDisconnecteds++;
+            }
+        }
+        return $connected ? $playerConnecteds : $playerDisconnecteds;
     }
 
     /**
      * @param String $member
      * @return string
      */
-    public function getInvitedDate(String $member): string{
+    public function getInvitedDate(string $member): string
+    {
         return "25 Janvier 2021";
     }
 
-    /**
-     * @param String $identifier
-     * @return bool
-     */
-    public static function factionExist(String $identifier): bool{
-        $factions = Plugin::getInstance()->getFactions();
-        return $factions->exists($identifier);
-    }
-
-    public static function playerStatus($member){
-        $player = Server::getInstance()->getPlayer($member);
-        if($player instanceof MPlayer){
-            return "§a§lCONNECTÉ";
-        }else{
-            return "§c§lDÉCONNECTÉ";
-        }
-    }
-
-    public function getIdentifier(){
+    public function getIdentifier()
+    {
         return $this->data["identifier"];
     }
 }
