@@ -117,4 +117,20 @@ class MPlayer extends Player
         $this->sendTip("§fVous êtes dans le claim de §a" . MFaction::getNameByIdentifier(Plugin::getInstance()->getClaims()->getFactionClaim($this->getLevel(), $chunkXP, $chunkZP)) . $msg);
     }
 
+    public function canInteractClaim(Event $event){
+        $player = $event->getPlayer();
+        $block = $event->getBlock();
+        if (!$player instanceof MPlayer) return;
+
+        $toPos = $block->getLevel()->getChunkAtPosition($block->asVector3());
+        $chunkXP = $toPos->getX();
+        $chunkZP = $toPos->getZ();
+        if (Plugin::getInstance()->getClaims()->isInClaim($block->getLevel(), $chunkXP, $chunkZP)) {
+            $id = Plugin::getInstance()->getClaims()->getFactionClaim($block->getLevel(), $chunkXP, $chunkZP);
+            if ($player->getFaction()->getIdentifier() !== $id) {
+                $player->sendTip("§cProtégé par la §f" . MFaction::getNameByIdentifier($id));
+                $event->setCancelled();
+            }
+        }
+    }
 }
