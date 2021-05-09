@@ -34,7 +34,6 @@ class ClaimsForm
                             }else{
                                 $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}La zone est déjà protéger par la faction {ERROR}".MFaction::getNameByIdentifier(Plugin::getInstance()->getClaims()->getFactionClaim($p->getLevel(), $chunkXP, $chunkZP))));
                             }
-                            var_dump(Plugin::getInstance()->getClaims()->getClaims());
                         } else {
                             $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous n'avez pas la rôle requis pour pouvoir protéger des zones"));
                         }
