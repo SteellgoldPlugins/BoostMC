@@ -34,15 +34,14 @@ class MFaction
         return $factions->exists($identifier);
     }
 
-    public static function getAllFactions() {
+    public static function getAllFactions(): array{
         $data = array();
         $query = Plugin::getInstance()->getDatabase()->getDatabase()->query("SELECT identifier FROM `factions`");
-        while ($res = $query->fetchArray(1)) {
+        while ($res = $query->fetchArray()) {
             array_push($data, $res);
         }
-        if(!$data) return [];
 
-        return $data[0];
+        return $data;
     }
 
     public static function getDataByIdentifier(String $identifier) {
@@ -53,7 +52,7 @@ class MFaction
         return Plugin::getInstance()->getDatabase()->getFactionData($faction)["name"];
     }
 
-    public static function playerStatus($member)
+    public static function playerStatus($member): string
     {
         $player = Server::getInstance()->getPlayer($member);
         if ($player instanceof MPlayer) {
@@ -138,7 +137,6 @@ class MFaction
         $playerConnecteds = 0;
         $playerDisconnecteds = 0;
         foreach (explode(' ', $this->data["members"]) as $member) {
-            var_dump($member);
             if (Server::getInstance()->getPlayer($member) instanceof MPlayer) {
                 $playerConnecteds++;
             } else {
