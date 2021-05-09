@@ -69,13 +69,4 @@ class PlayerListeners implements Listener
             }
         }
     }
-
-    /**
-    public function onChat(PlayerChatEvent $event){
-        $player = $event->getPlayer();
-        if(!$player instanceof MPlayer) return;
-        $colors = explode(" ", MPlayer::RANKS_COLOR[$player->getRank()]);
-        $event->setFormat($colors[0] . "[".$colors[1].$player->getFaction()->getName().$colors[0]."] ".$player->getName().$colors[1].": ".$colors[1].$event->getMessage());
-    }
-     */
 }
