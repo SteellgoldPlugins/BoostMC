@@ -11,12 +11,12 @@ use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
+use Steellg0ld\Museum\listeners\FactionListeners;
 use Steellg0ld\Museum\listeners\PlayerListeners;
 
 class Plugin extends PluginBase
 {
     public static $instance;
-    // public static array $claims;
 
     public function onEnable()
     {
@@ -30,15 +30,12 @@ class Plugin extends PluginBase
 
         $this->getClaims()->initClaim();
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
     }
 
     public function onDisable()
     {
-        /**
-        foreach ($this->getClaims()->getClaims() as $claim) {
-        var_dump($claim["ccc"]);
-        }
-         */
+
     }
 
     /**
