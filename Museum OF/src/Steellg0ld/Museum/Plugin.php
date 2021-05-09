@@ -81,6 +81,14 @@ class Plugin extends PluginBase
         return new Claims();
     }
 
+    /**
+     * @return Config
+     */
+    public function getClaimsMessages(): Config
+    {
+        return new Config(Plugin::getInstance()->getDataFolder() . "claims_messages.yml", Config::YAML);
+    }
+
     public function getEconomyAPI(): MEconomy
     {
         return new MEconomy();
