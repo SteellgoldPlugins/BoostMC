@@ -258,9 +258,15 @@ class DataConnectorImpl implements DataConnector{
 	}
 
 	public function waitAll() : void{
+	    $total = 0;
 		while(!empty($this->handlers)){
+		    if($total > 13){
+		        $this->plugin->getLogger()->error("Le wait dans le disable pour libasynql à excédé 13x1000ms d'attente.");
+		        break;
+            }
 			$this->checkResults();
-			usleep(1000);
+            $total++;
+            usleep(1000);
 		}
 	}
 

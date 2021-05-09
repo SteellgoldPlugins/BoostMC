@@ -124,7 +124,7 @@ class MysqlCredentials implements JsonSerializable{
 	}
 
 	/**
-	 * Prepares value to be var_dump()'ed without leaking password
+	 * Prepares value to be ()'ed without leaking password
 	 *
 	 * @return array
 	 */
