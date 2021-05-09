@@ -48,7 +48,6 @@ class FactionCommand extends Command
                     $chunkXP = $toPos->getX();
                     $chunkZP = $toPos->getZ();
                     if(!Plugin::getInstance()->getClaims()->isInClaim($sender->getLevel(), $chunkXP, $chunkZP)) {
-                        if(MFaction::getDataByIdentifier())
                     }else{
                         $sender->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'êtes dans aucun claim"));
                     }
