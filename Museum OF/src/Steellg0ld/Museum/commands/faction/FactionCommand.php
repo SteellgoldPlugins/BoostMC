@@ -6,6 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
+use Steellg0ld\Museum\commands\faction\subcommands\ClaimSubCommand;
 use Steellg0ld\Museum\commands\faction\subcommands\InviteSubCommand;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\forms\factions\ClaimsForm;
@@ -27,6 +28,7 @@ class FactionCommand extends Command
         }
 
         $invite = new InviteSubCommand();
+        $claim = new ClaimSubCommand();
 
         if (isset($args[0])) {
             switch ($args[0]) {
@@ -40,17 +42,10 @@ class FactionCommand extends Command
                     break;
                 case "c":
                 case "claim":
-                    ClaimsForm::openClaim($sender);
+                    $claim->execute($sender);
                     break;
                 case "u":
                 case "unclaim":
-                    $toPos = $sender->getLevel()->getChunkAtPosition($sender->asVector3());
-                    $chunkXP = $toPos->getX();
-                    $chunkZP = $toPos->getZ();
-                    if(!Plugin::getInstance()->getClaims()->isInClaim($sender->getLevel(), $chunkXP, $chunkZP)) {
-                    }else{
-                        $sender->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'êtes dans aucun claim"));
-                    }
                     break;
             }
         } else {

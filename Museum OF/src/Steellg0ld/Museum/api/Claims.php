@@ -22,7 +22,7 @@ class Claims
      * @param MPlayer $player
      * @param String $faction
      */
-    public function claim(MPlayer $player, String $faction, string $message = null){
+    public function claim(MPlayer $player, String $faction){
         $chunk = $player->getLevel()->getChunkAtPosition($player);
         $chunkX = $chunk->getX();
         $chunkZ = $chunk->getZ();
@@ -30,14 +30,6 @@ class Claims
         $claims = self::$claims[$faction];
         array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
         self::$claims[$faction] = $claims;
-
-        $config = Plugin::getInstance()->getClaimsMessages();
-        if($message !== null){
-            $config->set("{$chunkX}:{$chunkZ}:{$world}", $message);
-        }else{
-            $config->set("{$chunkX}:{$chunkZ}:{$world}", $faction);
-        }
-        $config->save();
     }
 
     /**
