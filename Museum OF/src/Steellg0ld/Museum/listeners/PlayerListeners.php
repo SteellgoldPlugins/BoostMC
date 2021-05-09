@@ -3,27 +3,32 @@
 namespace Steellg0ld\Museum\listeners;
 
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerJoinEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\Server;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\CodeForm;
-use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
-class PlayerListeners implements Listener {
-    public function onCreation(PlayerCreationEvent $event){
+class PlayerListeners implements Listener
+{
+    public function onCreation(PlayerCreationEvent $event)
+    {
         $event->setPlayerClass(MPlayer::class);
     }
 
-    public function onJoin(PlayerJoinEvent $event){
+    public function onJoin(PlayerJoinEvent $event)
+    {
         $player = $event->getPlayer();
         $event->setJoinMessage("");
-        if(!$player instanceof MPlayer) return;
-        if(Utils::checkVPN($player->getAddress())) $player->close("", Utils::createMessage("{ERROR}Vous ne pouvez pas utiliser de VPN sur le serveur"));
+        if (!$player instanceof MPlayer) return;
+        if (Utils::checkVPN($player->getAddress())) $player->close("", Utils::createMessage("{ERROR}Vous ne pouvez pas utiliser de VPN sur le serveur"));
 
-        if(!$player->hasPlayedBefore()) {
+        if (!$player->hasPlayedBefore()) {
             $player->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Si vous avez un code de parrainage, vous pouvez le définir pendant les 72 heures suivantes, une fois ce temp dépassé aucun code ne pourra être défini"));
             $player->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Précision: Pendant ces 72h vous ne pouvez pas créer de codes vous même"));
 
@@ -32,16 +37,30 @@ class PlayerListeners implements Listener {
         }
 
         $player->money = 5000;
-        Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}".$player->getName() . " {PRIMARY}+"));
+        Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}" . $player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
         $player->dataConnect();
     }
 
-    public function onQuit(PlayerQuitEvent $event){
+    public function onQuit(PlayerQuitEvent $event)
+    {
         $event->setQuitMessage("");
         $player = $event->getPlayer();
+        if (!$player instanceof MPlayer) return;
+        Plugin::getInstance()->getDatabase()->updatePlayer($player->getName(), $player->rank, $player->money, $player->faction_id, $player->faction_role, $player->code, $player->hasJoinedWithCode, $player->enterCodeWaitEnd);
+        Server::getInstance()->broadcastTip(Utils::createMessage("{ERROR}- {SECONDARY}" . $player->getName() . " {ERROR}-"));
+    }
+
+    public function onMove(PlayerMoveEvent $event)
+    {
+        $player = $event->getPlayer();
         if(!$player instanceof MPlayer) return;
-        Plugin::getInstance()->getDatabase()->updatePlayer($player->getName(),$player->rank, $player->money, $player->faction_id, $player->faction_role,$player->code,$player->hasJoinedWithCode, $player->enterCodeWaitEnd);
-        Server::getInstance()->broadcastTip(Utils::createMessage("{ERROR}- {SECONDARY}".$player->getName() . " {ERROR}-"));
+    }
+
+    public function onChat(PlayerChatEvent $event){
+        $player = $event->getPlayer();
+        if(!$player instanceof MPlayer) return;
+        $colors = explode(" ", MPlayer::RANKS_COLOR[$player->getRank()]);
+        $event->setFormat($colors[0] . "[".$colors[1].$player->getFaction()->getName().$colors[0]."] ".$player->getName().$colors[1].": ".$colors[1].$event->getMessage());
     }
 }
