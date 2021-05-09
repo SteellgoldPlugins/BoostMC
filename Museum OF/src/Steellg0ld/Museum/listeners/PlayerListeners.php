@@ -61,11 +61,12 @@ class PlayerListeners implements Listener
         $chunkXP = $toPos->getX();
         $chunkZP = $toPos->getZ();
         if(Plugin::getInstance()->getClaims()->isInClaim($player->getLevel(), $chunkXP, $chunkZP)){
-            $config = Plugin::getInstance()->getClaimsMessages();
-            $level = $player->getLevel()->getFolderName();
-            $a = "{$chunkXP}:{$chunkZP}:{$level}";
-            if($config->get($a) !== null) {
-                $player->sendTip("§fVous êtes dans le claim de §a" . MFaction::getNameByIdentifier(Plugin::getInstance()->getClaims()->getFactionClaim($player->getLevel(), $chunkXP, $chunkZP)));
+            $msg = $config->get("{$chunkXP}:{$chunkZP}:{$level}") == null ? "" : "\n§f» §a".$config->get("{$chunkXP}:{$chunkZP}:{$level}" . " §f«");
+            $claim = Plugin::getInstance()->getClaims()->getFactionClaim($player->getLevel(), $chunkXP, $chunkZP);
+
+            if($player->oldChunk !== $claim){
+                $player->sendTipFaction($chunkXP, $chunkZP, $msg);
+                $player->oldChunk = $claim;
             }
         }
     }
