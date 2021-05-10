@@ -13,6 +13,21 @@ class Database
         Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT, claims TEXT)");
     }
 
+    public function initPlayer(MPlayer $player){
+        $name = $player->getName();
+        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM players WHERE player = '$name'", [], function (array $rows) use ($player) {
+            $player->rank = $rows[0]["rank"];
+            $player->money = $rows[0]["money"];
+            $player->faction_id = $rows[0]["faction"];
+            if ($rows[0]["faction"] !== "none") {
+                $player->faction_role = $rows[0]["faction_role"];
+            }
+            $player->code = $rows[0]["code"];
+            $player->hasJoinedWithCode = $rows[0]["hasJoinedWithCode"];
+            $player->enterCodeWaitEnd = $rows[0]["enterCodeWaitEnd"];
+        });
+    }
+
     /**
      * @param String $name
      * @param String $address
@@ -40,34 +55,13 @@ class Database
     }
 
     /**
-     * @param String $name
-     * @return mixed
-     */
-    public function getPlayerData(string $name)
-    {
-        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM players WHERE player = '$name'", [], function (array $rows) {
-            var_dump($rows);
-            return $rows;
-        });
-    }
-
-    /**
      * @param string $faction_id
-     * @return mixed
      */
     public function getFactionData(string $faction_id)
     {
         Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM factions WHERE identifier = '$faction_id'", [], function(array $rows){
-            var_dump($rows);
             return $rows;
         });
-
-        /**
-        while ($res = $query->fetchArray(1)) {
-            array_push($data, $res);
-        }
-        return $data[0];
-         **/
     }
 
     /**

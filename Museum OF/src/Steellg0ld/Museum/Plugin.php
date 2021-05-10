@@ -25,8 +25,8 @@ class Plugin extends PluginBase
 
         $this->saveConfig();
         $this->database = libasynql::create($this, $this->getConfigFile("config")->get("database"), [
-            "sqlite" => "sqlite.sql",
-            "mysql" => "mysql.sql"
+            "sqlite" => "data.sql",
+            "mysql" => "data.sql"
         ]);
         $this->getDatabase()->init();
 

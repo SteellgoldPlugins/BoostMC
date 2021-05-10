@@ -43,7 +43,10 @@ class PlayerListeners implements Listener
         $player->money = 5000;
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}" . $player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
-        $player->dataConnect();
+        Plugin::getInstance()->getDatabase()->initPlayer($player);
+        var_dump($player->faction_id);
+        var_dump($player->rank);
+        // $player->dataConnect();
     }
 
     public function onQuit(PlayerQuitEvent $event)

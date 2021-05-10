@@ -34,9 +34,10 @@ class MFaction
         return $factions->exists($identifier);
     }
 
-    public static function getAllFactions(): array{
+    public static function getAllFactions() {
         Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT identifier FROM `factions`", [], function (array $rows) {
             var_dump($rows);
+            if($rows == null) return false;
             return $rows;
         });
     }

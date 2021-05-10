@@ -50,20 +50,6 @@ class MPlayer extends Player
         Plugin::getInstance()->getDatabase()->playerRegister($this->getName(), $this->getAddress());
     }
 
-    public function dataConnect()
-    {
-        $data = Plugin::getInstance()->getDatabase()->getPlayerData($this->getName());
-        $this->rank = $data["rank"];
-        $this->money = $data["money"];
-        $this->faction_id = $data["faction"];
-        if ($data["faction"] !== "none") {
-            $this->faction_role = $data["faction_role"];
-        }
-        $this->code = $data["code"];
-        $this->hasJoinedWithCode = $data["hasJoinedWithCode"];
-        $this->enterCodeWaitEnd = $data["enterCodeWaitEnd"];
-    }
-
     public function getFaction(): MFaction
     {
         return new MFaction($this->faction_id);
