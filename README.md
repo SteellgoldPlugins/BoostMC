@@ -18,6 +18,7 @@ __Anti XRAY features__:
  - Todo
 
 __Faction features__:
+
 Ranks:
  - The permissions are the same if you click on the form (`/f form`)
  - Recrue
