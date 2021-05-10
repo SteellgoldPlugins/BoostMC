@@ -13,6 +13,9 @@ git clone --recursive branch=master https://github.com/Steellgold/Museum
 
 ## Todo List:
 ### PocketMine-MP
+__Anti XRAY features__:
+ - Todo
+__Faction features__:
 Ranks:
  - The permissions are the same if you click on the form (`/f form`)
  - Recrue
@@ -35,7 +38,6 @@ Ranks:
 	 - Permissions: All permissions
 	 - ID: 3
 ---
-__Faction features__:
 | Command or Feature| Description | Status  | Rank  |
 |--|--|--|--|
 | `/f claim`| Protect a zone for that other factions can't break or put a block in it | ✅ | >= 2 |
