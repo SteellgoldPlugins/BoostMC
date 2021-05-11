@@ -49,16 +49,21 @@ class CodeForm
     {
         $form = new CustomForm(
             function (MPlayer $p, $data) {
-                if ($data !== null) {
+                if ($data == null) {
+                }else{
                     if (Plugin::getInstance()->getCodes()->exists($data[1])) {
                         if (!$p->hasJoinedWithCode) {
                             if (Plugin::getInstance()->getCodes()->get($p->getName()) == $data[1]) {
                                 $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous ne pouvez pas entré votre propre code"));
                             }
-
-                            $p->code = strtolower($data[1]);
-                            $p->hasJoinedWithCode = true;
-                            $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez entré le code {PRIMARY}{CODE}{SECONDARY} avec succès, mais vous ne pourrez plus en utiliser", ["{CODE}"], [$data[1]]));
+                            
+                            if(isset($data[1])){
+                                $p->code = strtolower($data[1]);
+                                $p->hasJoinedWithCode = true;
+                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous avez entré le code {PRIMARY}{CODE}{SECONDARY} avec succès, mais vous ne pourrez plus en utiliser", ["{CODE}"], [$data[1]]));
+                            }else{
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez rien préciser"));
+                            }
                         } else {
                             $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous avez déjà entré un code, vous ne pouvez donc plus en utiliser"));
                         }
