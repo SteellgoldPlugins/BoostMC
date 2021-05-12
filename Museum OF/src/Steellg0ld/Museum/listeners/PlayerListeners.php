@@ -44,8 +44,6 @@ class PlayerListeners implements Listener
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}" . $player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
         Plugin::getInstance()->getDatabase()->initPlayer($player);
-        var_dump($player->faction_id);
-        var_dump($player->rank);
     }
 
     public function onQuit(PlayerQuitEvent $event)

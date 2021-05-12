@@ -13,7 +13,11 @@ class MFaction
         2 => "Officier",
         3 => "Chef"
     ];
-    public $data;
+
+    /**
+     * @var array
+     */
+    public static $factions = [];
 
     /**
      * MFaction constructor.
@@ -39,6 +43,14 @@ class MFaction
             var_dump($rows);
             if($rows == null) return false;
             return $rows;
+        });
+    }
+
+    public static function initFactions() {
+        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM `factions`", [], function (array $rows) {
+            if($rows == null) return false;
+            var_dump($rows);
+            Plugin::$factions = $rows;
         });
     }
 

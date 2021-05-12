@@ -11,6 +11,7 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
+use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\listeners\FactionListeners;
 use Steellg0ld\Museum\listeners\PlayerListeners;
 
@@ -18,6 +19,7 @@ class Plugin extends PluginBase
 {
     public static $instance;
     private $database;
+    public static $factions;
 
     public function onEnable()
     {
@@ -35,7 +37,7 @@ class Plugin extends PluginBase
             new CodeCommand("c", "§aOuvrir la page pour utiliser un code", ["code"])
         ]);
 
-        $this->getClaims()->initClaim();
+        $this->getFactions()->initialize();
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
     }
@@ -56,11 +58,11 @@ class Plugin extends PluginBase
     }
 
     /**
-     * @return Config
+     * @return JSONProvider
      */
-    public function getFactions(): Config
+    public function getFactions(): JSONProvider
     {
-        return new Config(Plugin::getInstance()->getDataFolder() . "factions.yml", Config::YAML);
+        return new JSONProvider();
     }
 
     /**
