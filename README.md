@@ -35,8 +35,8 @@ Ranks:
 |--|--|--|--|--|
 | `/f placechest`| Place the faction chest | ❌ | 3 | [`/f pc`] |
 | `/f configchest`| Place the faction chest | ❌ | 3 | [`/f cg`] |
-| `/f unclaim`| Unprotect a zone | ⏰ | >= 2 | [`/f uc`] |
-| `/f claim`| Protect a zone for that other factions can't break or put a block in it | ⏰ | >= 2| [`/f cl`] |
+| `/f unclaim`| Unprotect a zone | ✅ | >= 2 | [`/f uc`] |
+| `/f claim`| Protect a zone for that other factions can't break or put a block in it | ✅ | >= 2| [`/f cl`] |
 | `/f create`| Create a faction (Cost: 500$) | ⏰ | < 0 | [`/f`] |
 | `/f disband`| Delete your faction and claims actives | ❌ | 3 | [`/f di`] |
 | `/f invite`| Invite a player into your faction | ✅ | >= 2 | [`/f in`] |
