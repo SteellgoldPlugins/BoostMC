@@ -6,7 +6,7 @@ use Steellg0ld\Museum\utils\Utils;
 
 class MEconomy
 {
-    public static $shop = [};
+    public static $shop = [];
                            
     public function delMoney(MPlayer $player, int $count, bool $msg = false)
     {

@@ -46,7 +46,6 @@ class PlayerListeners implements Listener
         Plugin::getInstance()->getDatabase()->initPlayer($player);
         var_dump($player->faction_id);
         var_dump($player->rank);
-        // $player->dataConnect();
     }
 
     public function onQuit(PlayerQuitEvent $event)
