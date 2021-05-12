@@ -6,7 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
-use Steellg0ld\Museum\commands\faction\subcommands\ClaimSubCommand;
+use Steellg0ld\Museum\commands\faction\subcommands\ClaimsSubCommand;
 use Steellg0ld\Museum\commands\faction\subcommands\InviteSubCommand;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\forms\factions\ClaimsForm;
@@ -28,7 +28,7 @@ class FactionCommand extends Command
         }
 
         $invite = new InviteSubCommand();
-        $claim = new ClaimSubCommand();
+        $claim = new ClaimsSubCommand();
 
         if (isset($args[0])) {
             switch ($args[0]) {
@@ -42,10 +42,11 @@ class FactionCommand extends Command
                     break;
                 case "c":
                 case "claim":
-                    $claim->execute($sender);
+                    $claim->execute_claim($sender);
                     break;
                 case "u":
                 case "unclaim":
+                $claim->execute_unclaim($sender);
                     break;
             }
         } else {
