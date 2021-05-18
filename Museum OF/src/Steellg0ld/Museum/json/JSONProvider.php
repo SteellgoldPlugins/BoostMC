@@ -17,18 +17,17 @@ class JSONProvider
         }
 
         foreach (Plugin::getInstance()->getConfigFile("factions")->getAll() as $item) {
-            if(!file_exists($dataFolder . "factions/".$item.".json")){
-                $file = $this->getFactionConfig($item);
-                $file->set($item,$data->defaultData($item));
-                $file->save();
-            }else{
-                var_dump("existe");
-            }
+            $this->getFactionConfig($item);
+            var_dump(Plugin::getInstance()->getFactions()->getFactionConfig($item)->getAll());
         }
     }
 
     public function getFactionConfig(string $factionId): Config {
-        return new Config(Plugin::getInstance()->getDataFolder() . "factions/$factionId.json", Config::JSON, []);
+        return new Config(Plugin::getInstance()->getDataFolder() . "factions/$factionId.json", Config::JSON, $this->getDataProvider()->defaultData($factionId));
+    }
+
+    public function getFactions(): Config {
+        return new Config(Plugin::getInstance()->getDataFolder() . "factions.yml", Config::YAML);
     }
 
     public function getDataProvider(): DataProvider{
