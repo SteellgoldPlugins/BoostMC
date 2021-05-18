@@ -23,7 +23,7 @@ class FactionForm
                 function (MPlayer $p, $data) use ($provider) {
                     if ($data !== null) {
                         if ($p->getMoney() >= Utils::FACTION_CREATE_PRICE) {
-                            if (isset($data[1])) {
+                            if (isset($data[1]) AND isset($data[2])) {
                                 if (!MFaction::factionExist($data[1])) {
                                     $faction_id = uniqid();
 
@@ -39,7 +39,7 @@ class FactionForm
                                     $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}La faction {ERROR}" . $data[1] . " {SECONDARY}existe déjà !"));
                                 }
                             } else {
-                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez pas préciser le nom de {ERROR}votre faction"));
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez pas préciser le nom de {ERROR}votre faction {SECONDARY}ou {ERROR}la description"));
                             }
                         } else {
                             $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez pas assez d'argent pour pouvoir {ERROR}créer une faction"));
