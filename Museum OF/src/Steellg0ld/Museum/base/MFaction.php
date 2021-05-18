@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\base;
 
 use pocketmine\Server;
+use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\Plugin;
 
 class MFaction
@@ -15,9 +16,9 @@ class MFaction
     ];
 
     /**
-     * @var array
+     * @var bool|mixed
      */
-    public static $factions = [];
+    private $data;
 
     /**
      * MFaction constructor.
@@ -25,7 +26,7 @@ class MFaction
      */
     public function __construct(string $faction_id)
     {
-        $this->data = Plugin::getInstance()->getDatabase()->getFactionData($faction_id);
+        $this->data = Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
     }
 
     /**
@@ -34,32 +35,19 @@ class MFaction
      */
     public static function factionExist(string $identifier): bool
     {
-        $factions = Plugin::getInstance()->getFactions();
-        return $factions->exists($identifier);
+        return file_exists(Plugin::getInstance()->getDataFolder() . "factions/".$identifier.".json");
     }
 
-    public static function getAllFactions() {
-        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT identifier FROM `factions`", [], function (array $rows) {
-            var_dump($rows);
-            if($rows == null) return false;
-            return $rows;
-        });
+    public static function getAllFactions(): array{
+        return Plugin::getInstance()->getFactions()->getFactions()->getAll();
     }
 
-    public static function initFactions() {
-        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM `factions`", [], function (array $rows) {
-            if($rows == null) return false;
-            var_dump($rows);
-            Plugin::$factions = $rows;
-        });
+    public static function getDataByIdentifier(String $faction_id) {
+        return Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
     }
 
-    public static function getDataByIdentifier(String $identifier) {
-        return Plugin::getInstance()->getDatabase()->getFactionData($identifier);
-    }
-
-    public static function getNameByIdentifier($faction){
-        return Plugin::getInstance()->getDatabase()->getFactionData($faction)["name"];
+    public static function getNameByIdentifier($faction_id){
+        return Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id)["name"];
     }
 
     public static function playerStatus($member): string
