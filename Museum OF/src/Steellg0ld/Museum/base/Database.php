@@ -40,31 +40,6 @@ class Database
     }
 
     /**
-     * @param String $identifier
-     * @param String $name
-     * @param String $owner
-     */
-    public function factionRegister(string $identifier, string $name, string $owner)
-    {
-        $factions = Plugin::getInstance()->getFactions();
-        $factions->set($name, $identifier);
-        $factions->save();
-
-        $claims = base64_encode(serialize(array()));
-        Plugin::getInstance()->getAsyncDatabase()->executeInsertRaw("INSERT INTO factions (identifier, name, members, owner, claims) VALUES ('$identifier', '$name', '$owner', '$owner', '$claims')");
-    }
-
-    /**
-     * @param string $faction_id
-     */
-    public function getFactionData(string $faction_id)
-    {
-        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM factions WHERE identifier = '$faction_id'", [], function(array $rows){
-            return $rows;
-        });
-    }
-
-    /**
      * @param String $name
      * @param Int $rank
      * @param Int $money
