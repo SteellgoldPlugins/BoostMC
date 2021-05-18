@@ -17,7 +17,7 @@ class Utils
 
     const VPN_API_KEY = "e842f02fa26b42329f6f6497b5635aa7";
     const API_URL = "https://vpnapi.io/api/{ADDRESS}?key=" . self::VPN_API_KEY;
-    public static $arrContextOptions = array(
+    public static array $arrContextOptions = array(
         "ssl" => array(
             "verify_peer" => false,
             "verify_peer_name" => false,
