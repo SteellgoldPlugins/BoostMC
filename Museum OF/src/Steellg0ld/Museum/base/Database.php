@@ -59,6 +59,6 @@ class Database
      */
     public function updateFactionMembers(string $members, string $faction)
     {
-        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE factions SET members = '$members' WHERE identifier = '$faction'");
+        var_dump("re-soon");
     }
 }
