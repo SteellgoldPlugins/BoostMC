@@ -27,7 +27,6 @@ class MFaction
     public function __construct(string $faction_id)
     {
         $this->data = Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
-        var_dump($this->data);
     }
 
     /**
@@ -153,5 +152,10 @@ class MFaction
     public function getIdentifier()
     {
         return $this->data["uniqid"];
+    }
+
+    public function updateClaim(String $claims)
+    {
+        $this->data["claims"] = $claims;
     }
 }
