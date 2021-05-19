@@ -9,8 +9,6 @@ use Steellg0ld\Museum\Plugin;
 class JSONProvider
 {
     public function initialize(): void {
-        $data = new DataProvider();
-
         $dataFolder = Plugin::getInstance()->getDataFolder();
         if(!is_dir($dataFolder . "factions")) {
             mkdir($dataFolder . "factions");
@@ -18,12 +16,11 @@ class JSONProvider
 
         foreach (Plugin::getInstance()->getConfigFile("factions")->getAll() as $item) {
             $this->getFactionConfig($item);
-            var_dump(Plugin::getInstance()->getFactions()->getFactionConfig($item)->getAll());
         }
     }
 
     public function getFactionConfig(string $factionId): Config {
-        return new Config(Plugin::getInstance()->getDataFolder() . "factions/$factionId.json", Config::JSON, $this->getDataProvider()->defaultData($factionId));
+        return new Config(Plugin::getInstance()->getDataFolder() . "factions/$factionId.json", Config::JSON);
     }
 
     public function getFactions(): Config {
