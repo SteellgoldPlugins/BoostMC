@@ -19,6 +19,12 @@ class JSONProvider
         }
     }
 
+    public function update($uniqid, $data){
+        $file = $this->getFactionConfig($uniqid);
+        $file->set($uniqid, $data);
+        $file->save();
+    }
+
     public function getFactionConfig(string $factionId): Config {
         return new Config(Plugin::getInstance()->getDataFolder() . "factions/$factionId.json", Config::JSON);
     }

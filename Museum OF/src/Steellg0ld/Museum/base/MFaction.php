@@ -99,16 +99,14 @@ class MFaction
 
     public function addMember(string $player)
     {
-        var_dump($this->data["members"]);
         array_push($this->data["members"], $player);
-        var_dump($this->data["members"]);
+        Plugin::getInstance()->getFactions()->update($this->data['uniqid'], $this->data);
     }
 
     public function removeMember(string $player)
     {
-        var_dump($this->data["members"]);
         unset($this->data["members"][array_search($player, $this->data["members"])]);
-        var_dump($this->data["members"]);
+        Plugin::getInstance()->getFactions()->update($this->data['uniqid'], $this->data);
     }
 
     public function getMembers()
@@ -154,6 +152,6 @@ class MFaction
 
     public function getIdentifier()
     {
-        return $this->data["identifier"];
+        return $this->data["uniqid"];
     }
 }
