@@ -9,6 +9,7 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
+use pocketmine\event\player\PlayerPreLoginEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
 use Steellg0ld\Museum\api\Claims;
@@ -40,7 +41,6 @@ class PlayerListeners implements Listener
             CodeForm::enterCode($player);
         }
 
-        $player->money = 5000;
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}" . $player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
         Plugin::getInstance()->getDatabase()->initPlayer($player);
