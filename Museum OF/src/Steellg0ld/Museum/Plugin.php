@@ -38,6 +38,7 @@ class Plugin extends PluginBase
         ]);
 
         $this->getFactions()->initialize();
+        $this->getClaims()->initClaim();
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
     }
