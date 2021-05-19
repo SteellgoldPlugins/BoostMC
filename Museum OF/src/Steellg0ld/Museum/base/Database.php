@@ -9,7 +9,7 @@ class Database
 {
     public function init()
     {
-        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT)");
+        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT, lastJoin TEXT)");
         // Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT, claims TEXT)");
     }
 
@@ -25,6 +25,7 @@ class Database
             $player->code = $rows[0]["code"];
             $player->hasJoinedWithCode = $rows[0]["hasJoinedWithCode"];
             $player->enterCodeWaitEnd = $rows[0]["enterCodeWaitEnd"];
+            $player->lastJoin = $rows[0]["lastJoin"];
         });
     }
 
@@ -36,7 +37,8 @@ class Database
     {
         $time = time() + 60 * 60 * 24 * 3;
         $address = base64_encode(base64_encode(base64_encode(base64_encode($address))));
-        Plugin::getInstance()->getAsyncDatabase()->executeInsertRaw("INSERT INTO players (player, address, rank, money, faction, faction_role, code, hasJoinedWithCode, enterCodeWaitEnd) VALUES ('$name', '$address', 0, 0, 'none', 0, 'none', 'none', '$time')");
+        $last = time();
+        Plugin::getInstance()->getAsyncDatabase()->executeInsertRaw("INSERT INTO players (player, address, rank, money, faction, faction_role, code, hasJoinedWithCode, enterCodeWaitEnd, lastJoin) VALUES ('$name', '$address', 0, 0, 'none', 0, 'none', 'none', '$time', '$last')");
     }
 
     /**
