@@ -23,7 +23,7 @@ class FactionForm
                 function (MPlayer $p, $data) use ($provider) {
                     if ($data !== null) {
                         if ($p->getMoney() >= Utils::FACTION_CREATE_PRICE) {
-                            if (isset($data[1]) AND isset($data[2])) {
+                            if (empty($data[1]) AND empty($data[2])) {
                                 if (!MFaction::factionExist($data[1])) {
                                     $faction_id = uniqid();
 
