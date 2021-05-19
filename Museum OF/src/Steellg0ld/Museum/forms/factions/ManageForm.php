@@ -14,7 +14,7 @@ class ManageForm
     {
         {
             $members = array();
-            foreach (explode(" ", $player->getFaction()->getMembers()) as $member) {
+            foreach ($player->getFaction()->getMembers() as $member) {
                 array_push($members, ["name" => $member, "status" => MFaction::playerStatus($member)]);
             }
 
