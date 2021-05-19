@@ -27,6 +27,7 @@ class MFaction
     public function __construct(string $faction_id)
     {
         $this->data = Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
+        var_dump($this->data);
     }
 
     /**
@@ -46,7 +47,7 @@ class MFaction
         return Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
     }
 
-    public static function getNameByIdentifier($faction_id){
+    public static function getNameByIdentifier(String $faction_id){
         return Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id)["name"];
     }
 
@@ -134,7 +135,7 @@ class MFaction
     {
         $playerConnecteds = 0;
         $playerDisconnecteds = 0;
-        foreach (explode(' ', $this->data["members"]) as $member) {
+        foreach ($this->data["members"] as $member) {
             if (Server::getInstance()->getPlayer($member) instanceof MPlayer) {
                 $playerConnecteds++;
             } else {
