@@ -15,7 +15,7 @@ class Claims
         if(MFaction::getAllFactions() == false) return;
         foreach (MFaction::getAllFactions() as $faction) {
             $fac = MFaction::getDataByIdentifier($faction["identifier"]);
-            self::$claims[$faction["identifier"]] = unserialize(base64_decode($fac['claims']));
+            self::$claims[$faction["uniqid"]] = unserialize(base64_decode($fac['claims']));
         }
     }
 
