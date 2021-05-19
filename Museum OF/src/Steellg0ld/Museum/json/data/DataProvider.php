@@ -12,7 +12,7 @@ class DataProvider
     public function createFaction(string $uniqid, MPlayer $owner, string $name, string $description, array $members, int $power){
         $provider = new JSONProvider();
         $factions = Plugin::getInstance()->getConfigFile("factions");
-        $factions->set($owner->getName(),$uniqid);
+        $factions->set($uniqid);
         $factions->save();
 
         $data = $provider->getFactionConfig($uniqid);
@@ -33,6 +33,7 @@ class DataProvider
                     "content" => "Faction created by ".$owner_name
                 ]
             ],
+            "claims" => "YTowOnt9",
             "upgrades" => [
                 "player_slot" => 0,
                 "slot_faction_chest" => 0,
