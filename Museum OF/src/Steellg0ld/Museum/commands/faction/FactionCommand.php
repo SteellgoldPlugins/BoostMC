@@ -4,13 +4,11 @@ namespace Steellg0ld\Museum\commands\faction;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\commands\faction\subcommands\ClaimsSubCommand;
 use Steellg0ld\Museum\commands\faction\subcommands\InviteSubCommand;
 use Steellg0ld\Museum\forms\FactionForm;
-use Steellg0ld\Museum\forms\factions\ClaimsForm;
-use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionCommand extends Command
@@ -51,7 +49,7 @@ class FactionCommand extends Command
             }
         } else {
             if (!$sender->hasFaction()) {
-                FactionForm::createFaction($sender);
+                FactionForm::createFaction($sender,new JSONProvider());
             } else {
                 FactionForm::factionForm($sender);
             }
