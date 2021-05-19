@@ -23,7 +23,7 @@ class FactionForm
                 function (MPlayer $p, $data) use ($provider) {
                     if ($data !== null) {
                         if ($p->getMoney() >= Utils::FACTION_CREATE_PRICE) {
-                            if (empty($data[1]) AND empty($data[2])) {
+                            if (isset($data[1]) AND isset($data[2])) {
                                 if (!MFaction::factionExist($data[1])) {
                                     $faction_id = uniqid();
 
@@ -32,7 +32,7 @@ class FactionForm
                                     $p->faction_role = 3;
                                     Claims::$claims[$faction_id] = array();
 
-                                    $provider->getDataProvider()->createFaction($faction_id,$p,$data[1], $data[2],[$p->getName()],20);
+                                    $provider->getDataProvider()->createFaction($faction_id,$p,$data[1], ($data[2] == "" ? "Default Description" : $data[2]),[$p->getName()],20);
                                     $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}" . $data[1]));
                                     if ($data[3]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . "{SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
                                 } else {
