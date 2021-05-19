@@ -29,6 +29,11 @@ class MFaction
         $this->data = Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
     }
 
+    public function update(){
+        $provider = new JSONProvider();
+        $provider->update($this->data["uniqid"],$this->data);
+    }
+
     /**
      * @param String $identifier
      * @return bool
@@ -157,5 +162,6 @@ class MFaction
     public function updateClaim(String $claims)
     {
         $this->data["claims"] = $claims;
+        $this->update();
     }
 }

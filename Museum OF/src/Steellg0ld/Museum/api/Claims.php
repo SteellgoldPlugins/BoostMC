@@ -12,7 +12,7 @@ class Claims
     public static array $claims = [];
 
     public function initClaim() {
-        foreach (Plugin::getInstance()->getFactions()->getFactions() as $faction) {
+        foreach (Plugin::getInstance()->getFactions()->getFactions()->getAll() as $faction) {
             $fac = MFaction::getDataByIdentifier($faction);
             self::$claims[$faction] = unserialize(base64_decode($fac["claims"]));
         }
