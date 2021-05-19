@@ -12,10 +12,9 @@ class Claims
     public static array $claims = [];
 
     public function initClaim() {
-        if(MFaction::getAllFactions() == false) return;
-        foreach (MFaction::getAllFactions() as $faction) {
-            $fac = MFaction::getDataByIdentifier($faction["identifier"]);
-            self::$claims[$faction["uniqid"]] = unserialize(base64_decode($fac['claims']));
+        foreach (Plugin::getInstance()->getFactions()->getFactions() as $faction) {
+            $fac = MFaction::getDataByIdentifier($faction);
+            self::$claims[$faction] = unserialize(base64_decode($fac["claims"]));
         }
     }
 
@@ -31,6 +30,8 @@ class Claims
         $claims = self::$claims[$faction];
         array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
         self::$claims[$faction] = $claims;
+        var_dump(self::$claims);
+        $player->getFaction()->updateClaim(base64_encode(serialize(self::$claims[$faction])));
     }
 
     /**
@@ -45,6 +46,8 @@ class Claims
         $claim = self::$claims[$faction];
         unset($claim[array_search("{$chunkX}:{$chunkZ}:{$world}", $claim)]);
         self::$claims[$faction] = $claim;
+        var_dump(self::$claims);
+        $player->getFaction()->updateClaim(base64_encode(serialize(self::$claims[$faction])));
     }
 
     /**

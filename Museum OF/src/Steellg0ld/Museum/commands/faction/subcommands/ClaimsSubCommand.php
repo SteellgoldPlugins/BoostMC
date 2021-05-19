@@ -31,7 +31,7 @@ class ClaimsSubCommand {
             $chunkXP = $toPos->getX();
             $chunkZP = $toPos->getZ();
 
-            if(!Plugin::getInstance()->getClaims()->isInClaim($player->getLevel(), $chunkXP, $chunkZP)){
+            if(Plugin::getInstance()->getClaims()->isInClaim($player->getLevel(), $chunkXP, $chunkZP)){
                 $faction = Plugin::getInstance()->getClaims()->getFactionClaim($player->getLevel(), $chunkXP, $chunkZP);
                 if($faction == $player->getFaction()->getIdentifier()){
                     Plugin::getInstance()->getClaims()->unclaim($player,$player->getFaction()->getIdentifier());
