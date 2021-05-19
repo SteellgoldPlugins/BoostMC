@@ -10,7 +10,7 @@ class Database
     public function init()
     {
         Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT)");
-        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT, claims TEXT)");
+        // Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT, claims TEXT)");
     }
 
     public function initPlayer(MPlayer $player){
@@ -50,7 +50,7 @@ class Database
      */
     public function updatePlayer(string $name, int $rank = 0, int $money = 250, string $faction = "none", int $faction_role = 0, string $code = "none", bool $hasJoinedWithCode = false, string $enterCodeWaitEnd = "0")
     {
-        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code$', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
+        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
     }
 
     /**
