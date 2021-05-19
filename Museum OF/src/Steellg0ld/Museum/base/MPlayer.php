@@ -44,6 +44,8 @@ class MPlayer extends Player
         "role" => ""
     ];
 
+    public $lastJoin;
+
     public function register()
     {
         Server::getInstance()->broadcastMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Bienvenu(e) à {PRIMARY}" . $this->getName() . "{SECONDARY}, qui se connecte pour la première fois"));
