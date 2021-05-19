@@ -44,7 +44,7 @@ class FactionCommand extends Command
                     break;
                 case "u":
                 case "unclaim":
-                $claim->execute_unclaim($sender);
+                    $claim->execute_unclaim($sender);
                     break;
             }
         } else {
