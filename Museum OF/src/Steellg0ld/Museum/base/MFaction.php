@@ -99,18 +99,16 @@ class MFaction
 
     public function addMember(string $player)
     {
-        $members = explode(" ", $this->data["members"]);
-        array_push($members, $player);
-        $members = implode(" ", $members);
-        Plugin::getInstance()->getDatabase()->updateFactionMembers($members, $this->data["identifier"]);
+        var_dump($this->data["members"]);
+        array_push($this->data["members"], $player);
+        var_dump($this->data["members"]);
     }
 
     public function removeMember(string $player)
     {
-        $array = explode(' ', $this->data["members"]);
-        unset($array[array_search($player, $array)]);
-        $new = implode(" ", $array);
-        Plugin::getInstance()->getDatabase()->updateFactionMembers($new, $this->data["identifier"]);
+        var_dump($this->data["members"]);
+        unset($this->data["members"][array_search($player, $this->data["members"])]);
+        var_dump($this->data["members"]);
     }
 
     public function getMembers()
