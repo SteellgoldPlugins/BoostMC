@@ -11,6 +11,7 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
+use Steellg0ld\Museum\commands\HelpCommand;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\listeners\FactionListeners;
 use Steellg0ld\Museum\listeners\PlayerListeners;
@@ -40,6 +41,7 @@ class Plugin extends PluginBase
         $this->getFactions()->initialize();
         $this->getClaims()->initClaim();
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new HelpCommand(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
     }
 

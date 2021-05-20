@@ -1,5 +1,7 @@
 <?php
 
+namespace Steellg0ld\Museum\commands;
+
 use pocketmine\event\player\PlayerCommandPreprocessEvent;
 
 class HelpCommand implements \pocketmine\event\Listener{
