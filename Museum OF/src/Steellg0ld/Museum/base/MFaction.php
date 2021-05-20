@@ -6,6 +6,7 @@ use pocketmine\Server;
 use pocketmine\utils\Timezone;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\utils\Utils;
 
 class MFaction
 {
@@ -99,7 +100,8 @@ class MFaction
      */
     public function getOfflinePlayerFactionRole(string $player): int
     {
-        return Plugin::getInstance()->getDatabase()->getPlayerData($player)["faction_role"];
+        Plugin::getInstance()->getDatabase()->getPlayerData($player)["faction_role"];
+        var_dump(Database::$return);
     }
 
     /**
@@ -178,12 +180,11 @@ class MFaction
     /**
      * @param String $member
      * @param bool $formated
-     * @param MPlayer $receiver
      * @return string
      */
-    public function getInvitedDate(string $member, bool $formated, MPlayer $receiver): string
+    public function getInvitedDate(string $member, bool $formated): string
     {
-        return $formated ? date("l M Y", $this->data['invitations_dates'][$member]) : $this->data['invitations_dates'][$member];
+        return $formated ? str_replace(Utils::MONTHS["EN"], Utils::MONTHS["FR"],str_replace(Utils::DAYS["EN"], Utils::DAYS["FR"],date("l d M Y à H:i", $this->data['invitations_dates'][$member]))) : $this->data['invitations_dates'][$member];
     }
 
     /**
