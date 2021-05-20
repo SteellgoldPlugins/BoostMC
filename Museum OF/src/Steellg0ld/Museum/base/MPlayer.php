@@ -121,4 +121,8 @@ class MPlayer extends Player
             }
         }
     }
+
+    public function saveData(){
+        Plugin::getInstance()->getDatabase()->updatePlayer($this->getName(), $this->rank, $this->money, $this->faction_id, $this->faction_role, $this->code, $this->hasJoinedWithCode, $this->enterCodeWaitEnd);
+    }
 }

@@ -3,12 +3,14 @@
 namespace Steellg0ld\Museum;
 
 use pocketmine\plugin\PluginBase;
+use pocketmine\Server;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\api\Claims;
 use Steellg0ld\Museum\api\libasynql\DataConnector;
 use Steellg0ld\Museum\api\libasynql\libasynql;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\MEconomy;
+use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
 use Steellg0ld\Museum\commands\HelpCommand;
@@ -47,6 +49,10 @@ class Plugin extends PluginBase
 
     public function onDisable()
     {
+        foreach (Server::getInstance()->getOnlinePlayers() as $player){
+            if($player instanceof MPlayer) $player->saveData();
+        }
+        
         if(isset($this->database)) $this->database->close();
     }
 
