@@ -52,7 +52,7 @@ class Plugin extends PluginBase
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
             if($player instanceof MPlayer) $player->saveData();
         }
-        
+
         if(isset($this->database)) $this->database->close();
     }
 
