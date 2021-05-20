@@ -14,8 +14,8 @@ class ManageForm
     {
         {
             $members = array();
-            foreach ($player->getFaction()->getMembers() as $member) {
-                array_push($members, ["name" => $member, "status" => MFaction::playerStatus($member)]);
+            foreach ($player->getFaction()->getMembers() as $name => $role) {
+                array_push($members, ["name" => $name, "status" => MFaction::playerStatus($name), "role" => $role]);
             }
 
             $form = new SimpleForm(
@@ -26,7 +26,7 @@ class ManageForm
                                 InviteForm::openInvitePlayerForm($p);
                                 break;
                             default:
-                                MembersForm::openMemberInfoForm($p, $members[$data - 1]["name"]);
+                                MembersForm::openMemberInfoForm($p, $members[$data - 1]["name"], $members[$data - 1]["role"]);
                                 break;
                         }
                     }
