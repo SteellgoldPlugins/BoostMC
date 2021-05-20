@@ -10,7 +10,6 @@ class Database
     public function init()
     {
         Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT, lastJoin TEXT)");
-        // Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS factions (identifier TEXT, name TEXT, members TEXT, owner TEXT, claims TEXT)");
     }
 
     public function initPlayer(MPlayer $player){
@@ -62,5 +61,15 @@ class Database
     public function updateFactionMembers(string $members, string $faction)
     {
         var_dump("re-soon");
+    }
+
+    /**
+     * @param string $name
+     */
+    public function getPlayerData(string $name)
+    {
+        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM players WHERE player = '$name'", [], function (array $rows) {
+            return $rows;
+        });
     }
 }
