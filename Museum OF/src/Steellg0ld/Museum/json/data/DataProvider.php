@@ -38,7 +38,8 @@ class DataProvider
                 "player_slot" => 0,
                 "slot_faction_chest" => 0,
                 "heal_home_faction" => 0
-            ]
+            ],
+            "invitations_dates" => []
         ];
     }
 }
