@@ -4,6 +4,60 @@ namespace Steellg0ld\Museum\utils;
 
 class Utils
 {
+    const DAYS = [
+        "FR" => [
+            "Lundi",
+            "Mardi",
+            "Mercredi",
+            "Jeudi",
+            "Vendredi",
+            "Samedi",
+            "Dimanche"
+        ],
+
+        "EN" => [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ]
+    ];
+
+    const MONTHS = [
+        "FR" => [
+            "Janvier",
+            "Février",
+            "Mars",
+            "Avril",
+            "Mai",
+            "Juin",
+            "Juillet",
+            "Août",
+            "Septembre",
+            "Octobre",
+            "Novembre",
+            "Décembre"
+        ],
+
+        "EN" => [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ]
+    ];
+
     const CONSOLE_ERROR = "Vous n'êtes pas joueur, connectez vous en jeu pour pouvoir executer cette commande";
     const PERMISSION_ERROR = "Vous n'avez pas la permission d'utiliser ce système/commande";
 
