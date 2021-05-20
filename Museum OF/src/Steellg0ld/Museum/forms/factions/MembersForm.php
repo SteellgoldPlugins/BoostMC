@@ -7,11 +7,13 @@ use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\api\Form;
 use Steellg0ld\Museum\forms\api\SimpleForm;
+use Steellg0ld\Museum\json\JSONProvider;
+use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class MembersForm
 {
-    public static function openMemberInfoForm(MPlayer $player, string $member)
+    public static function openMemberInfoForm(MPlayer $player, string $member, int $role)
     {
         {
             $form = new SimpleForm(
@@ -32,8 +34,8 @@ class MembersForm
             $form->setTitle(Form::FACTION_TITLE);
             $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Membre: {PRIMARY}" . $member . "\n" .
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Actuellement: " . MFaction::playerStatus($member) . "\n" .
-                    Utils::createMessage("§r{PRIMARY}> {SECONDARY}Invité le: {SECONDARY}" . $player->getFaction()->getInvitedDate($member)) . "\n" .
-                    Utils::createMessage("{PRIMARY}> {SECONDARY}Role: {SECONDARY}" . MFaction::ROLES[$player->getFaction()->getOfflinePlayerFactionRole($member)]))));
+                Utils::createMessage("§r{PRIMARY}> {SECONDARY}Invité le: {SECONDARY}" . $player->getFaction()->getInvitedDate($member, true)) . "\n" .
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Role: {SECONDARY}" . MFaction::ROLES[$role]))));
             if ($player->getName() !== $member) {
                 if ($player->faction_role >= 2) {
                     $form->addButton("§cExpulser");
