@@ -7,6 +7,8 @@ use Steellg0ld\Museum\Plugin;
 
 class Database
 {
+    public static array $return;
+
     public function init()
     {
         Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("CREATE TABLE IF NOT EXISTS players (player TEXT, address TEXT, rank INT, money INT, faction TEXT, faction_role INT, code TEXT, hasJoinedWithCode BOOL, enterCodeWaitEnd TEXT, lastJoin TEXT)");
@@ -54,22 +56,10 @@ class Database
         Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd' WHERE player = '$name'");
     }
 
-    /**
-     * @param String $members
-     * @param String $faction
-     */
-    public function updateFactionMembers(string $members, string $faction)
-    {
-        var_dump("re-soon");
-    }
-
-    /**
-     * @param string $name
-     */
     public function getPlayerData(string $name)
     {
         Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT * FROM players WHERE player = '$name'", [], function (array $rows) {
-            return $rows;
+            self::$return = $rows;
         });
     }
 }
