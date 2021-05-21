@@ -35,29 +35,6 @@ class PlayerListeners implements Listener
             CodeForm::enterCode($player);
         }
 
-        $time = ((int) floor(microtime(true) * 1000)) - $player->getFirstPlayed() ?? microtime();
-        $seconds = floor($time % 60);
-        $minutes = null;
-        $hours = null;
-        $days = null;
-        if($time >= 60){
-            $minutes = floor(($time % 3600) / 60);
-            if($time >= 3600){
-                $hours = floor(($time % (3600 * 24)) / 3600);
-                if($time >= 3600 * 24){
-                    $days = floor($time / (3600 * 24));
-                }
-            }
-        }
-        $uptime = ($minutes !== null ?
-                ($hours !== null ?
-                    ($days !== null ?
-                        "$days days "
-                        : "") . "$hours hours "
-                    : "") . "$minutes minutes "
-                : "") . "$seconds seconds";
-        var_dump($uptime);
-
         Server::getInstance()->broadcastTip(Utils::createMessage("{PRIMARY}+ {SECONDARY}" . $player->getName() . " {PRIMARY}+"));
         $player->hasFactionInvite = false;
         Plugin::getInstance()->getDatabase()->initPlayer($player);
