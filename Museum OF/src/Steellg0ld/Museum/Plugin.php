@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum;
 
+use muqsit\invmenu\InvMenuHandler;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
