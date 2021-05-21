@@ -4,11 +4,16 @@ namespace Steellg0ld\Museum\commands\faction;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\entity\Entity;
+use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\commands\faction\subcommands\ClaimsSubCommand;
 use Steellg0ld\Museum\commands\faction\subcommands\InviteSubCommand;
+use Steellg0ld\Museum\entity\UpgradesBlockEntity;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\json\JSONProvider;
+use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\utils\Resources;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionCommand extends Command
@@ -45,6 +50,11 @@ class FactionCommand extends Command
                 case "u":
                 case "unclaim":
                     $claim->execute_unclaim($sender);
+                    break;
+                case "up":
+                case "upgrades":
+                    // $nbt = UpgradesBlockEntity::createNBT($sender);
+                    // Entity::createEntity("UpgradesBlock", $sender->getLevel(), $nbt);
                     break;
             }
         } else {
