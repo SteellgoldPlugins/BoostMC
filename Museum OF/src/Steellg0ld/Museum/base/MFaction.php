@@ -10,6 +10,11 @@ use Steellg0ld\Museum\utils\Utils;
 
 class MFaction
 {
+    CONST RECRUE = 0;
+    CONST MEMBER = 1;
+    CONST OFFICIER = 2;
+    CONST CHEF = 3;
+
     const ROLES = [
         0 => "Recrue",
         1 => "Membre",
