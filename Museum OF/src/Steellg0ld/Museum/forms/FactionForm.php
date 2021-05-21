@@ -64,6 +64,17 @@ class FactionForm
                 function (MPlayer $p, $data) {
                     if ($data !== null) {
                         switch ($data) {
+                            case 0:
+                                if(!$p->faction_role == 3){
+                                    $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de quitter la faction {PRIMARY}".$p->getFaction()->getName()));
+                                    $p->getFaction()->removeMember($p);
+                                    $p->faction_role = 0;
+                                    $p->faction_id = "none";
+                                    $p->hasFactionInvite = false;
+                                }else{
+                                    $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous ne pouvez pas quitter votre faction, transferez la propriété, ou supprimer la faction"));
+                                }
+                                break;
                             case 1:
                                 ManageForm::openMembersListForm($p);
                                 break;
