@@ -10,6 +10,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\forms\CodeForm;
+use Steellg0ld\Museum\inventory\UpgradesInventory;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
