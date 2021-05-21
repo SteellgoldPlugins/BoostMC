@@ -8,6 +8,7 @@ use pocketmine\Player;
 abstract class Form implements IForm
 {
     const FACTION_TITLE = "Faction";
+    const FACTION_UPGRADE_TITLE = "Amélioration: ";
     const CODE_TITLE = "Code";
     const ECONOMY_TITLE = "Economie";
 

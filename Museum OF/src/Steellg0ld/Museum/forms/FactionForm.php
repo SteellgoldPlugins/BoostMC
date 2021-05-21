@@ -10,6 +10,7 @@ use Steellg0ld\Museum\forms\api\CustomForm;
 use Steellg0ld\Museum\forms\api\Form;
 use Steellg0ld\Museum\forms\api\SimpleForm;
 use Steellg0ld\Museum\forms\factions\ManageForm;
+use Steellg0ld\Museum\forms\factions\UpgradesForm;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
@@ -77,6 +78,9 @@ class FactionForm
                                 break;
                             case 1:
                                 ManageForm::openMembersListForm($p);
+                                break;
+                            case 5:
+                                UpgradesForm::openList($p);
                                 break;
                         }
                     }
