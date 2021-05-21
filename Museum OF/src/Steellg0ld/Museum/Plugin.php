@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum;
 
 use muqsit\invmenu\InvMenuHandler;
+use pocketmine\entity\Entity;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
@@ -14,7 +15,7 @@ use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
-use Steellg0ld\Museum\commands\HelpCommand;
+use Steellg0ld\Museum\entity\UpgradesBlockEntity;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\listeners\FactionListeners;
 use Steellg0ld\Museum\listeners\PlayerListeners;
@@ -41,10 +42,11 @@ class Plugin extends PluginBase
             new CodeCommand("c", "§aOuvrir la page pour utiliser un code", ["code"])
         ]);
 
+        Entity::registerEntity(UpgradesBlockEntity::class, true, ["UpgradesBlock"]);
+
         $this->getFactions()->initialize();
         $this->getClaims()->initClaim();
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new HelpCommand(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
 
         if(!InvMenuHandler::isRegistered()){
@@ -122,5 +124,10 @@ class Plugin extends PluginBase
      */
     public function getConfigFile(string $config): Config{
         return new Config($this->getDataFolder() . $config . ".yml", Config::YAML);
+    }
+
+    public function getMicroTime() : int{
+        $mt = explode(' ', microtime()) ;
+        return ((int)$mt[1]) * 1000 + ((int)round($mt[0] * 1000));
     }
 }
