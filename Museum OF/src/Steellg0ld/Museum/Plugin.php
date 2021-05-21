@@ -45,6 +45,10 @@ class Plugin extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListeners(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new HelpCommand(), $this);
         $this->getServer()->getPluginManager()->registerEvents(new FactionListeners(), $this);
+
+        if(!InvMenuHandler::isRegistered()){
+            InvMenuHandler::register($this);
+        }
     }
 
     public function onDisable()
