@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\base;
 
 use pocketmine\Server;
+use pocketmine\utils\Config;
 use pocketmine\utils\Timezone;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\Plugin;
@@ -10,6 +11,16 @@ use Steellg0ld\Museum\utils\Utils;
 
 class MFaction
 {
+    CONST UPGRADE_SLOTS = 0;
+    CONST UPGRADE_HEALTH = 1;
+    CONST UPGRADE_FACTION_CHEST = 2;
+
+    CONST UPGRADES = [
+        0 => "player_slot",
+        1 => "slot_faction_chest",
+        2 => "heal_home_faction"
+    ];
+
     CONST RECRUE = 0;
     CONST MEMBER = 1;
     CONST OFFICIER = 2;
@@ -34,6 +45,14 @@ class MFaction
     public function __construct(string $faction_id)
     {
         $this->data = Plugin::getInstance()->getFactions()->getFactionConfig($faction_id)->get($faction_id);
+    }
+
+    /**
+     * @return bool|mixed
+     */
+    public function getData()
+    {
+        return $this->data;
     }
 
     /**
@@ -97,16 +116,6 @@ class MFaction
     public function getFactionRole(MPlayer $player): string
     {
         return $player->faction_role !== null;
-    }
-
-    /**
-     * @param String $player
-     * @return int
-     */
-    public function getOfflinePlayerFactionRole(string $player): int
-    {
-        Plugin::getInstance()->getDatabase()->getPlayerData($player)["faction_role"];
-        var_dump(Database::$return);
     }
 
     /**
@@ -207,5 +216,15 @@ class MFaction
     {
         $this->data["claims"] = $claims;
         $this->update();
+    }
+
+    public function getMoney(): int
+    {
+        return 10312;
+    }
+
+    public function getUpgrade(String $id)
+    {
+        return $this->data["upgrades"][$id];
     }
 }
