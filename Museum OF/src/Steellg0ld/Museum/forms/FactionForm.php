@@ -88,11 +88,11 @@ class FactionForm
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Claim(s) actif(s): {SECONDARY}" . $player->getFaction()->getFactionClaims(true)) . "\n" .
                 Utils::createMessage("{PRIMARY}> {SECONDARY}Claim(s) inactif(s): {SECONDARY}" . $player->getFaction()->getFactionClaims(false)));
             $form->addButton("§cQuitter la faction\n§c§l" . $player->getFaction()->getName());
-            $form->addButton("Gérer les membres\n" . $player->getFaction()->getFactionAccess($player));
-            $form->addButton("Gérer la faction\n" . $player->getFaction()->getFactionAccess($player));
-            $form->addButton("Gérer les claims\n" . $player->getFaction()->getFactionAccess($player));
-            $form->addButton("Gérer le coffre\n" . $player->getFaction()->getFactionAccess($player));
-            $form->addButton("Améliorations de faction\n" . $player->getFaction()->getFactionAccess($player));
+            $form->addButton("Gérer les membres\n" . $player->getFaction()->getFactionAccess($player,MFaction::OFFICIER,MFaction::CHEF));
+            $form->addButton("Gérer la faction\n" . $player->getFaction()->getFactionAccess($player,MFaction::OFFICIER,MFaction::CHEF));
+            $form->addButton("Gérer les claims\n" . $player->getFaction()->getFactionAccess($player,MFaction::OFFICIER,MFaction::CHEF));
+            $form->addButton("Gérer le coffre\n" . $player->getFaction()->getFactionAccess($player,MFaction::OFFICIER,MFaction::CHEF));
+            $form->addButton("Améliorations de faction\n" . $player->getFaction()->getFactionAccess($player,MFaction::OFFICIER,MFaction::CHEF));
             $player->sendForm($form);
         }
     }
