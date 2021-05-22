@@ -1,8 +1,6 @@
 const Discord = require('discord.js')
 
 const sqlite3 = require('sqlite3').verbose();
-const yaml = require('js-yaml');
-const fs = require('fs');
 
 exports.Version = "v1.0"
 exports.Prefix = "*"
@@ -11,7 +9,7 @@ exports.Client = new Discord.Client()
 exports.Client.commands = new Discord.Collection();
 exports.Config = require('./conf/config.json');
 exports.Colors = require('colors');
-exports.Factions = yaml.load(fs.readFileSync('/home/ixti/example.yml', 'utf8'));
+exports.fs = require('fs');
 
 exports.Database = new sqlite3.Database('../data.sqlite', (err) => {
     if (err) {
