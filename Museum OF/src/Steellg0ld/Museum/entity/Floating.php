@@ -57,6 +57,7 @@ abstract class Floating extends Human
 
         $this->setNameTag($this->getCustomNameTag());
         $this->setNameTagVisible(true);
+        $this->setScale(1);
         $this->spawnToAll();
     }
 

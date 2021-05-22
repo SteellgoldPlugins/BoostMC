@@ -5,6 +5,7 @@ namespace Steellg0ld\Museum\base;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use pocketmine\utils\Timezone;
+use Steellg0ld\Museum\json\data\DataProvider;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
@@ -226,5 +227,29 @@ class MFaction
     public function getUpgrade(String $id)
     {
         return $this->data["upgrades"][$id];
+    }
+
+    public function slotChestUpdate(Int $upgrade){
+        $inventory = unserialize(base64_decode($this->getChest()));
+        $slots = DataProvider::SLOTS[$upgrade];
+        foreach (explode(";", $slots) as $item){
+            var_dump($item);
+            unset($inventory[$item]);
+        }
+
+        $this->data["upgrades"][self::UPGRADES[1]] = $upgrade;
+        $this->updateChest(base64_encode(serialize($inventory)));
+        $this->update();
+    }
+
+    public function getChest()
+    {
+        return $this->data["chest"];
+    }
+
+    public function updateChest(string $data)
+    {
+        $this->data["chest"] = $data;
+        $this->update();
     }
 }

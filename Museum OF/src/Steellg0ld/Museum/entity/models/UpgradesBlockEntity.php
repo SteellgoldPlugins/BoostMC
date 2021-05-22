@@ -5,7 +5,7 @@ namespace Steellg0ld\Museum\entity\models;
 use pocketmine\entity\Skin;
 use Steellg0ld\Museum\entity\Floating;
 use Steellg0ld\Museum\base\MPlayer;
-use Steellg0ld\Museum\inventory\UpgradesInventory;
+use Steellg0ld\Museum\inventory\FactionChestInventory;
 use Steellg0ld\Museum\utils\Resources;
 
 class UpgradesBlockEntity extends Floating {
@@ -18,10 +18,10 @@ class UpgradesBlockEntity extends Floating {
     }
 
     public function onClick(MPlayer $player): void{
-        UpgradesInventory::openInventory($player, $player->getFaction());
+        FactionChestInventory::openInventory($player, $player->getFaction());
     }
 
     public function getCustomSkin() : ?Skin{
-        return new Skin("upgrades",Resources::PNGtoBYTES("upgrades"),"","geometry.upgrades",Resources::getGeometry("upgrades"));
+        return new Skin("chest",Resources::PNGtoBYTES("chest"),"","geometry.chest",Resources::getGeometry("chest"));
     }
 }
