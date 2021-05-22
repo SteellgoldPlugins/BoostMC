@@ -8,5 +8,7 @@ Client.on("message", Message => {
     const command = Arguments.shift().toLowerCase();
     const cmd = Client.commands.get(command);
 
-    return cmd.run(Client, Message, Arguments);
+    if(cmd){
+        return cmd.run(Client, Message, Arguments);
+    }
 });
