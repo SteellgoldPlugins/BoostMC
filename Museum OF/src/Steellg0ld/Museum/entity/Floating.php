@@ -1,6 +1,6 @@
 <?php
 
-namespace Steellg0ld\Museum\base;
+namespace Steellg0ld\Museum\entity;
 
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
@@ -11,10 +11,11 @@ use pocketmine\level\Level;
 use pocketmine\math\Vector3;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\protocol\MovePlayerPacket;
+use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Resources;
 
-abstract class MFloating extends Human
+abstract class Floating extends Human
 {
     /**
      * @var int
@@ -41,14 +42,17 @@ abstract class MFloating extends Human
      */
     public $pos;
 
+    /**
+     * Floating constructor.
+     * @param Level $level
+     * @param CompoundTag $nbt
+     * @param Int $scale
+     */
     public function __construct(Level $level, CompoundTag $nbt)
     {
         parent::__construct($level, $nbt);
-
         if (!is_null($this->getCustomSkin())) {
-
             $this->setSkin($this->getCustomSkin());
-
         }
 
         $this->setNameTag($this->getCustomNameTag());

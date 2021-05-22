@@ -1,14 +1,14 @@
 <?php
 
-namespace Steellg0ld\Museum\entity;
+namespace Steellg0ld\Museum\entity\models;
 
 use pocketmine\entity\Skin;
-use Steellg0ld\Museum\base\MFloating;
+use Steellg0ld\Museum\entity\Floating;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\inventory\UpgradesInventory;
 use Steellg0ld\Museum\utils\Resources;
 
-class UpgradesBlockEntity extends MFloating {
+class UpgradesBlockEntity extends Floating {
 
     public $width = 1;
     public $height = 1.3;
@@ -22,6 +22,6 @@ class UpgradesBlockEntity extends MFloating {
     }
 
     public function getCustomSkin() : ?Skin{
-        return new Skin("test",Resources::PNGtoBYTES("test"),"","geometry.test",Resources::getGeometry("test"));
+        return new Skin("upgrades",Resources::PNGtoBYTES("upgrades"),"","geometry.upgrades",Resources::getGeometry("upgrades"));
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Steellg0ld\Museum\base;
+namespace Steellg0ld\Museum\entity;
 
 use pocketmine\entity\Human;
 use pocketmine\entity\Skin;
@@ -14,7 +14,7 @@ use pocketmine\network\mcpe\protocol\MovePlayerPacket;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Resources;
 
-abstract class MNPC extends Human
+abstract class NPC extends Human
 {
     /**
      * @var int
