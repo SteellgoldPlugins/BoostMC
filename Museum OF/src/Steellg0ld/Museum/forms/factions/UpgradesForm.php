@@ -38,28 +38,30 @@ class UpgradesForm
     public static function openInfos(MPlayer $player, String $id)
     {
         {
+            $upgrades = Plugin::getInstance()->getConfigFile("upgrades");
+            $faction = $player->getFaction();
+            $level = $faction->getUpgrade($id);
+
             $form = new SimpleForm(
-                function (MPlayer $p, $data) {
+                function (MPlayer $p, $data) use ($id, $level) {
                     if ($data !== null) {
-                        switch ($data) {
-                            case 0:
+                        switch ($id) {
+                            case MFaction::UPGRADES[1]:
+                                $p->getFaction()->slotChestUpdate($level++);
+                                // TODO REMOVE MONEY
                                 break;
                         }
                     }
                 }
             );
 
-            $upgrades = Plugin::getInstance()->getConfigFile("upgrades");
-            $faction = $player->getFaction();
-            $level = $faction->getUpgrade($id);
-
             $form->setTitle(Form::FACTION_UPGRADE_TITLE . $upgrades->get($id)["name"]);
-            $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}" . $upgrades->get($id)["description"] . "\n" .
+            $form->setContent($level == 8 ? Utils::createMessage("{PRIMARY}- {SECONDARY}Vous êtes niveau maximum sur cette amélioration") : Utils::createMessage("{PRIMARY}- {SECONDARY}" . $upgrades->get($id)["description"] . "\n" .
                 "\n" .
-                Utils::createMessage("{PRIMARY}> {SECONDARY}Voici les coûts pour l'amélioration supérieur ({PRIMARY}Niveau " . ($level + 1) ."{SECONDARY}): \n" .
-                Utils::createMessage("{PRIMARY}> {SECONDARY}Argent nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["money"]) . "$\n" .
-                Utils::createMessage("{PRIMARY}> {SECONDARY}Fragment nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["fragments"]))));
-            $form->addButton("Créer l'amélioration");
+                "{PRIMARY}> {SECONDARY}Voici les coûts pour le {PRIMARY}niveau " . ($level + 1) .": \n" .
+                "{PRIMARY}> {SECONDARY}Argent nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["money"] . "$\n" .
+                "{PRIMARY}> {SECONDARY}Fragment nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["fragments"]));
+            $form->addButton("Améliorer");
 
             $player->sendForm($form);
         }
