@@ -15,7 +15,7 @@ use Steellg0ld\Museum\base\MEconomy;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\commands\CodeCommand;
 use Steellg0ld\Museum\commands\faction\FactionCommand;
-use Steellg0ld\Museum\entity\UpgradesBlockEntity;
+use Steellg0ld\Museum\entity\models\UpgradesBlockEntity;
 use Steellg0ld\Museum\json\JSONProvider;
 use Steellg0ld\Museum\listeners\FactionListeners;
 use Steellg0ld\Museum\listeners\PlayerListeners;
