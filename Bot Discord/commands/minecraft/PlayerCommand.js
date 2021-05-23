@@ -23,7 +23,7 @@ module.exports.run = async (Client, message, args) => {
             console.error(err.message);
             return message.channel.send(`Aucun joueur n'existe avec le pseudo **${args[0]}**`)
         }else{
-            if(row.faction !== "none") faction = JSON.parse(fs.readFileSync('./../' + row.faction + '.json','utf8'));
+            if(row.faction !== "none") faction = JSON.parse(fs.readFileSync('./../MC/plugin_data/MuseumCore/factions/' + row.faction + '.json','utf8'));
 
             const embed = new Discord.MessageEmbed()
             embed.setTitle("Informations")
@@ -31,7 +31,7 @@ module.exports.run = async (Client, message, args) => {
             embed.addField('Grade', RANKS[row.rank], true)
             embed.addField('Temps de jeu', "1j30m02s", true)
             embed.addField('Compte Discord', row.discordId === "none" ? "Aucun compte lié" : "<@" + row.discordId + ">", true)
-            embed.addField('Faction', row.faction === "none" ? "Aucune faction" : faction['60a935469a262']["name"] + ROLES[row.faction_role], true)
+            embed.addField('Faction', row.faction === "none" ? "Aucune faction" : faction[row.faction]["name"] + ROLES[row.faction_role], true)
             embed.addField('Argent', row.money + '$', true)
             message.channel.send(embed)
         }
