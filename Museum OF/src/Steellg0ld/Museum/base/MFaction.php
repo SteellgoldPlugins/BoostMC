@@ -252,7 +252,6 @@ class MFaction
 
     public function updateChest(string $data)
     {
-        $this->data["chest"] = $data;
-        $this->update();
+        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE chests SET chest = '" . $data . "' WHERE faction = '" . $this->getIdentifier() . "'");
     }
 }
