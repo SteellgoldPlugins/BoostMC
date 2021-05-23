@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\base;
 
 use pocketmine\event\Event;
+use pocketmine\network\mcpe\protocol\OnScreenTextureAnimationPacket;
 use pocketmine\Player;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
@@ -124,5 +125,11 @@ class MPlayer extends Player
 
     public function saveData(){
         Plugin::getInstance()->getDatabase()->updatePlayer($this->getName(), $this->rank, $this->money, $this->faction_id, $this->faction_role, $this->code, $this->hasJoinedWithCode, $this->enterCodeWaitEnd);
+    }
+
+    public function sendScreenAnimation(int $animationType) {
+        $pk = new OnScreenTextureAnimationPacket();
+        $pk->effectId = $animationType;
+        $this->sendDataPacket($pk);
     }
 }
