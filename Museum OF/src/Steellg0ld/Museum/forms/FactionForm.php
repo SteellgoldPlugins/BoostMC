@@ -36,6 +36,7 @@ class FactionForm
                                     $provider->getDataProvider()->createFaction($faction_id,$p,$data[1], ($data[2] == "" ? "Default Description" : $data[2]),[$p->getName()],20);
                                     $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}Vous venez de créer la faction nommé {PRIMARY}" . $data[1]));
                                     if ($data[3]) Server::getInstance()->broadcastMessage(Utils::createMessage("{DANGER}- {SECONDARY}Une faction nommé {DANGER}" . $data[1] . "{SECONDARY}, viens d'être créer par {DANGER}" . $p->getName()));
+                                    $p->saveData();
                                 } else {
                                     $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}La faction {ERROR}" . $data[1] . " {SECONDARY}existe déjà !"));
                                 }
