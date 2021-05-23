@@ -219,6 +219,12 @@ class MFaction
         $this->update();
     }
 
+    public function updateMoney($count)
+    {
+        $this->data["bank"] = $count;
+        $this->update();
+    }
+
     public function getMoney(): int
     {
         return 10312;
