@@ -233,7 +233,6 @@ class MFaction
         $inventory = unserialize(base64_decode($this->getChest()));
         $slots = DataProvider::SLOTS[$upgrade];
         foreach (explode(";", $slots) as $item){
-            var_dump($item);
             unset($inventory[$item]);
         }
 
