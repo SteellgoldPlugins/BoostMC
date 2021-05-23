@@ -11,7 +11,7 @@ exports.Config = require('./conf/config.json');
 exports.Colors = require('colors');
 exports.fs = require('fs');
 
-exports.Database = new sqlite3.Database('../data.sqlite', (err) => {
+exports.Database = new sqlite3.Database('../MC/plugin_data/MuseumCore/data.sqlite', (err) => {
     if (err) {
         console.error(err.message);
     }
