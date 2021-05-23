@@ -18,7 +18,11 @@ class UpgradesBlockEntity extends Floating {
     }
 
     public function onClick(MPlayer $player): void{
-        FactionChestInventory::openInventory($player, $player->getFaction());
+        if($player->hasFaction()){
+            FactionChestInventory::openInventory($player, $player->getFaction());
+        }else{
+            $player->sendTip("Aucune faction");
+        }
     }
 
     public function getCustomSkin() : ?Skin{
