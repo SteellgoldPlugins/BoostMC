@@ -236,20 +236,18 @@ class MFaction
     }
 
     public function slotChestUpdate(Int $level, String $upgrade){
-        $inventory = unserialize(base64_decode($this->getChest()));
-        $slots = DataProvider::SLOTS[$level];
-        foreach (explode(";", $slots) as $item){
-            unset($inventory[$item]);
-        }
+        Plugin::getInstance()->getAsyncDatabase()->executeSelectRaw("SELECT chest FROM chests WHERE faction = '". $this->getIdentifier() . "'",[],function (array $row) use ($level, $upgrade){
+            var_dump($row[0]["chest"]);
+            $inventory = unserialize(base64_decode($row[0]["chest"]));
+            $slots = DataProvider::SLOTS[$level];
+            foreach (explode(";", $slots) as $item){
+                unset($inventory[$item]);
+            }
 
-        $this->data["upgrades"][self::UPGRADES[array_search($upgrade, self::UPGRADES)]] = $level;
-        $this->data["chest"] = base64_encode(serialize($inventory));
-        $this->update();
-    }
-
-    public function getChest()
-    {
-        return $this->data["chest"];
+            Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE chests SET chest = '" . base64_encode(serialize($inventory)) . "' WHERE faction = '" . $this->getIdentifier() . "'");
+            $this->data["upgrades"][self::UPGRADES[array_search($upgrade, self::UPGRADES)]] = $level;
+            $this->update();
+        });
     }
 
     public function updateChest(string $data)
