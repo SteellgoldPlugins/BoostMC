@@ -5,6 +5,7 @@ namespace Steellg0ld\Museum\inventory;
 use muqsit\invmenu\InvMenu;
 use muqsit\invmenu\transaction\InvMenuTransaction;
 use muqsit\invmenu\transaction\InvMenuTransactionResult;
+use pocketmine\entity\Effect;
 use Steellg0ld\Museum\base\MFaction;
 use Steellg0ld\Museum\base\MPlayer;
 use Steellg0ld\Museum\utils\Utils;

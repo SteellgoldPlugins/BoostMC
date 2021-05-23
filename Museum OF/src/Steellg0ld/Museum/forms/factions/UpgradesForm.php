@@ -48,16 +48,17 @@ class UpgradesForm
             $form = new SimpleForm(
                 function (MPlayer $p, $data) use ($id, $level, $upgrades, $faction) {
                     if ($data !== null) {
-                        if($upgrades->get($id)["prices"][$level + 1]["money"] >= $faction->getMoney()){
+                        if($faction->getMoney() >= $upgrades->get($id)["prices"][$level + 1]["money"]){
                             if($p->getInventory()->contains(Item::get(1002,0,$upgrades->get($id)["prices"][$level + 1]["fragments"]))){
-                                $p->getFaction()->slotChestUpdate($level + 1);
+                                $p->getFaction()->slotChestUpdate($level + 1, $id);
                                 $faction->updateMoney($faction->getMoney() - (int)$upgrades->get($id)["prices"][$level + 1]["money"]);
-                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}L'amélioration a bien été appliqué"));
+                                // TODO remove items
+                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}L'amélioration a bien été appliqué, votre coffre de faction est maintenant {PRIMARY}niveau ". ($level + 1)));
                             }else{
                                 $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez pas assez de {ERROR}fragements {SECONDARY}dans votre inventaire pour réussir l'amélioration"));
                             }
                         }else{
-                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Il manque {ERROR}{MISSING}$ {SECONDARY}dans le banque de faction"));
+                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Il manque {ERROR}{MISSING}$ {SECONDARY}dans le banque de faction", ["{MISSING}"],[$upgrades->get($id)["prices"][$level + 1]["money"] - $faction->getMoney()]));
                         }
                     }
                 }

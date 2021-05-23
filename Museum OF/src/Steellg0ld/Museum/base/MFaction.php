@@ -227,7 +227,7 @@ class MFaction
 
     public function getMoney(): int
     {
-        return 10312;
+        return $this->data["bank"];
     }
 
     public function getUpgrade(String $id)
@@ -235,15 +235,15 @@ class MFaction
         return $this->data["upgrades"][$id];
     }
 
-    public function slotChestUpdate(Int $upgrade){
+    public function slotChestUpdate(Int $level, String $upgrade){
         $inventory = unserialize(base64_decode($this->getChest()));
-        $slots = DataProvider::SLOTS[$upgrade];
+        $slots = DataProvider::SLOTS[$level];
         foreach (explode(";", $slots) as $item){
             unset($inventory[$item]);
         }
 
-        $this->data["upgrades"][self::UPGRADES[1]] = $upgrade;
-        $this->updateChest(base64_encode(serialize($inventory)));
+        $this->data["upgrades"][self::UPGRADES[array_search($upgrade, self::UPGRADES)]] = $level;
+        $this->data["chest"] = base64_encode(serialize($inventory));
         $this->update();
     }
 
