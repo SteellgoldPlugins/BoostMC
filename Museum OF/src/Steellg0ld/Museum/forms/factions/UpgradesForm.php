@@ -16,6 +16,7 @@ class UpgradesForm
     public static function openList(MPlayer $player)
     {
         {
+
             $form = new SimpleForm(
                 function (MPlayer $p, $data) {
                     if ($data !== null) {
@@ -24,12 +25,14 @@ class UpgradesForm
                 }
             );
 
+            $faction = $player->getFaction();
+
             $form->setTitle(Form::FACTION_TITLE);
-            $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Améliorations de {PRIMARY}" . $player->getFaction()->getName()) . "\n" .
-                Utils::createMessage("{PRIMARY}> {SECONDARY}Banque de faction: {PRIMARY}" . $player->getFaction()->getMoney()) . "$\n");
-            $form->addButton("Amélioration de joueurs\n   Niveau 2   ");
-            $form->addButton("Amélioration de quantité\n   Niveau 1   ");
-            $form->addButton("Amélioration de vie\n   Niveau 0   ");
+            $form->setContent(Utils::createMessage("{PRIMARY}- {SECONDARY}Améliorations de {PRIMARY}" . $faction->getName()) . "\n" .
+                Utils::createMessage("{PRIMARY}> {SECONDARY}Banque de faction: {PRIMARY}" . $faction->getMoney()) . "$\n");
+            $form->addButton("Amélioration de joueurs\nNiveau " . $faction->getUpgrade("player_slot"));
+            $form->addButton("Amélioration de quantité\nNiveau " . $faction->getUpgrade("slot_faction_chest"));
+            $form->addButton("Amélioration de vie\nNiveau " . $faction->getUpgrade("heal_home_faction"));
 
             $player->sendForm($form);
         }
@@ -43,13 +46,18 @@ class UpgradesForm
             $level = $faction->getUpgrade($id);
 
             $form = new SimpleForm(
-                function (MPlayer $p, $data) use ($id, $level) {
+                function (MPlayer $p, $data) use ($id, $level, $upgrades, $faction) {
                     if ($data !== null) {
-                        switch ($id) {
-                            case MFaction::UPGRADES[1]:
-                                $p->getFaction()->slotChestUpdate($level++);
-                                // TODO REMOVE MONEY
-                                break;
+                        if($upgrades->get($id)["prices"][$level + 1]["money"] >= $faction->getMoney()){
+                            if($p->getInventory()->contains(Item::get(1002,0,$upgrades->get($id)["prices"][$level + 1]["fragments"]))){
+                                $p->getFaction()->slotChestUpdate($level + 1);
+                                $faction->updateMoney($faction->getMoney() - (int)$upgrades->get($id)["prices"][$level + 1]["money"]);
+                                $p->sendMessage(Utils::createMessage("{PRIMARY}- {SECONDARY}L'amélioration a bien été appliqué"));
+                            }else{
+                                $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Vous n'avez pas assez de {ERROR}fragements {SECONDARY}dans votre inventaire pour réussir l'amélioration"));
+                            }
+                        }else{
+                            $p->sendMessage(Utils::createMessage("{ERROR}- {SECONDARY}Il manque {ERROR}{MISSING}$ {SECONDARY}dans le banque de faction"));
                         }
                     }
                 }
@@ -61,7 +69,7 @@ class UpgradesForm
                 "{PRIMARY}> {SECONDARY}Voici les coûts pour le {PRIMARY}niveau " . ($level + 1) .": \n" .
                 "{PRIMARY}> {SECONDARY}Argent nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["money"] . "$\n" .
                 "{PRIMARY}> {SECONDARY}Fragment nécessaire: {PRIMARY}" . $upgrades->get($id)["prices"][$level + 1]["fragments"]));
-            $form->addButton("Améliorer");
+            if($level !== 8) $form->addButton("Améliorer");
 
             $player->sendForm($form);
         }
