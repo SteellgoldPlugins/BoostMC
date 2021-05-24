@@ -1,5 +1,42 @@
 NO_MESSAGE_FOUND: "Aucun message n'a été trouvé"
+NO_RANK_FOUND: "Aucun grade trouvé"
 
+RANK_0: "Joueur"
+RANK_1: "VIP"
+RANK_2: "Modérateur"
+
+# FORMS
+SETTINGS_TITLE_FORM: "Paramètres"
+SETTINGS_LABEL_FORM: "{PREFIX}Vous êtes {PRIMARY}{RANK}{SECONDARY}, configurer vos paramètres comme vous le sentez !"
+SETTINGS_DROPDOWN_0: "Symbole de l'économie"
+SETTINGS_DROPDOWN_1: "Langue du serveur"
+SETTINGS_DROPDOWN_1_0: "Français"
+SETTINGS_DROPDOWN_1_1: "Anglais"
+SETTINGS_DROPDOWN_1_2: "Espagnol"
+SETTINGS_DROPDOWN_1_3: "Italien"
+SETTINGS_DROPDOWN_1_4: "Chinois"
+
+FACTION_CREATE_TITLE_FORM: "Créer une faction"
+FACTION_CREATE_LABEL_FORM: "{PREFIX}Créer votre faction et esseyer de dominer les autres"
+FACTION_CREATE_INPUT_FORM: "Nom de votre faction"
+FACTION_CREATE_INPUT_DESCRIPTION_FORM: "Une description (Laisser vide pour plus tard)"
+
+FACTION_MANAGE_TITLE_FORM: "Faction: {FACTION}"
+FACTION_MANAGE_LABEL_FORM: "{PREFIX}Ici gérer la faction"
+FACTION_MANAGE_MEMBERS_LABEL_FORM: "{PREFIX}Gérer les membres de votre faction facilement"
+
+FACTION_MANAGE_INVITE_BUTTON_FORM: "Inviter un joueur"
+FACTION_MANAGE_KICK_BUTTON_FORM: "Exclure le joueur"
+FACTION_MANAGE_MEMBER_BUTTON_FORM: "Gérer le joueur"
+
+FACTION_MANAGE_LEAVE_BUTTON_FORM: "Quitter la faction"
+FACTION_MANAGE_FACTION_BUTTON_FORM: "Gérer la faction"
+FACTION_MANAGE_MEMBERS_BUTTON_FORM: "Gérer les membres"
+FACTION_MANAGE_LOGS_BUTTON_FORM: "Voir les logs"
+
+# MESSAGES
 PLAYER_FIRST_JOIN: "{PREFIX}Bienvenu(e) à {PRIMARY}{PLAYER} {SECONDARY}qui s'est connecté(e) pour la première fois sur le serveur"
 PLAYER_JOIN: "{PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}a rejoint le serveur"
-PLAYER_LEAVE: "{PREFIX}le joueur {PRIMARY}{PLAYER} {SECONDARY}a quitter le serveur"
+PLAYER_LEAVE: "{PREFIX}le joueur {ERROR}{PLAYER} {SECONDARY}a quitter le serveur"
+
+FACTION_CREATED: "{PREFIX}Vous venez de créer la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f {SECONDARY}à nouveau pour gérer la faction"
