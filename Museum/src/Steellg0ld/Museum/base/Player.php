@@ -5,11 +5,9 @@ namespace Steellg0ld\Museum\base;
 class Player extends \pocketmine\Player
 {
     public int $rank = Ranks::PLAYER;
-    public array $notifications = [
         "player_status" => 1
     ];
 
-    public $lang = "fr_FR";
     public string $lang = "fr_FR";
     public int $money = 0;
     public string $faction = "";
