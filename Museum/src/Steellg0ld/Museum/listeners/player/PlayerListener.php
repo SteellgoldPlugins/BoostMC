@@ -54,6 +54,7 @@ class PlayerListener implements Listener
     public function onLeave(PlayerQuitEvent $event)
     {
         $player = $event->getPlayer();
+        $event->setQuitMessage("");
         if ($player instanceof Player) {
             foreach (Server::getInstance()->getOnlinePlayers() as $players) {
                 if ($players instanceof Player) {
