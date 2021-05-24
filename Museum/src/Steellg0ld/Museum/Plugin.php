@@ -44,6 +44,17 @@ class Plugin extends PluginBase
         return self::$instance;
     }
 
+    public function loadCommands(){
+        $this->getServer()->getCommandMap()->registerAll("museum",[
+            new Settings("settings","Configure your game","",["configure","setting"]),
+            new Faction("faction","Global faction command","",["f","fac"])
+        ]);
+    }
+
+    public function loadListeners(){
+        $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
+    }
+
     public function getDatabase(): Database{
         return new Database();
     }
