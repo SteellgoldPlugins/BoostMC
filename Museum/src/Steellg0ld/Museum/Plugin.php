@@ -27,7 +27,6 @@ class Plugin extends PluginBase
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
         }
-        $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
 
         $this->getDatabase()->initialize();
         $this->loadCommands();
