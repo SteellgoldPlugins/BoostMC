@@ -5,6 +5,7 @@ namespace Steellg0ld\Museum\base;
 class Player extends \pocketmine\Player
 {
     public int $rank = Ranks::PLAYER;
+    public array $settings = [
         "player_status" => 1
     ];
 
