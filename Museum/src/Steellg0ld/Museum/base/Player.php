@@ -22,6 +22,10 @@ class Player extends \pocketmine\Player
     public function register() {
         var_dump("register");
         $this->rank = Ranks::PLAYER;
+        $this->money = 0;
+        $this->lang = "fr_FR";
+        $this->settings["player_status"] = 1;
+        Plugin::getInstance()->getServer()->getAsyncPool()->submitTask(new RegisterPlayer($this->getName(), $this->getAddress()));
     }
 
     public function getLang(): string{
