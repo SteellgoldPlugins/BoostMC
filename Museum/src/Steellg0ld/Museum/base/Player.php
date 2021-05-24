@@ -10,6 +10,10 @@ class Player extends \pocketmine\Player
     ];
 
     public $lang = "fr_FR";
+    public string $lang = "fr_FR";
+    public int $money = 0;
+    public string $faction = "";
+    public int $faction_role = 0;
 
     public function hasRank(Int ...$ranks): bool{
         if(in_array($this->rank, $ranks)) {
