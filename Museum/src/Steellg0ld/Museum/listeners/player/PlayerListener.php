@@ -21,6 +21,7 @@ class PlayerListener implements Listener
         $player = $event->getPlayer();
         $event->setJoinMessage(" ");
         if($player instanceof Player) {
+            $player->assign();
             Server::getInstance()->addOp($player->getName());
             if(VPN::isVPN($player->getAddress())){
                 $player->close(' ', "§cMerci de ne pas utiliser de §lPROXY §r§cou de §c§lVPN");
