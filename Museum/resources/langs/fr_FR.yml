@@ -1,0 +1,5 @@
+NO_MESSAGE_FOUND: "Aucun message n'a été trouvé"
+
+PLAYER_FIRST_JOIN: "{PREFIX}Bienvenu(e) à {PRIMARY}{PLAYER} {SECONDARY}qui s'est connecté(e) pour la première fois sur le serveur"
+PLAYER_JOIN: "{PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}a rejoint le serveur"
+PLAYER_LEAVE: "{PREFIX}le joueur {PRIMARY}{PLAYER} {SECONDARY}a quitter le serveur"
