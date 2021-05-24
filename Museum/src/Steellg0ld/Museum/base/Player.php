@@ -32,7 +32,6 @@ class Player extends \pocketmine\Player
     }
 
     public function register() {
-        var_dump("register");
         $this->rank = Ranks::PLAYER;
         $this->money = 0;
         $this->lang = "fr_FR";
