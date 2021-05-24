@@ -19,6 +19,18 @@ class Player extends \pocketmine\Player
         }
     }
 
+    public function assign(){
+        $data = Plugin::getInstance()->getDatabase()->getDatabase()->query("SELECT faction,role,rank,money,lang,settings FROM players WHERE player = '" . $this->getName() . "'");
+        while ($resultAttr = $data->fetchArray(SQLITE3_ASSOC)){
+            $this->faction = $resultAttr['faction'];
+            $this->faction_role = $resultAttr['role'];
+            $this->rank = $resultAttr['rank'];
+            $this->money = $resultAttr['money'];
+            $this->settings = unserialize(base64_decode($resultAttr['settings']));
+            $this->lang = $resultAttr['lang'];
+        }
+    }
+
     public function register() {
         var_dump("register");
         $this->rank = Ranks::PLAYER;
