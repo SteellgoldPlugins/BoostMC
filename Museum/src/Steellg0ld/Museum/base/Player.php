@@ -2,6 +2,9 @@
 
 namespace Steellg0ld\Museum\base;
 
+use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\tasks\async\RegisterPlayer;
+
 class Player extends \pocketmine\Player
 {
     public int $rank = Ranks::PLAYER;
