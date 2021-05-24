@@ -27,4 +27,8 @@ class Player extends \pocketmine\Player
     public function getLang(): string{
         return $this->lang;
     }
+
+    public function getRank(): int{
+        return $this->rank;
+    }
 }
