@@ -28,6 +28,11 @@ class Plugin extends PluginBase
             InvMenuHandler::register($this);
         }
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
+
+        $this->getDatabase()->initialize();
+        $this->loadCommands();
+        $this->loadListeners();
+        $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
     }
 
     public function onDisable()
