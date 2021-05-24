@@ -20,9 +20,9 @@ class Plugin extends PluginBase
     {
         self::$instance = $this;
 
-        $this->saveResource("lang.yml");
         @mkdir($this->getDataFolder() . "langs/");
-        $this->saveResource($this->getDataFolder() . "fr_FR.yml");
+        $this->saveResource("langs/fr_FR.yml");
+        $this->saveResource("langs/ch_CH.yml");
 
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
