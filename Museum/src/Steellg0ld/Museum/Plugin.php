@@ -6,9 +6,10 @@ use muqsit\invmenu\InvMenuHandler;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
+use Steellg0ld\Museum\commands\defaults\Faction;
+use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
-use Steellg0ld\Museum\tasks\LoadItTask;
-use Steellg0ld\Museum\utils\Utils;
+use Steellg0ld\Museum\tasks\async\LoadDatabase;
 
 class Plugin extends PluginBase
 {
