@@ -58,7 +58,7 @@ class PlayerListener implements Listener
         if ($player instanceof Player) {
             foreach (Server::getInstance()->getOnlinePlayers() as $players) {
                 if ($players instanceof Player) {
-                    if ($players->notifications["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()]);
+                    if ($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()]);
                 }
             }
         }
