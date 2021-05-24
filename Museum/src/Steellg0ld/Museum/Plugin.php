@@ -14,7 +14,7 @@ use Steellg0ld\Museum\tasks\async\LoadDatabase;
 class Plugin extends PluginBase
 {
     public static $instance;
-    CONST FILE_DB = "db";
+    CONST FILE_DB = "data.db";
 
     public function onEnable()
     {
