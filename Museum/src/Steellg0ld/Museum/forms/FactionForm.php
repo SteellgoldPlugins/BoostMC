@@ -45,10 +45,10 @@ class FactionForm{
 
             $form->setTitle(Utils::getMessage($player, "FACTION_MANAGE_TITLE_FORM"));
             $form->setContent(Utils::getMessage($player, "FACTION_MANAGE_LABEL_FORM"));
-            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_LEAVE_BUTTON_FORM"),0,"textures/ui/import");
-            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_FACTION_BUTTON_FORM"),0,"textures/ui/icon_unlocked");
-            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_MEMBERS_BUTTON_FORM"),0,"textures/ui/icon_unlocked");
-            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_LOGS_BUTTON_FORM"),0,"textures/ui/icon_lock");
+            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_LEAVE_BUTTON_FORM"));
+            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_FACTION_BUTTON_FORM"));
+            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_MEMBERS_BUTTON_FORM"));
+            $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_LOGS_BUTTON_FORM"));
             $player->sendForm($form);
         }
     }
