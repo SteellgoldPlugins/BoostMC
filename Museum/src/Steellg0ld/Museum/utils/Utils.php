@@ -6,8 +6,8 @@ use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\Plugin;
 
 class Utils {
-    CONST SEARCH = ["{PREFIX}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{DARK_ERROR}"];
-    CONST REPLACE = ["§l» §r§f", "§a", "§f", "§c", "§4"];
+    CONST SEARCH = ["{n}","{PREFIX}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{DARK_ERROR}"];
+    CONST REPLACE = ["\n","§l» §r§f", "§a", "§f", "§c", "§4"];
 
     public static function getPrefix(): string{
         return "§l» §r§f";
