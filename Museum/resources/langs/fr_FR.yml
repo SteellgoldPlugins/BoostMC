@@ -24,6 +24,7 @@ FACTION_CREATE_INPUT_DESCRIPTION_FORM: "Une description (Laisser vide pour plus 
 FACTION_MANAGE_TITLE_FORM: "Faction: {FACTION}"
 FACTION_MANAGE_LABEL_FORM: "{PREFIX}Ici gérer la faction"
 FACTION_MANAGE_MEMBERS_LABEL_FORM: "{PREFIX}Gérer les membres de votre faction facilement"
+FACTION_MANAGE_MEMBER_LABEL_FORM: "{PREFIX}Voici {PRIMARY}{NAME} {SECONDARY}il est {PRIMARY}{ROLE}{SECONDARY}, il a rejoint la faction le: {PRIMARY}{JOIN_DATE}{n}{PRIMARY}- {SECONDARY}Argent investi dans la banque: {PRIMARY}{MONEY_INVEST}${n}{PRIMARY}- {SECONDARY}Dernière connexion: {PRIMARY}{LAST_CONNECT}{n}{PRIMARY}- {SECONDARY}Nombre de meurtres/morts: {PRIMARY}{KILLS}{SECONDARY}/{PRIMARY}{DEATHS}"
 
 FACTION_MANAGE_INVITE_BUTTON_FORM: "Inviter un joueur"
 FACTION_MANAGE_KICK_BUTTON_FORM: "Exclure le joueur"
@@ -40,3 +41,8 @@ PLAYER_JOIN: "{PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}a rejoint le serveu
 PLAYER_LEAVE: "{PREFIX}le joueur {ERROR}{PLAYER} {SECONDARY}a quitter le serveur"
 
 FACTION_CREATED: "{PREFIX}Vous venez de créer la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f {SECONDARY}à nouveau pour gérer la faction"
+
+FACTION_INVITE: "{PREFIX}{PRIMARY}{OFFICIER}{SECONDARY}, vous a invité(e) dans la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f accept:deny {SECONDARY}pour l'accepter ou refusé l'invitation"
+FACTION_INVITE_JOIN: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a accepter l'invitation, il est maintenant dans la faction en tant que {PRIMARY}{ROLE}"
+FACTION_INVITE_DENY: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invitation"
+FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
