@@ -10,6 +10,7 @@ use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
+use Steellg0ld\Museum\utils\Utils;
 
 class Plugin extends PluginBase
 {
@@ -36,7 +37,7 @@ class Plugin extends PluginBase
 
     public function onDisable()
     {
-        parent::onDisable();
+        Utils::saveAll();
     }
 
     public static function getInstance(): self
