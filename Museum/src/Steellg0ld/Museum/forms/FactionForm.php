@@ -4,8 +4,10 @@ namespace Steellg0ld\Museum\forms;
 
 use FormAPI\CustomForm;
 use FormAPI\SimpleForm;
+use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\faction\MemberForm;
+use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionForm{
@@ -15,7 +17,11 @@ class FactionForm{
             $form = new CustomForm(
                 function (Player $p, $data) {
                     if ($data !== null) {
-                        self::manage($p);
+                        if(isset($data[1]) && isset($data[2])){
+                            Faction::create($p,$data[1]);
+                        }else{
+                            Utils::sendMessage($p,"MISSING_ARGUMENTS");
+                        }
                     }
                 }
             );
