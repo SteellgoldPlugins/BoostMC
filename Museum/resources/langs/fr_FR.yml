@@ -1,5 +1,6 @@
-NO_MESSAGE_FOUND: "Aucun message n'a été trouvé"
+NO_MESSAGE_FOUND: "Aucun résultat"
 NO_RANK_FOUND: "Aucun grade trouvé"
+MISSING_ARGUMENTS: "{ERROR}- {SECONDARY}Vous avez oublier des éléments."
 
 RANK_0: "Joueur"
 RANK_1: "VIP"
