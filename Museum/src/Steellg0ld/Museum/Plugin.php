@@ -7,6 +7,7 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
+use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Settings;
@@ -68,5 +69,9 @@ class Plugin extends PluginBase
     public function getMessages(String $file): Config
     {
         return new Config($this->getDataFolder() . "langs/".$file.".yml", Config::YAML);
+    }
+
+    public function getEconomyAPI(): Economy{
+        return new Economy();
     }
 }
