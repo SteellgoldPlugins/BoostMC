@@ -36,6 +36,7 @@ class Player extends \pocketmine\Player
             $this->money = $resultAttr['money'];
             $this->settings = unserialize(base64_decode($resultAttr['settings']));
             $this->lang = $resultAttr['lang'];
+            $this->discordId = $resultAttr['discordId'];
         }
     }
 
