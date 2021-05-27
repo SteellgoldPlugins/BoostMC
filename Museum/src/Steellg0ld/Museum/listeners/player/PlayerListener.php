@@ -9,6 +9,7 @@ use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
 use Steellg0ld\Museum\api\VPN;
 use Steellg0ld\Museum\base\Player;
+use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class PlayerListener implements Listener
@@ -56,6 +57,7 @@ class PlayerListener implements Listener
         $player = $event->getPlayer();
         $event->setQuitMessage("");
         if ($player instanceof Player) {
+            Plugin::getInstance()->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)),$player->discordId);
             foreach (Server::getInstance()->getOnlinePlayers() as $players) {
                 if ($players instanceof Player) {
                     if ($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()]);
