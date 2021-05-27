@@ -17,6 +17,8 @@ class Player extends \pocketmine\Player
     public string $faction = "";
     public int $faction_role = 0;
 
+    public string $discordId = "";
+
     public function hasRank(Int ...$ranks): bool{
         if(in_array($this->rank, $ranks)) {
             return true;
