@@ -25,6 +25,7 @@ class Faction
     {
         self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array());
         self::$claims[$faction] = array();
+
         $player->faction = $faction;
         $player->faction_role = self::LEADER;
 
