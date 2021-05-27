@@ -17,6 +17,6 @@ class Database
 
     public function player_update()
     {
-        Plugin::getInstance()->getAsyncDatabase()->executeGenericRaw("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd', discordId = '$discordId' WHERE player = '$name'");
+        Plugin::getInstance()->getDatabase()->getDatabase()->query("UPDATE players SET rank = '$rank', money = '$money', faction = '$faction', faction_role = '$faction_role', code = '$code', hasJoinedWithCode = '$hasJoinedWithCode', enterCodeWaitEnd = '$enterCodeWaitEnd', discordId = '$discordId' WHERE player = '$name'");
     }
 }
