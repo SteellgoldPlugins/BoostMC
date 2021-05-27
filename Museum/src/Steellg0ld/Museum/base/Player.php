@@ -9,8 +9,10 @@ class Player extends \pocketmine\Player
 {
     public int $rank = Ranks::PLAYER;
     public array $settings = [
-        "player_status" => 1
+        "players_message_status" => 1,
+        "economy_symbol" => 1
     ];
+
 
     public string $lang = "fr_FR";
     public int $money = 0;
