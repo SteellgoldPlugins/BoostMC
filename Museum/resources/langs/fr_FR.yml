@@ -1,6 +1,7 @@
 NO_MESSAGE_FOUND: "Aucun résultat"
 NO_RANK_FOUND: "Aucun grade trouvé"
-MISSING_ARGUMENTS: "{ERROR}- {SECONDARY}Vous avez oublier des éléments."
+MISSING_ARGUMENTS: "{ERROR}- {SECONDARY}Vous avez oublier des éléments"
+MISSING_DATA: "{ERROR}- {SECONDARY}Vous n'avez choisie aucune option"
 
 RANK_0: "Joueur"
 RANK_1: "VIP"
@@ -18,7 +19,7 @@ SETTINGS_DROPDOWN_1_3: "Italien"
 SETTINGS_DROPDOWN_1_4: "Chinois"
 
 FACTION_CREATE_TITLE_FORM: "Créer une faction"
-FACTION_CREATE_LABEL_FORM: "{PREFIX}Créer votre faction et esseyer de dominer les autres"
+FACTION_CREATE_LABEL_FORM: "{PREFIX}Créer votre faction et esseyer de dominer les autres, cela vous coûtera {PRIMARY}{DEFAULT_FACTION_PRICE}{ECONOMY_SYMBOL}{SECONDARY}"
 FACTION_CREATE_INPUT_FORM: "Nom de votre faction"
 FACTION_CREATE_INPUT_DESCRIPTION_FORM: "Une description (Laisser vide pour plus tard)"
 
@@ -47,3 +48,5 @@ FACTION_INVITE: "{PREFIX}{PRIMARY}{OFFICIER}{SECONDARY}, vous a invité(e) dans 
 FACTION_INVITE_JOIN: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a accepter l'invitation, il est maintenant dans la faction en tant que {PRIMARY}{ROLE}"
 FACTION_INVITE_DENY: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invitation"
 FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
+
+SETTINGS_UPDATED: "{PREFIX}Vos préférences ont bien été enregistrées"
