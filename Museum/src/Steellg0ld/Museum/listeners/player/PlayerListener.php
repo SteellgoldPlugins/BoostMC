@@ -33,21 +33,8 @@ class PlayerListener implements Listener
                 $player->register();
             }
 
-            /**
-             * SEND THE JOIN MESSAGE
-             */
-            if(!$player->hasPlayedBefore()) {
-                foreach (Server::getInstance()->getOnlinePlayers() as $players){
-                    if($players instanceof Player){
-                        if($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_FIRST_JOIN", ["{PLAYER}"], [$player->getName()]);
-                    }
-                }
-            }else{
-                foreach (Server::getInstance()->getOnlinePlayers() as $players){
-                    if($players instanceof Player){
-                        if($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_JOIN", ["{PLAYER}"], [$player->getName()]);
-                    }
-                }
+            foreach (Server::getInstance()->getOnlinePlayers() as $players){
+                if($players instanceof Player) if($players->settings["player_status"]) Utils::sendMessage($players, $player->hasPlayedBefore() ? "PLAYER_JOIN" : "PLAYER_FIRST_JOIN", ["{PLAYER}"], [$player->getName()]);
             }
         }
     }
