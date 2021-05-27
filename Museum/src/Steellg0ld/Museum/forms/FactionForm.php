@@ -7,7 +7,6 @@ use FormAPI\SimpleForm;
 use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\faction\MemberForm;
-use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionForm{
