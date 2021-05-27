@@ -17,9 +17,11 @@ class Faction
     public const LEADER = 3;
 
     public const DEFAULT_POWER = 20;
+    public const DEFAULT_FACTION_PRICE = 500;
     public const POWER_PER_KILL = 5;
     public const POWER_PER_DEATHS = 10;
     public const INVITATION_EXPIRATION_TIME = 60;
+    public const DEFAULT_ECONOMY_SYMBOL = 1;
 
     public static function create(Player $player, string $faction): void
     {
