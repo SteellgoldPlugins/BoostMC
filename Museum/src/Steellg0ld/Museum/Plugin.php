@@ -10,7 +10,10 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\commands\defaults\Faction;
+use Steellg0ld\Museum\commands\defaults\Money;
+use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
+use Steellg0ld\Museum\commands\defaults\Shop;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
 use Steellg0ld\Museum\utils\Utils;
@@ -54,7 +57,10 @@ class Plugin extends PluginBase
     public function loadCommands(){
         $this->getServer()->getCommandMap()->registerAll("museum",[
             new Settings("settings","Configure your game","",["configure","setting"]),
-            new Faction("faction","Global faction command","",["f","fac"])
+            new Settings("settings","Configure your game","",["configure","setting"]),
+            new Rank("setrank","Set rank to yourself",""),
+            new Shop("shop","Buy a item simply",""),
+            new Money("money","Edit the money","")
         ]);
     }
 
@@ -69,6 +75,11 @@ class Plugin extends PluginBase
     public function getMessages(String $file): Config
     {
         return new Config($this->getDataFolder() . "langs/".$file.".yml", Config::YAML);
+    }
+
+    public function getConfigFile(String $file): Config
+    {
+        return new Config($this->getDataFolder() . $file.".yml", Config::YAML);
     }
 
     public function getEconomyAPI(): Economy{
