@@ -17,7 +17,7 @@ class FactionForm{
                 function (Player $p, $data) {
                     if ($data !== null) {
                         if(isset($data[1]) && isset($data[2])){
-                            Faction::create($p,$data[1]);
+                            Faction::create($p,$data[1],$data[2], $data[3]);
                         }else{
                             Utils::sendMessage($p,"MISSING_ARGUMENTS");
                         }
@@ -27,8 +27,10 @@ class FactionForm{
 
             $form->setTitle(Utils::getMessage($player, "FACTION_CREATE_TITLE_FORM"));
             $form->addLabel(Utils::getMessage($player, "FACTION_CREATE_LABEL_FORM"));
-            $form->addInput(Utils::getMessage($player, "FACTION_CREATE_INPUT_FORM"));
-            $form->addInput(Utils::getMessage($player, "FACTION_CREATE_INPUT_DESCRIPTION_FORM"));
+            $form->addInput(Utils::getMessage($player, "FACTION_CREATE_INPUT_NAME_FORM"),Utils::getMessage($player, "FACTION_CREATE_INPUT_NAME_PLACEHOLDER_FORM"));
+            $form->addInput(Utils::getMessage($player, "FACTION_CREATE_INPUT_DESCRIPTION_FORM"),Utils::getMessage($player, "FACTION_CREATE_INPUT_DESCRIPTION_PLACEHOLDER_FORM"));
+            $form->addInput(Utils::getMessage($player, "FACTION_CREATE_INPUT_CLAIMS_MESSAGE_FORM"),Utils::getMessage($player, "FACTION_CREATE_INPUT_CLAIMS_MESSAGE_PLACEHOLDER_FORM"));
+            $form->addDropdown(Utils::getMessage($player, "FACTION_CREATE_DROPDOWN_INVITATIONS_FORM"),["Ouvert à tous","Sous invitations","Sous cautions"]);
             $player->sendForm($form);
         }
     }
