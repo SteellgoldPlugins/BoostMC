@@ -65,4 +65,43 @@ class ShopForm{
             $player->sendForm($form);
         }
     }
+
+    public static function product(Player $player, Item $item, Int $buy_price, Int $sell_price)
+    {
+        {
+            $form = new CustomForm(
+                function (Player $p, $data) use ($item, $buy_price, $sell_price) {
+                    if ($data !== null) {
+                        $price = ($data[1] == true ? $sell_price * $data[2] : $buy_price * $data[2]);
+                        if($data[1] == false){
+                            if($p->getInventory()->canAddItem(Item::get($item->getId(),$item->getDamage(),$data[2]))){
+                                if(Plugin::getInstance()->getEconomyAPI()->delMoney($p,$price)){
+                                    $p->getInventory()->addItem(Item::get($item->getId(),$item->getDamage(),$data[2]));
+                                    Utils::sendMessage($p, "SHOP_BUYED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
+                                }else{
+                                    Utils::sendMessage($p, "SHOP_NO_ENOUGHT_MONEY", ["{NEEDED}"],[$price - $p->money],false);
+                                }
+                            }else{
+                                Utils::sendMessage($p, "SHOP_INVENTORY_FULL", ["{ITEM}","{COUNT}"],[$item->getName(),$data[2]],false);
+                            }
+                        }else{
+                            if($p->getInventory()->contains(Item::get($item->getId(), $item->getDamage(), $data[2]))){
+                                Plugin::getInstance()->getEconomyAPI()->addMoney($p,$price);
+                                $p->getInventory()->removeItem(Item::get($item->getId(), $item->getDamage(), $data[2]));
+                                Utils::sendMessage($p, "SHOP_SELLED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
+                            }else{
+                                Utils::sendMessage($p, "SHOP_NOT_HAVE_ITEM", ["{ITEM}", "{COUNT}"], [$item->getName(), $data[2]]);
+                            }
+                        }
+                    }
+                }
+            );
+
+            $form->setTitle(Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->addLabel(str_replace(["{ITEM}","{BUY_PRICE}","{SELL_PRICE}"],[$item->getName(), $buy_price, $sell_price],Utils::getMessage($player, "SHOP_PRODUCT_LABEL_FORM")));
+            $form->addToggle(Utils::getMessage($player, "SHOP_PRODUCT_TOGGLE_FORM"));
+            $form->addSlider(Utils::getMessage($player, "SHOP_PRODUCT_SLIDER_FORM"),1,128);
+            $player->sendForm($form);
+        }
+    }
 }
