@@ -7,7 +7,9 @@ use Steellg0ld\Museum\Plugin;
 class Ranks {
     CONST PLAYER = 0;
     CONST VIP = 1;
-    CONST STAFF = 2;
+    CONST VIP_PLUS = 2;
+    CONST STAFF = 3;
+
 
     public static function translate(Player $player, Int $rank){
         $config = Plugin::getInstance()->getMessages($player->getLang());
