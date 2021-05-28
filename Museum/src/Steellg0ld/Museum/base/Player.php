@@ -19,8 +19,13 @@ class Player extends \pocketmine\Player
     public string $faction = "none";
     public int $faction_role = 0;
 
+    /** * @var string  */
     public string $discordId = "";
 
+    /**
+     * @param Int ...$ranks
+     * @return bool
+     */
     public function hasRank(Int ...$ranks): bool{
         if(in_array($this->rank, $ranks)) {
             return true;
@@ -50,10 +55,16 @@ class Player extends \pocketmine\Player
         Plugin::getInstance()->getServer()->getAsyncPool()->submitTask(new RegisterPlayer($this->getName(), $this->getAddress()));
     }
 
+    /**
+     * @return string
+     */
     public function getLang(): string{
         return $this->lang;
     }
 
+    /**
+     * @return int
+     */
     public function getRank(): int{
         return $this->rank;
     }
