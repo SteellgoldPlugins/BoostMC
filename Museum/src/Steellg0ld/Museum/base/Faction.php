@@ -23,9 +23,9 @@ class Faction
     public const INVITATION_EXPIRATION_TIME = 60;
     public const DEFAULT_ECONOMY_SYMBOL = 1;
 
-    public static function create(Player $player, string $faction): void
+    public static function create(Player $player, string $faction, string $description, string $claim_message): void
     {
-        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array());
+        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message);
         self::$claims[$faction] = array();
 
         $player->faction = $faction;
