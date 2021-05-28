@@ -16,7 +16,7 @@ class Player extends \pocketmine\Player
 
     public string $lang = "fr_FR";
     public int $money = 0;
-    public string $faction = "";
+    public string $faction = "none";
     public int $faction_role = 0;
 
     public string $discordId = "";
