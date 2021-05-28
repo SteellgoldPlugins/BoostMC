@@ -68,6 +68,14 @@ class Player extends \pocketmine\Player
     public function getRank(): int{
         return $this->rank;
     }
+
+    /**
+     * @return string
+     */
+    public function getFaction() : string {
+        return $this->faction;
+    }
+
     /**
      * @return bool
      */
