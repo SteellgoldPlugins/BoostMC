@@ -20,8 +20,13 @@ SETTINGS_DROPDOWN_1_4: "Chinois"
 
 FACTION_CREATE_TITLE_FORM: "Créer une faction"
 FACTION_CREATE_LABEL_FORM: "{PREFIX}Créer votre faction et esseyer de dominer les autres, cela vous coûtera {PRIMARY}{DEFAULT_FACTION_PRICE}{ECONOMY_SYMBOL}{SECONDARY}"
-FACTION_CREATE_INPUT_FORM: "Nom de votre faction"
-FACTION_CREATE_INPUT_DESCRIPTION_FORM: "Une description (Laisser vide pour plus tard)"
+FACTION_CREATE_INPUT_NAME_FORM: "{PREFIX}Nom de votre faction"
+FACTION_CREATE_INPUT_DESCRIPTION_FORM: "{PREFIX}Une description (Laisser vide pour plus tard)"
+FACTION_CREATE_DROPDOWN_INVITATIONS_FORM: "{PREFIX}Type d'invitation dans la faction"
+FACTION_CREATE_INPUT_CLAIMS_MESSAGE_FORM: "{PREFIX}Message affiché lors ce qu'on est dans une zone protégé de votre faction"
+FACTION_CREATE_INPUT_NAME_PLACEHOLDER_FORM: "LesProduitsLaitiers"
+FACTION_CREATE_INPUT_DESCRIPTION_PLACEHOLDER_FORM: "Une super faction !"
+FACTION_CREATE_INPUT_CLAIMS_MESSAGE_PLACEHOLDER_FORM: "Une super faction !"
 
 FACTION_MANAGE_TITLE_FORM: "Faction: {FACTION}"
 FACTION_MANAGE_LABEL_FORM: "{PREFIX}Ici gérer la faction"
@@ -37,6 +42,12 @@ FACTION_MANAGE_FACTION_BUTTON_FORM: "Gérer la faction"
 FACTION_MANAGE_MEMBERS_BUTTON_FORM: "Gérer les membres"
 FACTION_MANAGE_LOGS_BUTTON_FORM: "Voir les logs"
 
+SHOP_TITLE_FORM: "Boutique d'objets"
+SHOP_LABEL_FORM: "{PREFIX}Vous avez actuellemnt {PRIMARY}{MONEY}{ECONOMY_SYMBOL}"
+SHOP_PRODUCT_LABEL_FORM: "{PREFIX}L'item {PRIMARY}{ITEM}{SECONDARY}, est actuellement à {PRIMARY}{BUY_PRICE}{ECONOMY_SYMBOL} {SECONDARY}à l'achat, et à {PRIMARY}{SELL_PRICE}{ECONOMY_SYMBOL} {SECONDARY}à la vente"
+SHOP_PRODUCT_TOGGLE_FORM: "Voulez-vous le vendre ?"
+SHOP_PRODUCT_SLIDER_FORM: "Combien voulez vous acheter/vendre cette item"
+
 # MESSAGES
 PLAYER_FIRST_JOIN: "{PREFIX}Bienvenu(e) à {PRIMARY}{PLAYER} {SECONDARY}qui s'est connecté(e) pour la première fois sur le serveur"
 PLAYER_JOIN: "{PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}a rejoint le serveur"
@@ -50,3 +61,8 @@ FACTION_INVITE_DENY: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invit
 FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
 
 SETTINGS_UPDATED: "{PREFIX}Vos préférences ont bien été enregistrées"
+
+SHOP_BUYED: "{PREFIX}Vous venez d'acheter {PRIMARY}x{COUNT} {ITEM_BUYED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
+SHOP_NO_ENOUGHT_MONEY: "{PREFIX}Vous n'avez pas assez d'argent, il vous manque {PRIMARY}{NEEDED}{ECONOMY_SYMBOL}"
+SHOP_NOT_HAVE_ITEM: "{PREFIX}Vous n'avez pas {PRIMARY}x{COUNT} {ITEM}Redstone {SECONDARY}dans votre inventaire"
+SHOP_INVENTORY_FULL: "{PREFIX}Votre inventaire est actuellement plein, vous ne pouvez pas acheter d'item"
