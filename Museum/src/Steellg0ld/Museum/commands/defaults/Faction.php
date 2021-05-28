@@ -17,7 +17,11 @@ class Faction extends Command {
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if($sender instanceof Player){
-            FactionForm::createForm($sender);
+            if($sender->hasFaction()){
+                FactionForm::createForm($sender);
+            }else{
+                FactionForm::manage($sender);
+            }
         }
     }
 }
