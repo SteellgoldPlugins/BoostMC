@@ -63,6 +63,7 @@ FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
 SETTINGS_UPDATED: "{PREFIX}Vos préférences ont bien été enregistrées"
 
 SHOP_BUYED: "{PREFIX}Vous venez d'acheter {PRIMARY}x{COUNT} {ITEM_BUYED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
+SHOP_SELLED: "{PREFIX}Vous venez de vendre {PRIMARY}x{COUNT} {ITEM_SELLED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
 SHOP_NO_ENOUGHT_MONEY: "{PREFIX}Vous n'avez pas assez d'argent, il vous manque {PRIMARY}{NEEDED}{ECONOMY_SYMBOL}"
-SHOP_NOT_HAVE_ITEM: "{PREFIX}Vous n'avez pas {PRIMARY}x{COUNT} {ITEM}Redstone {SECONDARY}dans votre inventaire"
+SHOP_NOT_HAVE_ITEM: "{PREFIX}Vous n'avez pas {PRIMARY}x{COUNT} {ITEM} {SECONDARY}dans votre inventaire"
 SHOP_INVENTORY_FULL: "{PREFIX}Votre inventaire est actuellement plein, vous ne pouvez pas acheter d'item"

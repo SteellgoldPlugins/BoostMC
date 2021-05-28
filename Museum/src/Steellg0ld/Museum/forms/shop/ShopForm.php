@@ -34,7 +34,7 @@ class ShopForm{
             $form->addButton("Blocs décoratifs",0,"textures/items/painting");
             $form->addButton("Blocs de constructions",0,"textures/items/brick");
             $form->addButton("Outils de combat",0,"textures/items/netherite_sword");
-            $form->addButton("Minerais\n".count(Prices::ORES)." disponibles",0,"textures/items/iron_ingot");
+            $form->addButton("Minerais\n".count(Prices::$ores)." disponibles",0,"textures/items/iron_ingot");
             $form->addButton("Objects divers",0,"textures/items/bucket_empty");
             $player->sendForm($form);
         }
@@ -44,15 +44,14 @@ class ShopForm{
     {
         {
             $array = [];
-            foreach (Prices::ORES as $ores){
+            foreach (Prices::$ores as $ores){
                 array_push($array, $ores);
             }
 
             $form = new SimpleForm(
                 function (Player $p, $data) use ($array) {
                     if ($data !== null) {
-                        self::product($p, Item::get($array[$data]["o"]),$array[$data]["b"],$array[$data]["s"]);
-                        var_dump($array[$data]);
+                        self::product($p, $data, Item::get($array[$data]["o"]),$array[$data]["b"],$array[$data]["s"]);
                     }
                 }
             );
@@ -66,11 +65,11 @@ class ShopForm{
         }
     }
 
-    public static function product(Player $player, Item $item, Int $buy_price, Int $sell_price)
+    public static function product(Player $player, $place, Item $item, Int $buy_price, Int $sell_price)
     {
         {
             $form = new CustomForm(
-                function (Player $p, $data) use ($item, $buy_price, $sell_price) {
+                function (Player $p, $data) use ($item, $buy_price, $sell_price, $place) {
                     if ($data !== null) {
                         $price = ($data[1] == true ? $sell_price * $data[2] : $buy_price * $data[2]);
                         if($data[1] == false){
@@ -78,6 +77,7 @@ class ShopForm{
                                 if(Plugin::getInstance()->getEconomyAPI()->delMoney($p,$price)){
                                     $p->getInventory()->addItem(Item::get($item->getId(),$item->getDamage(),$data[2]));
                                     Utils::sendMessage($p, "SHOP_BUYED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
+                                    Prices::$ores[$place]["s"] = Prices::$ores[$place]["s"] - $buy_price;
                                 }else{
                                     Utils::sendMessage($p, "SHOP_NO_ENOUGHT_MONEY", ["{NEEDED}"],[$price - $p->money],false);
                                 }
@@ -88,7 +88,8 @@ class ShopForm{
                             if($p->getInventory()->contains(Item::get($item->getId(), $item->getDamage(), $data[2]))){
                                 Plugin::getInstance()->getEconomyAPI()->addMoney($p,$price);
                                 $p->getInventory()->removeItem(Item::get($item->getId(), $item->getDamage(), $data[2]));
-                                Utils::sendMessage($p, "SHOP_SELLED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
+                                Utils::sendMessage($p, "SHOP_SELLED", ["{ITEM_SELLED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
+                                Prices::$ores[$place]["b"] = (Prices::$ores[$place]["b"] + $price) * 1.6;
                             }else{
                                 Utils::sendMessage($p, "SHOP_NOT_HAVE_ITEM", ["{ITEM}", "{COUNT}"], [$item->getName(), $data[2]]);
                             }
