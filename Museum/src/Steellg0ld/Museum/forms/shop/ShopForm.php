@@ -39,4 +39,30 @@ class ShopForm{
             $player->sendForm($form);
         }
     }
+
+    public static function ores(Player $player)
+    {
+        {
+            $array = [];
+            foreach (Prices::ORES as $ores){
+                array_push($array, $ores);
+            }
+
+            $form = new SimpleForm(
+                function (Player $p, $data) use ($array) {
+                    if ($data !== null) {
+                        self::product($p, Item::get($array[$data]["o"]),$array[$data]["b"],$array[$data]["s"]);
+                        var_dump($array[$data]);
+                    }
+                }
+            );
+
+            $form->setTitle(Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setContent(Utils::getMessage($player, "SHOP_LABEL_FORM"));
+            foreach ($array as $item){
+                $form->addButton(Item::get($item["o"])->getName() . "\n§a".$item["b"].Economy::SYMBOLS[$player->settings["economy_symbol"]] ." §r- §c".$item['s'],0,$item['i']."$");
+            }
+            $player->sendForm($form);
+        }
+    }
 }
