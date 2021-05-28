@@ -23,7 +23,7 @@ class RegisterPlayer extends AsyncTask {
 
         $name = $this->player;
         $adress = base64_encode(base64_encode(base64_encode($this->address)));
-        $settings = base64_encode(serialize());
+        $settings = base64_encode(serialize(["players_message_status" => 1, "economy_symbol" => 1]));
         $db->query("INSERT INTO players (player, address, faction, role, rank, money, lang, settings) VALUES ('$name', '$adress', 'none', 0, 0, 0, 'fr_FR', '$settings')");
     }
 }
