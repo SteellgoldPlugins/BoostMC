@@ -11,6 +11,7 @@ use pocketmine\Server;
 use Steellg0ld\Museum\api\VPN;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
+use Steellg0ld\Museum\forms\shop\ShopForm;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -40,6 +41,8 @@ class PlayerListener implements Listener
             foreach (Server::getInstance()->getOnlinePlayers() as $players){
                 if($players instanceof Player) if($players->settings["player_status"]) Utils::sendMessage($players, $player->hasPlayedBefore() ? "PLAYER_JOIN" : "PLAYER_FIRST_JOIN", ["{PLAYER}"], [$player->getName()]);
             }
+
+            ShopForm::open($player);
         }
     }
 
