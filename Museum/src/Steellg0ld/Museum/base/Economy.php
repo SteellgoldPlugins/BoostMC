@@ -2,6 +2,8 @@
 
 namespace Steellg0ld\Museum\base;
 
+use Steellg0ld\Museum\utils\Prices;
+
 class Economy
 {
     public const SYMBOLS = [
@@ -26,6 +28,12 @@ class Economy
 
     public function haveNeededMoney(Player $player, Int $need): bool {
         return $player->money >= $need;
+    }
+
+    public function calculate(Int $actual, Int $count, Bool $sell = false){
+        if($actual <= 0) return 0;
+        elseif(!$sell) return 2 * $count + $actual;
+        else return 2 * $count - $actual;
     }
 
     private function reduceMoney(Player $player, Int $count): bool {
