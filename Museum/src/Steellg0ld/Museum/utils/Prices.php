@@ -29,4 +29,20 @@ class Prices {
         4 => ["o" => Item::STEAK, "b" => 10, "s" => 0, "i" => "textures/items/beef_cooked"]
     ];
 
+    public static function update(Int $type, Int $id, String $action, Int $new){
+        switch ($type){
+            case self::DECORATIVES:
+                self::$decoratives[$id][$action] = $new;
+                break;
+            case self::CONSTRUCTION:
+                self::$constructions[$id][$action] = $new;
+                break;
+            case self::ORES:
+                self::$ores[$id][$action] = $new;
+                break;
+            case self::MISC:
+                self::$misc[$id][$action] = $new;
+                break;
+        }
+    }
 }
