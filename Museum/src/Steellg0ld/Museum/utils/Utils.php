@@ -9,8 +9,8 @@ use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\Plugin;
 
 class Utils {
-    CONST SEARCH = ["{n}","{PREFIX}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{DARK_ERROR}", "{DEFAULT_FACTION_PRICE}"];
-    CONST REPLACE = ["\n","§l» §r§f", "§a", "§f", "§c", "§4", Faction::DEFAULT_FACTION_PRICE];
+    CONST SEARCH = ["{l}","{n}","{PREFIX}", "{PRIMARY}", "{SECONDARY}", "{ERROR}", "{DARK_ERROR}", "{DEFAULT_FACTION_PRICE}"];
+    CONST REPLACE = ["\n","\n","§l» §r§f", "§a", "§f", "§c", "§4", Faction::DEFAULT_FACTION_PRICE];
     CONST LANGS = [0 => "fr_FR", 1 => "en_EN", 2 => "es_ES", 3 => "it_IT", 4 => "ch_CH"];
 
     public static function getPrefix(): string{
