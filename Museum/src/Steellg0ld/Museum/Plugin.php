@@ -29,7 +29,6 @@ class Plugin extends PluginBase
 
         @mkdir($this->getDataFolder() . "langs/");
         $this->saveResource("langs/fr_FR.yml");
-        $this->saveResource("langs/ch_CH.yml");
 
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
