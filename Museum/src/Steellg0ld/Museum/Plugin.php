@@ -3,18 +3,25 @@
 namespace Steellg0ld\Museum;
 
 use muqsit\invmenu\InvMenuHandler;
+use pocketmine\entity\Entity;
+use pocketmine\level\biome\Biome;
+use pocketmine\level\generator\Generator;
+use pocketmine\level\generator\GeneratorManager;
+use pocketmine\level\generator\hell\Nether;
+use pocketmine\level\Level;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
-use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Money;
 use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\commands\defaults\Shop;
+use Steellg0ld\Museum\entity\Wither;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
+use Steellg0ld\Museum\listeners\server\LevelListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -22,6 +29,8 @@ class Plugin extends PluginBase
 {
     public static $instance;
     CONST FILE_DB = "data.db";
+
+    public static ?Level $netherLevel;
 
     public function onEnable()
     {
@@ -37,7 +46,9 @@ class Plugin extends PluginBase
         $this->getDatabase()->initialize();
         $this->loadCommands();
         $this->loadListeners();
+        $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
+        \Steellg0ld\Museum\base\Level::loadAndGenerateLevels();
     }
 
     public function onDisable()
@@ -63,8 +74,12 @@ class Plugin extends PluginBase
         ]);
     }
 
-    public function loadListeners(){
+    private function loadListeners(){
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
+    }
+
+    private function loadEntitys(){
+        Entity::registerEntity(Wither::class, true, ["Wither", "minecraft:wither"]);
     }
 
     public function getDatabase(): Database{
