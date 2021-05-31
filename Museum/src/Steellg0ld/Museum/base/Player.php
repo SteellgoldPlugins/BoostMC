@@ -9,7 +9,7 @@ class Player extends \pocketmine\Player
 {
     public int $rank = Ranks::PLAYER;
     public array $settings = [
-        "players_message_status" => 1,
+        "player_status" => 1,
         "economy_symbol" => 1
     ];
 
@@ -80,7 +80,6 @@ class Player extends \pocketmine\Player
      * @return bool
      */
     public function hasFaction() : bool {
-        var_dump($this->faction);
         return $this->faction == "none";
     }
 }
