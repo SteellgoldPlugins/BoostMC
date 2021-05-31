@@ -70,4 +70,24 @@ class Faction
         unset(self::$invitationsTimeout[$player->getName()]);
     }
 
+    public static function denyInvitation(Player $player): void {
+        $faction = self::$invitations[$player->getName()];
+        unset(self::$invitations[$player->getName()]);
+        unset(self::$invitationsTimeout[$player->getName()]);
+
+        foreach (self::getMembers($faction) as $member){
+            $member = Server::getInstance()->getPlayer($member);
+            if(!$member instanceof Player) return;
+            Utils::sendMessage($member,"FACTION_INVITE_DENY",["{INVITED}"], [$member->getName()]);
+        }
+    }
+
+    public static function getMembers(String $faction){
+        return self::$factions[$faction]["players"];
+    }
+
+    public static function isInvited(Player $invited): bool {
+        $faction = self::$invitations[$invited->getName()];
+        if (count(self::getMembers($faction)) < self::DEFAULT_MAX_MEMBERS) return true; else return false;
+    }
 }
