@@ -48,4 +48,26 @@ class Faction
         self::$invitations[$player->getName()] = $faction;
         self::$invitationsTimeout[$player->getName()] = time() + self::INVITATION_EXPIRATION_TIME;
     }
+
+    public static function acceptInvitation(Player $player) {
+        $name = $player->getName();
+        $faction = self::$invitations[$player->getName()];
+        $player->faction = $faction;
+        $player->faction_role = 0;
+
+        $array = self::$factions[$faction]["players"];
+        array_push($array, $name);
+        self::$factions[$faction]["players"] = $array;
+        foreach (self::getMembers($faction) as $player) {
+            if (Server::getInstance()->getPlayer($player)) {
+                $player = Server::getInstance()->getPlayer($player);
+                if ($player instanceof Player) {
+                    $player->sendMessage(Utils::getMessage($player, "FACTION_INVITE_JOIN", ["{INVITED}"], [$name]));
+                }
+            }
+        }
+        unset(self::$invitations[$player->getName()]);
+        unset(self::$invitationsTimeout[$player->getName()]);
+    }
+
 }
