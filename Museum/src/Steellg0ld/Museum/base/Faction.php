@@ -43,4 +43,9 @@ class Faction
 
         $player->sendMessage(Utils::getMessage($player, "FACTION_CREATED", ["{FACTION}"],[$faction]));
     }
+
+    public static function sendInvitation(Player $player, string $faction): void {
+        self::$invitations[$player->getName()] = $faction;
+        self::$invitationsTimeout[$player->getName()] = time() + self::INVITATION_EXPIRATION_TIME;
+    }
 }
