@@ -15,6 +15,7 @@ use pocketmine\utils\Config;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
+use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Money;
 use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
@@ -29,8 +30,6 @@ class Plugin extends PluginBase
 {
     public static $instance;
     CONST FILE_DB = "data.db";
-
-    public static ?Level $netherLevel;
 
     public function onEnable()
     {
@@ -48,7 +47,6 @@ class Plugin extends PluginBase
         $this->loadListeners();
         $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
-        \Steellg0ld\Museum\base\Level::loadAndGenerateLevels();
     }
 
     public function onDisable()
@@ -66,7 +64,7 @@ class Plugin extends PluginBase
 
     public function loadCommands(){
         $this->getServer()->getCommandMap()->registerAll("museum",[
-            new Settings("settings","Configure your game","",["configure","setting"]),
+            new Faction("faction","Faction command","",["fac","f"]),
             new Settings("settings","Configure your game","",["configure","setting"]),
             new Rank("setrank","Set rank to yourself",""),
             new Shop("shop","Buy a item simply",""),
