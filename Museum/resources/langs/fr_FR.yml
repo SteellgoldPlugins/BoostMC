@@ -27,6 +27,8 @@ FACTION_CREATE_INPUT_CLAIMS_MESSAGE_FORM: "{PREFIX}Message affiché lors ce qu'o
 FACTION_CREATE_INPUT_NAME_PLACEHOLDER_FORM: "LesProduitsLaitiers"
 FACTION_CREATE_INPUT_DESCRIPTION_PLACEHOLDER_FORM: "Une super faction !"
 FACTION_CREATE_INPUT_CLAIMS_MESSAGE_PLACEHOLDER_FORM: "Une super faction !"
+FACTION_INVITE_LABEL_FORM: "{PREFIX}Invitez des nouveaux membres pour votre faction"
+FACTION_INVITE_INPUT_FORM: "Pseudo du joueur que vous voulez ajouter"
 
 FACTION_MANAGE_TITLE_FORM: "Faction: {FACTION}"
 FACTION_MANAGE_LABEL_FORM: "{PREFIX}Ici gérer la faction"
@@ -60,10 +62,14 @@ PLAYER_LEAVE: "{PREFIX}le joueur {ERROR}{PLAYER} {SECONDARY}a quitter le serveur
 
 FACTION_CREATED: "{PREFIX}Vous venez de créer la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f {SECONDARY}à nouveau pour gérer la faction"
 
-FACTION_INVITE: "{PREFIX}{PRIMARY}{OFFICIER}{SECONDARY}, vous a invité(e) dans la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f accept:deny {SECONDARY}pour l'accepter ou refusé l'invitation"
-FACTION_INVITE_JOIN: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a accepter l'invitation, il est maintenant dans la faction en tant que {PRIMARY}{ROLE}"
+FACTION_NO_INVITATIONS: "Vous n'avez aucunes invitations"
+FACTION_INVITE: "{PREFIX}Vous venez d'inviter {PRIMARY}{INVITED}"
+FACTION_INVITED: "{PREFIX}{PRIMARY}{OFFICIER}{SECONDARY}, vous a invité(e) dans la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f accept:deny {SECONDARY}pour l'accepter ou refusé l'invitation"
+FACTION_INVITE_JOIN: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a accepter l'invitation, il est maintenant dans la faction !"
 FACTION_INVITE_DENY: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invitation"
 FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
+FACTION_INVITE_PLAYER_DISCONNECTED: "{PREFIX}Le joueur est actuellement déconnecté(e)"
+FACTION_PLAYER_ALREADY_FACTION: "{PREFIX}Le joueur {PRIMARY}{PLAYER}{SECONDARY} a déjà une faction {SECONDARY}({PRIMARY}{FACTION}{SECONDARY})"
 
 SETTINGS_UPDATED: "{PREFIX}Vos préférences ont bien été enregistrées"
 
