@@ -87,8 +87,6 @@ class ShopForm{
                                 if(Plugin::getInstance()->getEconomyAPI()->delMoney($p,$price)){
                                     $p->getInventory()->addItem(Item::get($item->getId(),$item->getDamage(),$data[2]));
                                     Utils::sendMessage($p, "SHOP_BUYED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
-                                    Prices::update($category, $place, "s", Plugin::getInstance()->getEconomyAPI()->calculate($buy_price,$data[2],false));
-                                    Prices::update($category, $place, "b", Plugin::getInstance()->getEconomyAPI()->calculate($buy_price,$data[2],true));
                                 }else{
                                     Utils::sendMessage($p, "SHOP_NO_ENOUGHT_MONEY", ["{NEEDED}"],[$price - $p->money],false);
                                 }
@@ -100,8 +98,6 @@ class ShopForm{
                                 Plugin::getInstance()->getEconomyAPI()->addMoney($p,$price);
                                 $p->getInventory()->removeItem(Item::get($item->getId(), $item->getDamage(), $data[2]));
                                 Utils::sendMessage($p, "SHOP_SELLED", ["{ITEM_SELLED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
-                                Prices::update($category, $place, "b", Plugin::getInstance()->getEconomyAPI()->calculate($buy_price,$data[2],true));
-                                Prices::update($category, $place, "s", Plugin::getInstance()->getEconomyAPI()->calculate($buy_price,$data[2],false));
                             }else{
                                 Utils::sendMessage($p, "SHOP_NOT_HAVE_ITEM", ["{ITEM}", "{COUNT}"], [$item->getName(), $data[2]]);
                             }
