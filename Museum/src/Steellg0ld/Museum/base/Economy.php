@@ -30,14 +30,17 @@ class Economy
         return $player->money >= $need;
     }
 
-    public function calculate(Int $actual, Int $count, Bool $sell = false){
-        if($actual <= 0) return 0;
-        elseif(!$sell) return 2 * $count + $actual;
-        else return 2 * $count - $actual;
-    }
-
     private function reduceMoney(Player $player, Int $count): bool {
         $player->money = $player->money - $count;
         return true;
+    }
+
+    public function calculate(Int $actual, Int $count, Bool $sell = false): int {
+        if($actual <= 0) return $actual + $count;
+        if($sell){
+            return $actual + $count;
+        }else{
+            return $actual - $count;
+        }
     }
 }
