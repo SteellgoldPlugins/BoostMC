@@ -33,6 +33,8 @@ class Utils {
         $faction = Faction::$factions;
         $claim = Faction::$claims;
 
+        var_dump(Faction::$factions);
+
         foreach ($faction as $name => $values) {
                 $faction = \SQLite3::escapeString($name);
                 $players = \SQLite3::escapeString(base64_encode(serialize($values["players"])));
