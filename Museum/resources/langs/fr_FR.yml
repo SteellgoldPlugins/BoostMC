@@ -5,7 +5,11 @@ MISSING_DATA: "{ERROR}- {SECONDARY}Vous n'avez choisie aucune option"
 
 RANK_0: "Joueur"
 RANK_1: "VIP"
-RANK_2: "Modérateur"
+RANK_2: "VIP+"
+RANK_3: "YouTube"
+RANK_4: "Twitch"
+RANK_5: "Staff"
+RANK_6: "Administrateur"
 
 # FORMS
 SETTINGS_TITLE_FORM: "Paramètres"
@@ -55,7 +59,15 @@ SHOP_PRODUCT_LABEL_FORM: "{PREFIX}L'item {PRIMARY}{ITEM}{SECONDARY}, est actuell
 SHOP_PRODUCT_TOGGLE_FORM: "Voulez-vous le vendre ?"
 SHOP_PRODUCT_SLIDER_FORM: "Combien voulez vous acheter/vendre cette item"
 
+MANAGE_PLAYER_TITLE_FORM: "Gérer le joueur {PLAYER_MANAGE}"
+MANAGE_PLAYER_LABEL_FORM: "{PREFIX}Grade: {PRIMARY}{RANK}"
+
+MANAGE_PLAYER_BAN_TITLE_FORM: "Bannir {PLAYER_MANAGE}"
+MANAGE_PLAYER_BAN_LABEL_FORM: "{PREFIX}Choisissez le temp et le type de banissement du joueur"
+
 # MESSAGES
+PLAYER_DISCONNECTED: "{PREFIX}Le joueur {ERROR}{DISCONNECTED_PLAYER} {SECONDARY}est actuellement déconnecté(e)"
+
 PLAYER_FIRST_JOIN: "{PREFIX}Bienvenu(e) à {PRIMARY}{PLAYER} {SECONDARY}qui s'est connecté(e) pour la première fois sur le serveur"
 PLAYER_JOIN: "{PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}a rejoint le serveur"
 PLAYER_LEAVE: "{PREFIX}le joueur {ERROR}{PLAYER} {SECONDARY}a quitter le serveur"
@@ -78,3 +90,5 @@ SHOP_SELLED: "{PREFIX}Vous venez de vendre {PRIMARY}x{COUNT} {ITEM_SELLED} {SECO
 SHOP_NO_ENOUGHT_MONEY: "{PREFIX}Vous n'avez pas assez d'argent, il vous manque {PRIMARY}{NEEDED}{ECONOMY_SYMBOL}"
 SHOP_NOT_HAVE_ITEM: "{PREFIX}Vous n'avez pas {PRIMARY}x{COUNT} {ITEM} {SECONDARY}dans votre inventaire"
 SHOP_INVENTORY_FULL: "{PREFIX}Votre inventaire est actuellement plein, vous ne pouvez pas acheter d'item"
+
+PLAYER_MANAGE_EDITION: "{PREFIX}Vous venez de modifié le joueur {PRIMARY}{PLAYER}"
