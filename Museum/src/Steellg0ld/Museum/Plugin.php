@@ -16,6 +16,7 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\commands\defaults\Faction;
+use Steellg0ld\Museum\commands\defaults\Manage;
 use Steellg0ld\Museum\commands\defaults\Money;
 use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
@@ -68,7 +69,7 @@ class Plugin extends PluginBase
             new Settings("settings","Configure your game","",["configure","setting"]),
             new Rank("setrank","Set rank to yourself",""),
             new Shop("shop","Buy a item simply",""),
-            new Money("money","Edit the money","")
+            new Manage("manage","Edit player informations","")
         ]);
     }
 
