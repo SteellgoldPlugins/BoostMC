@@ -19,7 +19,7 @@ class LoadDatabase extends AsyncTask {
         $results = [];
 
         $db = new \SQLite3($this->db[0]);
-        $data = $db->query("SELECT faction, players, power, money, allies, description, claim_message, claims FROM faction");
+        $data = $db->query("SELECT faction, players, power, money, allies, description, claim_message, claims, roles, dates, invests FROM faction");
         while ($resultArr = $data->fetchArray(SQLITE3_ASSOC)) {
             $results["faction"][$resultArr['faction']] = array(unserialize(base64_decode($resultArr['players'])), $resultArr['power'], $resultArr['money'], unserialize(base64_decode($resultArr['allies'])), base64_decode($resultArr['description']), base64_decode($resultArr['claim_message']), unserialize(base64_decode($resultArr['claims'])), unserialize(base64_decode($resultArr['roles'])), unserialize(base64_decode($resultArr['dates'])), unserialize(base64_decode($resultArr['invests'])));
         }
