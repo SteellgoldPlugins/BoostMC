@@ -26,7 +26,7 @@ class MemberForm{
                         if($data == 0){
                             self::invite($p);
                         }else{
-                            self::member($p, $array[$data]);
+                            self::member($p, $array[$data - 1]);
                         }
                     }
                 }
