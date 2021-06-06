@@ -19,4 +19,9 @@ class Database
     {
         Plugin::getInstance()->getDatabase()->getDatabase()->query("UPDATE players SET address = '$address', faction = '$faction', role = '$role', rank = '$rank', money= '$money', lang = '$lang', settings = '$settings', discordId = '$discordId' WHERE player = '$player'");
     }
+
+    public static function update(String $colum, String $value, String $player)
+    {
+        Plugin::getInstance()->getDatabase()->getDatabase()->query("UPDATE players SET '$colum'='$value' WHERE player = '$player'");
+    }
 }
