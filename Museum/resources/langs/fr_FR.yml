@@ -82,6 +82,7 @@ FACTION_INVITE_DENY: "{PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invit
 FACTION_INVITE_TIME_OUT: "{PREFIX}L'invitation a expirée"
 FACTION_INVITE_PLAYER_DISCONNECTED: "{PREFIX}Le joueur est actuellement déconnecté(e)"
 FACTION_PLAYER_ALREADY_FACTION: "{PREFIX}Le joueur {PRIMARY}{PLAYER}{SECONDARY} a déjà une faction {SECONDARY}({PRIMARY}{FACTION}{SECONDARY})"
+FACTION_CANT_LEAVE_DISBAND: "{PREFIX}Vous ne pouvez pas quitter la faction, supprimer la faction pour pouvoir la quitter, vous êtes le {ERROR}Chef"
 
 SETTINGS_UPDATED: "{PREFIX}Vos préférences ont bien été enregistrées"
 
