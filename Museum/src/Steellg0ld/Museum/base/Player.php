@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\base;
 
+use Steellg0ld\Museum\api\Scoreboard;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\tasks\async\RegisterPlayer;
 
@@ -81,5 +82,14 @@ class Player extends \pocketmine\Player
      */
     public function hasFaction() : bool {
         return $this->faction == "none";
+    }
+
+    public function setScoreboard(){
+        $scoreboard = Plugin::getInstance()->getScoreboardAPI();
+        $scoreboard->remove($this);
+        $scoreboard->new($this,"infos","MUSEUM");
+        $scoreboard->setLine($this, 1," " . $this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
+        $scoreboard->setLine($this, 2," " . Ranks::translate($this,$this->rank));
+        $scoreboard->setLine($this, 3," " . ($this->faction == "none" ? "Sans faction" : $this->faction));
     }
 }
