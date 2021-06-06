@@ -6,20 +6,19 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerJoinEvent;
-use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
 use Steellg0ld\Museum\api\VPN;
-use Steellg0ld\Museum\base\Level;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
 use Steellg0ld\Museum\forms\shop\ShopForm;
 use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
 class PlayerListener implements Listener
 {
-    public const CHAT = "{PRIMARY}[{SECONDARY}{RANK}{PRIMARY}] {PRIMARY}[{SECONDARY}{FACTION}{FACTION_RANK}{PRIMARY}] {SECONDARY}{PLAYER_NAME} {PRIMARY}§l» §r{PRIMARY}{MESSAGE}";
+    public const CHAT = "{RANK} {PRIMARY}[{SECONDARY}{FACTION}{FACTION_RANK}{PRIMARY}] {SECONDARY}{PLAYER_NAME} {PRIMARY}§l» §r{PRIMARY}{MESSAGE}";
 
     public function create(PlayerCreationEvent $event) {
         $event->setPlayerClass(Player::class);
@@ -45,6 +44,7 @@ class PlayerListener implements Listener
             }
 
             ShopForm::open($player);
+            $player->setScoreboard();
         }
     }
 
@@ -67,7 +67,7 @@ class PlayerListener implements Listener
         $p = $event->getPlayer();
         if(!$p instanceof Player) return;
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
-            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], Ranks::$ranks[$p->getRank()]["r"], $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
+            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], Unicode::RED_BUTTON, $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
         }
     }
 }
