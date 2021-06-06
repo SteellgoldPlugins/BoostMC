@@ -30,7 +30,6 @@ class Faction
     public const POWER_PER_KILL = 5;
     public const POWER_PER_DEATHS = 10;
     public const INVITATION_EXPIRATION_TIME = 60;
-    public const DEFAULT_ECONOMY_SYMBOL = 1;
     public const DEFAULT_MAX_MEMBERS = 10;
 
     public static function create(Player $player, string $faction, string $description, string $claim_message): void
@@ -82,6 +81,21 @@ class Faction
         }
     }
 
+    public static function disbandFaction(String $faction): void {
+        foreach (self::$factions[$faction]["players"] as $player){
+            $p = Server::getInstance()->getPlayer($player);
+            if($p instanceof Player){
+                $p->faction = "none";
+                $p->faction_role = 0;
+            }else{
+                Database::update("faction","none",$player);
+                Database::update("faction_role",0,$player);
+            }
+        }
+
+        if (isset(self::$factions[$faction]))unset(self::$factions[$faction]);
+    }
+
     public static function getMembers(String $faction){
         return self::$factions[$faction]["players"];
     }
@@ -90,4 +104,19 @@ class Faction
         $faction = self::$invitations[$invited->getName()];
         if (count(self::getMembers($faction)) < self::DEFAULT_MAX_MEMBERS) return true; else return false;
     }
+
+    public static function getRoles(String $faction){
+        return self::$factions[$faction]["roles"];
+    }
+
+    public static function getLeader(string $faction): string {
+        foreach (self::getMembers($faction) as $player) {
+            if (self::getRoles($faction) === 3) {
+                return $player;
+            }
+        }
+        return "";
+    }
+
+
 }
