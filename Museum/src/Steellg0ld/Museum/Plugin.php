@@ -12,6 +12,7 @@ use pocketmine\level\Level;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
+use Steellg0ld\Museum\api\Scoreboard;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
@@ -21,10 +22,13 @@ use Steellg0ld\Museum\commands\defaults\Money;
 use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\commands\defaults\Shop;
+use Steellg0ld\Museum\commands\defaults\Test;
 use Steellg0ld\Museum\entity\Wither;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
 use Steellg0ld\Museum\listeners\server\LevelListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
+use Steellg0ld\Museum\tasks\UpdateScoreboard;
+use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
 class Plugin extends PluginBase
@@ -48,6 +52,9 @@ class Plugin extends PluginBase
         $this->loadListeners();
         $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
+        $this->getScheduler()->scheduleRepeatingTask(new UpdateScoreboard(),20 * 3);
+
+        Unicode::init();
     }
 
     public function onDisable()
@@ -65,9 +72,9 @@ class Plugin extends PluginBase
 
     public function loadCommands(){
         $this->getServer()->getCommandMap()->registerAll("museum",[
+            new Test("emoticons","Show all emoticons","",["emoticons","png"]),
             new Faction("faction","Faction command","",["fac","f"]),
             new Settings("settings","Configure your game","",["configure","setting"]),
-            new Rank("setrank","Set rank to yourself",""),
             new Shop("shop","Buy a item simply",""),
             new Manage("manage","Edit player informations","")
         ]);
