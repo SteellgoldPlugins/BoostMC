@@ -11,6 +11,7 @@ use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Prices;
+use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
 class ShopForm{
@@ -38,7 +39,7 @@ class ShopForm{
                 }
             );
 
-            $form->setTitle(Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
             $form->setContent(Utils::getMessage($player, "SHOP_LABEL_FORM"));
             $form->addButton(Utils::getMessage($player, "SHOP_DECORATIVE_BLOCKS_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$decoratives)]),0,"textures/items/painting");
             $form->addButton(Utils::getMessage($player, "SHOP_CONSTRUCTION_BLOCKS_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$constructions)]),0,"textures/items/brick");
@@ -66,7 +67,7 @@ class ShopForm{
                 }
             );
 
-            $form->setTitle(Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
             $form->setContent(Utils::getMessage($player, "SHOP_LABEL_FORM"));
             foreach ($array as $item){
                 $form->addButton(Item::get($item["o"])->getName() . "\n§a".$item["b"].Economy::SYMBOLS[$player->settings["economy_symbol"]] ." §r- §c".$item['s']."$",0,$item['i']);
@@ -108,7 +109,7 @@ class ShopForm{
                 }
             );
 
-            $form->setTitle(Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
             $form->addLabel(str_replace(["{ITEM}","{BUY_PRICE}","{SELL_PRICE}"],[$item->getName(), $buy_price, $sell_price],Utils::getMessage($player, "SHOP_PRODUCT_LABEL_FORM")));
             $form->addToggle(Utils::getMessage($player, "SHOP_PRODUCT_TOGGLE_FORM"));
             $form->addSlider(Utils::getMessage($player, "SHOP_PRODUCT_SLIDER_FORM"),1,128);
