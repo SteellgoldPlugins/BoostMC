@@ -139,3 +139,16 @@ class Unicode {
     const DIAMOND_SWORD = "";
     const NETHERITE_SWORD = "";
     const EXCLAMATION = "";
+    const MEN_POLICE_FACE = "";
+    const GIRL_BLACK_POLICE_FACE = "";
+    const ALEX_OFFLINE = "";
+    const DOWN = "";
+    const LEFT = "";
+    const RIGHT = "";
+    const RED_UP = "";
+    const RED_DOWN = "";
+    const RED_LEFT = "";
+    const RED_RIGHT = "";
+    const RED_EXCLAMATION = "";
+    const RED_HELP = "";
+}
