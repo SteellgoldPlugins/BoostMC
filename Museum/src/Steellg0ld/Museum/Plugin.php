@@ -105,4 +105,8 @@ class Plugin extends PluginBase
     public function getEconomyAPI(): Economy{
         return new Economy();
     }
+
+    public function getScoreboardAPI(): Scoreboard {
+        return new Scoreboard();
+    }
 }
