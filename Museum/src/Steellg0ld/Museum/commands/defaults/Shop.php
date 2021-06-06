@@ -8,6 +8,7 @@ use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\FactionForm;
 use Steellg0ld\Museum\forms\SettingsForm;
 use Steellg0ld\Museum\forms\shop\ShopForm;
+use Steellg0ld\Museum\Plugin;
 
 class Shop extends Command {
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
