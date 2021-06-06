@@ -42,6 +42,8 @@ class FactionForm{
                 function (Player $p, $data) {
                     if ($data !== null) {
                         switch($data){
+                            case 0:
+                                break;
                             case 2:
                             MemberForm::list($p);
                             break;
