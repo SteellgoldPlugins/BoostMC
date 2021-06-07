@@ -21,25 +21,39 @@ class Faction extends Command {
     {
         if($sender instanceof Player){
             if(isset($args[0])){
-                switch ($args[0]){
-                    case "create":
-                        if($sender->hasFaction()){
-                            FactionForm::createForm($sender);
-                        }else{
-                            FactionForm::manage($sender);
-                        }
-                        break;
-                    case "invite":
-                        MemberForm::invite($sender);
-                        break;
-                    case "accept":
-                        var_dump(FactionAPI::$invitations[$sender->getName()]);
-                        FactionAPI::acceptInvitation($sender);
-                        break;
-                    case "deny":
-                        FactionAPI::denyInvitation($sender);
-                        break;
+                if($sender->hasFaction()){
+                    switch ($args[0]){
+                        case "create":
+                            if($sender->hasFaction()){
+                                FactionForm::createForm($sender);
+                            }else{
+                                FactionForm::manage($sender);
+                            }
+                            break;
+                        case "invite":
+                            MemberForm::invite($sender);
+                            break;
+                        case "accept":
+                            var_dump(FactionAPI::$invitations[$sender->getName()]);
+                            FactionAPI::acceptInvitation($sender);
+                            break;
+                        case "deny":
+                            FactionAPI::denyInvitation($sender);
+                            break;
+                        case "h":
+                        case "home":
+                            break;
+                        case "seth":
+                        case "sethome":
+                        case "sh":
+
+                            break;
+                    }
+                }else{
+
                 }
+            }else{
+                Utils::sendMessage($sender,"FACTION_NO_ARGUMENTS");
             }
         }
     }
