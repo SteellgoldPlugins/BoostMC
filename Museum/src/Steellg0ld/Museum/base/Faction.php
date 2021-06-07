@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\base;
 
+use pocketmine\level\Position;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\utils\Utils;
@@ -34,7 +35,7 @@ class Faction
 
     public static function create(Player $player, string $faction, string $description, string $claim_message): void
     {
-        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message, "roles" => array($player->getName() => 3), "dates" => array($player->getName() => time()), "invests" => array($player->getName() => 0));
+        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message, "roles" => array($player->getName() => 3), "dates" => array($player->getName() => time()), "invests" => array($player->getName() => 0), "home" => null);
         self::$claims[$faction] = array();
 
         $player->faction = $faction;
@@ -118,5 +119,15 @@ class Faction
         return "";
     }
 
+    public static function getHome(string $faction) : Position {
+        return self::$factions[$faction]["home"] !== null ? unserialize(base64_decode(self::$factions[$faction])) : Utils::getSpawn();
+    }
 
+    public static function setHome(string $faction, Position $position) {
+        return self::$factions[$faction]["home"] = base64_decode(serialize($position));
+    }
+
+    public static function hasHome(string $faction): bool {
+        return self::$factions[$faction]["home"] == null;
+    }
 }
