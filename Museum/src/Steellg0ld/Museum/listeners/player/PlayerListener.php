@@ -39,8 +39,10 @@ class PlayerListener implements Listener
                 $player->register();
             }
 
-            foreach (Server::getInstance()->getOnlinePlayers() as $players){
-                if($players instanceof Player) if($players->settings["player_status"]) Utils::sendMessage($players, $player->hasPlayedBefore() ? "PLAYER_JOIN" : "PLAYER_FIRST_JOIN", ["{PLAYER}"], [$player->getName()]);
+            foreach (Server::getInstance()->getOnlinePlayers() as $players) {
+                if ($players instanceof Player) {
+                    if ($players->settings["player_status"]) Utils::sendMessage($players, $player->hasPlayedBefore() ? "PLAYER_JOIN" : "PLAYER_FIRST_JOIN", ["{PLAYER}"], [$player->getName()],false, true);
+                }
             }
 
             ShopForm::open($player);
@@ -56,7 +58,7 @@ class PlayerListener implements Listener
             Plugin::getInstance()->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)),$player->discordId);
             foreach (Server::getInstance()->getOnlinePlayers() as $players) {
                 if ($players instanceof Player) {
-                    if ($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()]);
+                    if ($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()], false, true);
                 }
             }
         }
