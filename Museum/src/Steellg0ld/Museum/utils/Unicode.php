@@ -23,7 +23,7 @@ class Unicode {
         } while (++$i < $GRID ** 2);
 
         for ($a = 1; ; $a++) {
-            if ($a > 119) {
+            if ($a > 121) {
                 break;
             }
             $config->set($a, $vv[$a]);
@@ -151,4 +151,6 @@ class Unicode {
     const RED_RIGHT = "";
     const RED_EXCLAMATION = "";
     const RED_HELP = "";
+    const PURPLE_BIOLOGIC = "";
+    const LESS = "";
 }
