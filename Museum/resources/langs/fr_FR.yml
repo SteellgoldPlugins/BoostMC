@@ -8,8 +8,9 @@ RANK_1: "VIP"
 RANK_2: "VIP+"
 RANK_3: "YouTube"
 RANK_4: "Twitch"
-RANK_5: "Staff"
-RANK_6: "Administrateur"
+RANK_5: "Guide"
+RANK_6: "Modérateur"
+RANK_7: "Administrateur"
 
 # FORMS
 SETTINGS_TITLE_FORM: "Paramètres"
@@ -21,6 +22,11 @@ SETTINGS_DROPDOWN_1_1: "Anglais"
 SETTINGS_DROPDOWN_1_2: "Espagnol"
 SETTINGS_DROPDOWN_1_3: "Italien"
 SETTINGS_DROPDOWN_1_4: "Chinois"
+SETTINGS_DROPDOWN_2: "Sexe de votre unicode (Staff)"
+SETTINGS_DROPDOWN_2_0: "[U] Homme (Blanc)"
+SETTINGS_DROPDOWN_2_1: "[U] Homme (Noir)"
+SETTINGS_DROPDOWN_2_2: "[U] Femme (Blanche)"
+SETTINGS_DROPDOWN_2_3: "[U] Femme (Noire)"
 
 FACTION_CREATE_TITLE_FORM: "Créer une faction"
 FACTION_CREATE_LABEL_FORM: "{PREFIX}Créer votre faction et esseyer de dominer les autres, cela vous coûtera {PRIMARY}{DEFAULT_FACTION_PRICE}{ECONOMY_SYMBOL}{SECONDARY}"
@@ -68,10 +74,9 @@ MANAGE_PLAYER_BAN_LABEL_FORM: "{PREFIX}Choisissez le temp et le type de banissem
 # MESSAGES
 PLAYER_DISCONNECTED: "{ERROR_PREFIX}Le joueur {ERROR}{DISCONNECTED_PLAYER} {SECONDARY}est actuellement déconnecté(e)"
 
-PLAYER_FIRST_JOIN: "{SUCCESS_PREFIX}Bienvenu(e) à {PRIMARY}{PLAYER} {SECONDARY}qui s'est connecté(e) pour la première fois sur le serveur"
 PLAYER_JOIN: "{+} {PRIMARY}{PLAYER} {+}"
-PLAYER_FIRST_JOIN: "{+} {BASE}Première connexion de {PRIMARY}{PLAYER} {+}"
 PLAYER_LEAVE: "{-} {ERROR}{PLAYER} {-}"
+PLAYER_FIRST_JOIN: "{+} {BASE}Première connexion de {PRIMARY}{PLAYER} {+}"
 
 FACTION_CREATED: "{SUCCESS_PREFIX}Vous venez de créer la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f {SECONDARY}à nouveau pour gérer la faction"
 
