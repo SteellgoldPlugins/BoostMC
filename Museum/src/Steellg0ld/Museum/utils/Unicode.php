@@ -23,7 +23,7 @@ class Unicode {
         } while (++$i < $GRID ** 2);
 
         for ($a = 1; ; $a++) {
-            if ($a > 121) {
+            if ($a > 129) {
                 break;
             }
             $config->set($a, $vv[$a]);
@@ -57,8 +57,8 @@ class Unicode {
     const CRYSTAL = "";
     const CHEST_0 = "";
     const RAGE_FACE = "";
-    const POLICE_FACE = "";
-    const BLACK_POLICE_FACE = "";
+    const MODERATOR_FACE = "";
+    const BLACK_MODERATOR_FACE = "";
     const COIN = "";
     const UP = "";
     const BIOLOGIC = "";
@@ -139,8 +139,8 @@ class Unicode {
     const DIAMOND_SWORD = "";
     const NETHERITE_SWORD = "";
     const EXCLAMATION = "";
-    const MEN_POLICE_FACE = "";
-    const GIRL_BLACK_POLICE_FACE = "";
+    const MEN_MODERATOR_FACE = "";
+    const GIRL_BLACK_MODERATOR_FACE = "";
     const ALEX_OFFLINE = "";
     const DOWN = "";
     const LEFT = "";
@@ -153,4 +153,13 @@ class Unicode {
     const RED_HELP = "";
     const PURPLE_BIOLOGIC = "";
     const LESS = "";
+    const MEN_ADMIN_FACE = "";
+    const MEN_ADMIN_BLACK_FACE = "";
+    const GIRL_ADMIN_FACE = "";
+    const GIRL_ADMIN_BLACK_FACE = "";
+    const MEN_HELPER_FACE = "";
+    const MEN_HELPER_BLACK_FACE = "";
+    const GIRL_HELPER_FACE = "";
+    const GIRL_HELPER_BLACK_FACE = "";
+
 }
