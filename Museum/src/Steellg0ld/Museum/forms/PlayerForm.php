@@ -28,7 +28,7 @@ class PlayerForm {
 
             $form->setTitle(Utils::getMessage($player, "MANAGE_PLAYER_TITLE_FORM",["{PLAYER_MANAGE}"],[$sender->getName()]));
             $form->addLabel(Utils::getMessage($player, "MANAGE_PLAYER_LABEL_FORM",["{RANK}", "{PLAYER_MANAGE}"], [Ranks::translate($player, $sender->getRank()),$sender->getName()]));
-            $form->addDropdown("Grade", ["Joueur", "VIP", "VIP+", "Youtube", "Twitch", "Staff", "Administrateur"],$sender->getRank());
+            $form->addDropdown("Grade", ["Joueur", "VIP", "VIP+", "Youtube", "Twitch", "Guide", "Modérateur", "Administrateur"],$sender->getRank());
             $form->addInput("Argent",$sender->money,$sender->money);
             $form->addToggle("Bannir (Fenêtre externe)");
             $player->sendForm($form);
