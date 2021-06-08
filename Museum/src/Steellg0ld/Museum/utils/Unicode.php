@@ -162,4 +162,26 @@ class Unicode {
     const GIRL_HELPER_FACE = "";
     const GIRL_HELPER_BLACK_FACE = "";
 
+    public static function getMFace(Int $setting, Int $rank): string {
+        return [
+            5 => [
+                0 => self::MEN_HELPER_FACE,
+                1 => self::MEN_HELPER_BLACK_FACE,
+                2 => self::GIRL_HELPER_FACE,
+                3 => self::GIRL_HELPER_BLACK_FACE,
+            ],
+            6 => [
+                0 => self::MEN_MODERATOR_FACE,
+                1 => self::BLACK_MODERATOR_FACE,
+                2 => self::MODERATOR_FACE,
+                3 => self::GIRL_BLACK_MODERATOR_FACE,
+            ],
+            7 => [
+                0 => self::MEN_ADMIN_FACE,
+                1 => self::MEN_ADMIN_BLACK_FACE,
+                2 => self::GIRL_ADMIN_FACE,
+                3 => self::GIRL_ADMIN_BLACK_FACE,
+            ],
+        ][$rank][$setting];
+    }
 }
