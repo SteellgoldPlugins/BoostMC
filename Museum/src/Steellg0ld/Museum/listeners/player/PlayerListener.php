@@ -69,7 +69,7 @@ class PlayerListener implements Listener
         $p = $event->getPlayer();
         if(!$p instanceof Player) return;
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
-            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], Unicode::RED_BUTTON, $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
+            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
         }
     }
 }
