@@ -33,6 +33,20 @@ class Faction
     public const INVITATION_EXPIRATION_TIME = 60;
     public const DEFAULT_MAX_MEMBERS = 10;
 
+    /**
+         /$$      /$$
+        | $$$    /$$$
+        | $$$$  /$$$$  /$$$$$$  /$$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$
+        | $$ $$/$$ $$ |____  $$| $$__  $$ |____  $$ /$$__  $$ /$$__  $$
+        | $$  $$$| $$  /$$$$$$$| $$  \ $$  /$$$$$$$| $$  \ $$| $$$$$$$$
+        | $$\  $ | $$ /$$__  $$| $$  | $$ /$$__  $$| $$  | $$| $$_____/
+        | $$ \/  | $$|  $$$$$$$| $$  | $$|  $$$$$$$|  $$$$$$$|  $$$$$$$
+        |__/     |__/ \_______/|__/  |__/ \_______/ \____  $$ \_______/
+                                                    /$$  \ $$
+                                                    |  $$$$$$/
+                                                    \______/
+     */
+
     public static function create(Player $player, string $faction, string $description, string $claim_message): void
     {
         self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message, "roles" => array($player->getName() => 3), "dates" => array($player->getName() => time()), "invests" => array($player->getName() => 0), "home" => null);
@@ -44,6 +58,17 @@ class Faction
         $player->sendMessage(Utils::getMessage($player, "FACTION_CREATED", ["{FACTION}"],[$faction]));
     }
 
+
+    /**
+         /$$      /$$                         /$$
+        | $$$    /$$$                        | $$
+        | $$$$  /$$$$  /$$$$$$  /$$$$$$/$$$$ | $$$$$$$   /$$$$$$   /$$$$$$   /$$$$$$$
+        | $$ $$/$$ $$ /$$__  $$| $$_  $$_  $$| $$__  $$ /$$__  $$ /$$__  $$ /$$_____/
+        | $$  $$$| $$| $$$$$$$$| $$ \ $$ \ $$| $$  \ $$| $$$$$$$$| $$  \__/|  $$$$$$
+        | $$\  $ | $$| $$_____/| $$ | $$ | $$| $$  | $$| $$_____/| $$       \____  $$
+        | $$ \/  | $$|  $$$$$$$| $$ | $$ | $$| $$$$$$$/|  $$$$$$$| $$       /$$$$$$$/
+        |__/     |__/ \_______/|__/ |__/ |__/|_______/  \_______/|__/      |_______/
+     */
     public static function sendInvitation(Player $player, string $faction): void {
         self::$invitations[$player->getName()] = $faction;
         self::$invitationsTimeout[$player->getName()] = time() + self::INVITATION_EXPIRATION_TIME;
@@ -114,6 +139,30 @@ class Faction
         foreach (self::getMembers($faction) as $player) {
             if (self::getRoles($faction) === 3) {
                 return $player;
+
+    /**
+         /$$   /$$
+        | $$  | $$
+        | $$  | $$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$
+        | $$$$$$$$ /$$__  $$| $$_  $$_  $$ /$$__  $$
+        | $$__  $$| $$  \ $$| $$ \ $$ \ $$| $$$$$$$$
+        | $$  | $$| $$  | $$| $$ | $$ | $$| $$_____/
+        | $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$
+        |__/  |__/ \______/ |__/ |__/ |__/ \_______/
+     */
+
+
+    /**
+          /$$$$$$  /$$           /$$
+         /$$__  $$| $$          |__/
+        | $$  \__/| $$  /$$$$$$  /$$ /$$$$$$/$$$$   /$$$$$$$
+        | $$      | $$ |____  $$| $$| $$_  $$_  $$ /$$_____/
+        | $$      | $$  /$$$$$$$| $$| $$ \ $$ \ $$|  $$$$$$
+        | $$    $$| $$ /$$__  $$| $$| $$ | $$ | $$ \____  $$
+        |  $$$$$$/| $$|  $$$$$$$| $$| $$ | $$ | $$ /$$$$$$$/
+        \______/ |__/ \_______/|__/|__/ |__/ |__/|_______/
+     */
+
             }
         }
         return "";
