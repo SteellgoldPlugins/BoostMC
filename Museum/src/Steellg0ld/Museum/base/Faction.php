@@ -139,21 +139,6 @@ class Faction
         }
     }
 
-    public static function disbandFaction(String $faction): void {
-        foreach (self::$factions[$faction]["players"] as $player){
-            $p = Server::getInstance()->getPlayer($player);
-            if($p instanceof Player){
-                $p->faction = "none";
-                $p->faction_role = 0;
-            }else{
-                Database::update("faction","none",$player);
-                Database::update("faction_role",0,$player);
-            }
-        }
-
-        if (isset(self::$factions[$faction]))unset(self::$factions[$faction]);
-    }
-
     public static function getMembers(String $faction){
         return self::$factions[$faction]["players"];
     }
@@ -163,14 +148,13 @@ class Faction
         if (count(self::getMembers($faction)) < self::DEFAULT_MAX_MEMBERS) return true; else return false;
     }
 
-    public static function getRoles(String $faction){
-        return self::$factions[$faction]["roles"];
+    public static function kickFaction(string $name): void {
+        // TODO (genre)
     }
 
-    public static function getLeader(string $faction): string {
-        foreach (self::getMembers($faction) as $player) {
-            if (self::getRoles($faction) === 3) {
-                return $player;
+    public static function leaveFaction(Player $player): void {
+        // TODO (genre)
+    }
 
     /**
          /$$   /$$
@@ -183,6 +167,28 @@ class Faction
         |__/  |__/ \______/ |__/ |__/ |__/ \_______/
      */
 
+    public static function getHome(string $faction) {
+        var_dump(self::$factions[$faction]["home"]);
+        return self::$factions[$faction]["home"] !== "none" ? explode(":", self::$factions[$faction]["home"]) : Utils::getSpawn();
+    }
+
+    public static function setHome(string $faction, Position $position): string
+    {
+        return self::$factions[$faction]["home"] = $position->getX(). ":".$position->getY().":".$position->getZ();
+    }
+
+    public static function hasHome(string $faction): bool {
+        return self::$factions[$faction]["home"] !== "none";
+    }
+
+    public static function teleportHome(Player $sender) {
+        if(self::hasHome($sender->getFaction())){
+            $home = self::getHome($sender->getFaction());
+            Plugin::getInstance()->getScheduler()->scheduleRepeatingTask(new CooldownTeleportTask($sender,self::TELEPORT_COOLDOWN, new Vector3($home[0], $home[1], $home[2]), ["x" => $sender->getX(), "y" => $sender->getY(), "z" => $sender->getZ()]),20);
+        }else{
+            Utils::sendMessage($sender,"FACTION_NO_HOME");
+        }
+    }
 
     /**
           /$$$$$$  /$$           /$$
@@ -195,6 +201,24 @@ class Faction
         \______/ |__/ \_______/|__/|__/ |__/ |__/|_______/
      */
 
+    public static function getClaimCount(string $faction): int {
+        return count(self::$claims[$faction]) ?? 0;
+    }
+
+    public static function isInClaim(Level $level, int $chunkX, int $chunkZ): bool {
+        $world = $level->getFolderName();
+        $array = [];
+        foreach (self::$claims as $faction => $claims) {
+            $array = array_merge($array, $claims);
+        }
+        return in_array("{$chunkX}:{$chunkZ}:{$world}", $array);
+    }
+
+    public static function getFactionClaim(Level $level, int $chunkX, int $chunkZ): string {
+        $world = $level->getFolderName();
+        foreach (self::$claims as $faction => $claims) {
+            foreach ($claims as $claim) {
+                if ($claim === "{$chunkX}:{$chunkZ}:{$world}") return $faction;
             }
         }
         return "";
