@@ -224,15 +224,35 @@ class Faction
         return "";
     }
 
-    public static function getHome(string $faction) : Position {
-        return self::$factions[$faction]["home"] !== null ? unserialize(base64_decode(self::$factions[$faction])) : Utils::getSpawn();
+    public function claimChunk(Player $player, string $faction): void {
+        $chunk = $player->getLevel()->getChunkAtPosition($player);
+        $chunkX = $chunk->getX();
+        $chunkZ = $chunk->getZ();
+        $world = $player->getLevel()->getFolderName();
+        $claims = self::$claims[$faction];
+        array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
+        self::$claims[$faction] = $claims;
     }
 
-    public static function setHome(string $faction, Position $position) {
-        return self::$factions[$faction]["home"] = base64_decode(serialize($position));
+    public function deleteClaim(Player $player, string $faction) {
+        $chunk = $player->getLevel()->getChunkAtPosition($player);
+        $chunkX = $chunk->getX();
+        $chunkZ = $chunk->getZ();
+        $world = $player->getLevel()->getFolderName();
+        $claim = self::$claims[$faction];
+        unset($claim[array_search("{$chunkX}:{$chunkZ}:{$world}", $claim)]);
+        self::$claims[$faction] = $claim;
     }
 
-    public static function hasHome(string $faction): bool {
-        return self::$factions[$faction]["home"] == null;
+    public static function claim(Player $sender){
+        if($sender->faction_role >= self::OFFICIER){
+
+        }else{
+            Utils::sendMessage($sender, "MUST_BE_OFFICIER");
+        }
+    }
+
+    public static function unclaim(Player $sender)
+    {
     }
 }
