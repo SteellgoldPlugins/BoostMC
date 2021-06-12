@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\utils;
 
+use pocketmine\item\ItemIds;
 use Steellg0ld\Museum\Plugin;
 
 class Unicode {
@@ -23,7 +24,7 @@ class Unicode {
         } while (++$i < $GRID ** 2);
 
         for ($a = 1; ; $a++) {
-            if ($a > 129) {
+            if ($a > 161) {
                 break;
             }
             $config->set($a, $vv[$a]);
@@ -33,7 +34,7 @@ class Unicode {
 
 
     const FOOD = "";
-    const IRON_CHESTPLATE = "";
+    const SMALL_IRON_CHESTPLATE = "";
     const MINECOIN = "";
     const GOLDEN = "";
     const AUDIO = "";
@@ -161,6 +162,32 @@ class Unicode {
     const MEN_HELPER_BLACK_FACE = "";
     const GIRL_HELPER_FACE = "";
     const GIRL_HELPER_BLACK_FACE = "";
+    const TIMER_RIGHT = "";
+    const ENDERPEARL_TIMER = "";
+    const LEATHER_HELMET = "";
+    const LEATHER_CHESTPLATE = "";
+    const LEATHER_LEGGINGS = "";
+    const LEATHER_BOOTS = "";
+    const IRON_HELMET = "";
+    const IRON_CHESTPLATE = "";
+    const IRON_LEGGINGS = "";
+    const IRON_BOOTS = "";
+    const CHAINMAIL_HELMET = "";
+    const CHAINMAIL_CHESTPLATE = "";
+    const CHAINMAIL_LEGGINGS = "";
+    const CHAINMAIL_BOOTS = "";
+    const GOLDEN_HELMET = "";
+    const GOLDEN_CHESTPLATE = "";
+    const GOLDEN_LEGGINGS = "";
+    const GOLDEN_BOOTS = "";
+    const DIAMOND_HELMET = "";
+    const DIAMOND_CHESTPLATE = "";
+    const DIAMOND_LEGGINGS = "";
+    const DIAMOND_BOOTS = "";
+    const NETHERITE_HELMET = "";
+    const NETHERITE_CHESTPLATE = "";
+    const NETHERITE_LEGGINGS = "";
+    const NETHERITE_BOOTS = "";
 
     public static function getMFace(Int $setting, Int $rank): string {
         return [
@@ -184,4 +211,27 @@ class Unicode {
             ],
         ][$rank][$setting];
     }
+
+    CONST ARMORS = [
+        ItemIds::LEATHER_HELMET => Unicode::LEATHER_HELMET,
+        ItemIds::LEATHER_CHESTPLATE => Unicode::LEATHER_CHESTPLATE,
+        ItemIds::LEATHER_LEGGINGS => Unicode::LEATHER_LEGGINGS,
+        ItemIds::LEATHER_BOOTS => Unicode::LEATHER_BOOTS,
+        ItemIds::CHAIN_HELMET => Unicode::CHAINMAIL_HELMET,
+        ItemIds::CHAIN_CHESTPLATE => Unicode::CHAINMAIL_CHESTPLATE,
+        ItemIds::CHAIN_LEGGINGS => Unicode::CHAINMAIL_LEGGINGS,
+        ItemIds::CHAIN_BOOTS => Unicode::CHAINMAIL_BOOTS,
+        ItemIds::IRON_HELMET => Unicode::IRON_HELMET,
+        ItemIds::IRON_CHESTPLATE => Unicode::IRON_CHESTPLATE,
+        ItemIds::IRON_LEGGINGS => Unicode::IRON_LEGGINGS,
+        ItemIds::IRON_BOOTS => Unicode::IRON_BOOTS,
+        ItemIds::GOLDEN_HELMET => Unicode::GOLDEN_HELMET,
+        ItemIds::GOLDEN_CHESTPLATE => Unicode::GOLDEN_CHESTPLATE,
+        ItemIds::GOLDEN_LEGGINGS => Unicode::GOLDEN_LEGGINGS,
+        ItemIds::GOLDEN_BOOTS => Unicode::GOLDEN_BOOTS,
+        ItemIds::DIAMOND_HELMET => Unicode::DIAMOND_HELMET,
+        ItemIds::DIAMOND_CHESTPLATE => Unicode::DIAMOND_CHESTPLATE,
+        ItemIds::DIAMOND_LEGGINGS => Unicode::DIAMOND_LEGGINGS,
+        ItemIds::DIAMOND_BOOTS => Unicode::DIAMOND_BOOTS
+    ];
 }
