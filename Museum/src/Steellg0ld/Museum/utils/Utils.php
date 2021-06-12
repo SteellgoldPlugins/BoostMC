@@ -43,9 +43,9 @@ class Utils {
                 $allies = \SQLite3::escapeString(base64_encode(serialize($values["allies"])));
                 $description = \SQLite3::escapeString(base64_encode($values["description"]));
                 $claim_message = \SQLite3::escapeString(base64_encode($values["claim_message"]));
-                $roles = \SQLite3::escapeString(base64_encode($values["roles"]));
-                $dates = \SQLite3::escapeString(base64_encode($values["dates"]));
-                $invests = \SQLite3::escapeString(base64_encode($values["invests"]));
+                $roles = \SQLite3::escapeString(base64_encode(serialize($values["roles"])));
+                $dates = \SQLite3::escapeString(base64_encode(serialize($values["dates"])));
+                $invests = \SQLite3::escapeString(base64_encode(serialize($values["invests"])));
                 $home = \SQLite3::escapeString(base64_encode(serialize($values["home"])));
                 $claims = \SQLite3::escapeString(base64_encode(serialize($claim[$faction])));
                 $db->query("INSERT INTO faction (faction, players, power, money, allies, description, claim_message,claims,roles,dates,invests,home) VALUES ('$faction', '$players', '$power', '$money', '$allies', '$description', '$claim_message', '$claims', '$roles', '$dates', '$invests', '$home')");
