@@ -4,6 +4,7 @@ namespace Steellg0ld\Museum\commands\defaults;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
+use pocketmine\level\Position;
 use pocketmine\Server;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\faction\MemberForm;
@@ -21,20 +22,15 @@ class Faction extends Command {
     {
         if($sender instanceof Player){
             if(isset($args[0])){
-                if($sender->hasFaction()){
+                if(in_array($args[0], ["accept", "deny"]) or $sender->hasFaction()){
                     switch ($args[0]){
                         case "create":
-                            if($sender->hasFaction()){
-                                FactionForm::createForm($sender);
-                            }else{
-                                FactionForm::manage($sender);
-                            }
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender); else FactionForm::manage($sender);
                             break;
                         case "invite":
-                            MemberForm::invite($sender);
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender); else MemberForm::invite($sender);
                             break;
                         case "accept":
-                            var_dump(FactionAPI::$invitations[$sender->getName()]);
                             FactionAPI::acceptInvitation($sender);
                             break;
                         case "deny":
@@ -42,15 +38,21 @@ class Faction extends Command {
                             break;
                         case "h":
                         case "home":
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender); else FactionAPI::teleportHome($sender);
                             break;
                         case "seth":
                         case "sethome":
-                        case "sh":
-
+                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::teleportHome($sender);
+                            break;
+                        case "claim":
+                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::claim($sender);
+                            break;
+                        case "unclaim":
+                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::unclaim($sender);
                             break;
                     }
                 }else{
-
+                    FactionForm::createForm($sender);
                 }
             }else{
                 Utils::sendMessage($sender,"FACTION_NO_ARGUMENTS");
