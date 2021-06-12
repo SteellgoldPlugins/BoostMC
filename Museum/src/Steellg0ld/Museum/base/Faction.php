@@ -224,7 +224,7 @@ class Faction
         return "";
     }
 
-    public function claimChunk(Player $player, string $faction): void {
+    public static function claimChunk(Player $player, string $faction): void {
         $chunk = $player->getLevel()->getChunkAtPosition($player);
         $chunkX = $chunk->getX();
         $chunkZ = $chunk->getZ();
@@ -234,7 +234,7 @@ class Faction
         self::$claims[$faction] = $claims;
     }
 
-    public function deleteClaim(Player $player, string $faction) {
+    public static function deleteClaim(Player $player, string $faction) {
         $chunk = $player->getLevel()->getChunkAtPosition($player);
         $chunkX = $chunk->getX();
         $chunkZ = $chunk->getZ();
@@ -246,13 +246,35 @@ class Faction
 
     public static function claim(Player $sender){
         if($sender->faction_role >= self::OFFICIER){
+            $chunk = $sender->getLevel()->getChunkAtPosition($sender);
+            $chunkX = $chunk->getX();
+            $chunkZ = $chunk->getZ();
 
+            if(!self::isInClaim($sender->getLevel(),$chunkX,$chunkZ)){
+                self::claimChunk($sender,$sender->getFaction());
+                Utils::sendMessage($sender, "FACTION_CLAIM");
+            }else{
+                Utils::sendMessage($sender, "FACTION_ZONE_ALREADY", ["{FACTION}"], [self::getFactionClaim($sender->getLevel(),$chunkX, $chunkZ)]);
+            }
         }else{
             Utils::sendMessage($sender, "MUST_BE_OFFICIER");
         }
     }
 
-    public static function unclaim(Player $sender)
-    {
+    public static function unclaim(Player $sender) {
+        if($sender->faction_role >= self::OFFICIER){
+            if(self::isInClaim($sender->getLevel(), $sender->getLevel()->getChunkAtPosition($sender)->getX(), $sender->getLevel()->getChunkAtPosition($sender)->getZ())){
+                if(self::getFactionClaim($sender->getLevel(), $sender->getLevel()->getChunkAtPosition($sender)->getX(), $sender->getLevel()->getChunkAtPosition($sender)->getZ()) == $sender->getFaction()){
+                    self::deleteClaim($sender,$sender->getFaction());
+                    Utils::sendMessage($sender, "FACTION_UNCLAIM");
+                }else{
+                    Utils::sendMessage($sender,"FACTION_ZONE_OUR");
+                }
+            }else{
+                Utils::sendMessage($sender,"NO_CLAIM_ZONE");
+            }
+        }else{
+            Utils::sendMessage($sender, "MUST_BE_OFFICIER");
+        }
     }
 }
