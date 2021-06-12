@@ -42,13 +42,13 @@ class Faction extends Command {
                             break;
                         case "seth":
                         case "sethome":
-                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::teleportHome($sender);
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::teleportHome($sender);
                             break;
                         case "claim":
-                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::claim($sender);
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::claim($sender);
                             break;
                         case "unclaim":
-                            if(!$sender->hasFaction()) FactionAPI::setHome($sender->getFaction(),$sender->getPosition()); else FactionAPI::unclaim($sender);
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::unclaim($sender);
                             break;
                     }
                 }else{
