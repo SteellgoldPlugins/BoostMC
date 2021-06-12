@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\utils;
 
+use pocketmine\item\ItemIds;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Server;
@@ -14,6 +15,11 @@ class Utils {
     CONST SEARCH = ["{l}","{n}","{PREFIX}", "{SUCCESS_PREFIX}", "{ERROR_PREFIX}", "{SUCCESS_HELP}", "{ERROR_HELP}", "{+}", "{-}", "{PRIMARY}", "{SECONDARY}", "{TERTIARY}", "{BASE}",  "{ERROR}", "{DARK_ERROR}", "{DEFAULT_FACTION_PRICE}"];
     CONST REPLACE = ["\n","\n","§l» §r§f", Unicode::EXCLAMATION." ", Unicode::RED_EXCLAMATION." ", Unicode::HELP." ", Unicode::RED_HELP." ", Unicode::PLUS." ", Unicode::LESS." ", "§a", "§f", "§7", "§f", "§c", "§4", Faction::DEFAULT_FACTION_PRICE];
     CONST LANGS = [0 => "fr_FR", 1 => "en_EN", 2 => "es_ES", 3 => "it_IT", 4 => "ch_CH"];
+
+    CONST HELMET = [ItemIds::LEATHER_HELMET => 55, ItemIds::CHAIN_HELMET => 165, ItemIds::IRON_HELMET => 165, ItemIds::GOLDEN_HELMET => 77, ItemIds::DIAMOND_HELMET => 363];
+    CONST CHESTPLATES = [ItemIds::LEATHER_CHESTPLATE => 80, ItemIds::CHAIN_CHESTPLATE => 240, ItemIds::IRON_CHESTPLATE => 240, ItemIds::GOLDEN_CHESTPLATE => 112, ItemIds::DIAMOND_CHESTPLATE => 528];
+    CONST LEGGINGS = [ItemIds::LEATHER_LEGGINGS => 75, ItemIds::CHAIN_LEGGINGS => 225, ItemIds::IRON_LEGGINGS => 225, ItemIds::GOLDEN_LEGGINGS => 105, ItemIds::DIAMOND_LEGGINGS => 495];
+    CONST BOOTS = [ItemIds::LEATHER_BOOTS => 65, ItemIds::CHAIN_BOOTS => 195, ItemIds::IRON_BOOTS => 195, ItemIds::GOLDEN_BOOTS => 91, ItemIds::DIAMOND_BOOTS => 429];
 
     public static function getPrefix(): string{
         return "§l» §r§f";
