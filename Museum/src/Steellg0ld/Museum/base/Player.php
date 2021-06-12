@@ -88,11 +88,26 @@ class Player extends \pocketmine\Player
 
     public function setScoreboard(){
         $scoreboard = Plugin::getInstance()->getScoreboardAPI();
-        $scoreboard->remove($this);
-        $scoreboard->new($this,"infos","MUSEUM");
-        $scoreboard->setLine($this, 1," " . $this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
-        $scoreboard->setLine($this, 2,($this->hasRank(Ranks::HELPER,Ranks::MODERATOR,Ranks::ADMIN) ? Unicode::getMFace($this->settings["unicode"], $this->getRank()) . " " : " ") . Ranks::translate($this,$this->rank));
-        $scoreboard->setLine($this, 3," " . ($this->faction == "none" ? "Sans faction" : $this->faction));
+        if(!$this->inCombat){
+            $scoreboard->remove($this);
+            $scoreboard->new($this,"infos","MUSEUM");
+            $scoreboard->setLine($this, 1,Unicode::COIN . " " . $this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
+            $scoreboard->setLine($this, 2,($this->hasRank(Ranks::HELPER,Ranks::MODERATOR,Ranks::ADMIN) ? Unicode::getMFace($this->settings["unicode"], $this->getRank()) . " " : " ") . Ranks::translate($this,$this->rank));
+            $scoreboard->setLine($this, 3,Unicode::GROUP . ($this->faction == "none" ? " Sans faction" : " " .$this->faction));
+        }else{
+            $scoreboard->remove($this);
+            $scoreboard->new($this,"infos","MUSEUM-PVP");
+            $scoreboard->setLine($this, 1,Unicode::NETHERITE_SWORD . " 20 secondes");
+            $scoreboard->setLine($this, 2,Unicode::ENDERPEARL_TIMER . (time() >= $this->nextEnderPearl ? " Disponible" : " ". ($this->nextEnderPearl - time()) . "s"));
+
+            $helmet = $this->getArmorUnicodes()[0] !== null ? $this->getArmorUnicodes()[0] . " " .(Utils::HELMET[$this->getArmorInventory()->getHelmet()->getId()] - $this->getArmorInventory()->getHelmet()->getDamage()) : "Aucun casque";
+            $chestplate = $this->getArmorUnicodes()[1] !== null ? $this->getArmorUnicodes()[1] . " " .(Utils::CHESTPLATES[$this->getArmorInventory()->getChestplate()->getId()] - $this->getArmorInventory()->getChestplate()->getDamage()) : "Aucun plastron";
+            $leggings = $this->getArmorUnicodes()[2] !== null ? $this->getArmorUnicodes()[2] . " " .(Utils::LEGGINGS[$this->getArmorInventory()->getLeggings()->getId()] - $this->getArmorInventory()->getLeggings()->getDamage()) : "Aucune jambières";
+            $boots = $this->getArmorUnicodes()[3] !== null ? $this->getArmorUnicodes()[3] . " " .(Utils::BOOTS[$this->getArmorInventory()->getBoots()->getId()] - $this->getArmorInventory()->getBoots()->getDamage()) : "Aucune bottes";
+            $this->sendTip($helmet . "  " . $chestplate . "  " . $leggings . "  " . $boots);
+        }
+    }
+
     public function getArmorUnicodes(): array {
         return [
             0 => $this->getArmorInventory()->getHelmet()->getId() !== 0 ? Unicode::ARMORS[$this->getArmorInventory()->getHelmet()->getId()] : null,
