@@ -83,7 +83,7 @@ class Player extends \pocketmine\Player
      * @return bool
      */
     public function hasFaction() : bool {
-        return $this->faction == "none";
+        return $this->faction !== "none";
     }
 
     public function setScoreboard(){
