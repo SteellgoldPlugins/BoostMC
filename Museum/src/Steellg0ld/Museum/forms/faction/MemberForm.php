@@ -50,7 +50,7 @@ class MemberForm{
                     if ($data !== null) {
                         $player = Server::getInstance()->getPlayer($data[1]);
                         if($player instanceof Player){
-                            if($player->hasFaction()){
+                            if(!$player->hasFaction()){
                                 Faction::sendInvitation($player,$p->getFaction());
                                 Utils::sendMessage($p,"FACTION_INVITE", ["{INVITED}"], [$player->getName()]);
                                 Utils::sendMessage($player,"FACTION_INVITED",[
