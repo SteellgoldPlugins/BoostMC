@@ -46,8 +46,6 @@ class Plugin extends PluginBase
         $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
         $this->getScheduler()->scheduleRepeatingTask(new UpdateScoreboard(),20);
-
-        Unicode::init();
     }
 
     public function onDisable()
