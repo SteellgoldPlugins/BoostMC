@@ -16,6 +16,7 @@ class Player extends \pocketmine\Player
         "player_status" => 1,
         "economy_symbol" => 1,
         "unicode" => 0,
+        "armor_pvp_status" => false
     ];
 
 
@@ -103,11 +104,13 @@ class Player extends \pocketmine\Player
             $scoreboard->setLine($this, 1,Unicode::NETHERITE_SWORD . " 20 secondes");
             $scoreboard->setLine($this, 2,Unicode::ENDERPEARL_TIMER . (time() >= $this->nextEnderPearl ? " Disponible" : " ". ($this->nextEnderPearl - time()) . "s"));
 
-            $helmet = $this->getArmorUnicodes()[0] !== null ? $this->getArmorUnicodes()[0] . " " .(Utils::HELMET[$this->getArmorInventory()->getHelmet()->getId()] - $this->getArmorInventory()->getHelmet()->getDamage()) : "Aucun casque";
-            $chestplate = $this->getArmorUnicodes()[1] !== null ? $this->getArmorUnicodes()[1] . " " .(Utils::CHESTPLATES[$this->getArmorInventory()->getChestplate()->getId()] - $this->getArmorInventory()->getChestplate()->getDamage()) : "Aucun plastron";
-            $leggings = $this->getArmorUnicodes()[2] !== null ? $this->getArmorUnicodes()[2] . " " .(Utils::LEGGINGS[$this->getArmorInventory()->getLeggings()->getId()] - $this->getArmorInventory()->getLeggings()->getDamage()) : "Aucune jambières";
-            $boots = $this->getArmorUnicodes()[3] !== null ? $this->getArmorUnicodes()[3] . " " .(Utils::BOOTS[$this->getArmorInventory()->getBoots()->getId()] - $this->getArmorInventory()->getBoots()->getDamage()) : "Aucune bottes";
-            $this->sendTip($helmet . "  " . $chestplate . "  " . $leggings . "  " . $boots);
+            if($this->settings["armor_pvp_status"]){
+                $helmet = $this->getArmorUnicodes()[0] !== null ? $this->getArmorUnicodes()[0] . " " .(Utils::HELMET[$this->getArmorInventory()->getHelmet()->getId()] - $this->getArmorInventory()->getHelmet()->getDamage()) : "Aucun casque";
+                $chestplate = $this->getArmorUnicodes()[1] !== null ? $this->getArmorUnicodes()[1] . " " .(Utils::CHESTPLATES[$this->getArmorInventory()->getChestplate()->getId()] - $this->getArmorInventory()->getChestplate()->getDamage()) : "Aucun plastron";
+                $leggings = $this->getArmorUnicodes()[2] !== null ? $this->getArmorUnicodes()[2] . " " .(Utils::LEGGINGS[$this->getArmorInventory()->getLeggings()->getId()] - $this->getArmorInventory()->getLeggings()->getDamage()) : "Aucune jambières";
+                $boots = $this->getArmorUnicodes()[3] !== null ? $this->getArmorUnicodes()[3] . " " .(Utils::BOOTS[$this->getArmorInventory()->getBoots()->getId()] - $this->getArmorInventory()->getBoots()->getDamage()) : "Aucune bottes";
+                $this->sendPopup($helmet . "  " . $chestplate . "  " . $leggings . "  " . $boots);
+            }
         }
     }
 
