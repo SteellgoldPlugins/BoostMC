@@ -12,6 +12,8 @@ RANK_5: "Guide"
 RANK_6: "Modérateur"
 RANK_7: "Administrateur"
 
+FACTION_RESIDENCE: "Résidence de la faction"
+
 # FORMS
 SETTINGS_TITLE_FORM: "Paramètres"
 SETTINGS_LABEL_FORM: "{PREFIX}Vous êtes {PRIMARY}{RANK}{SECONDARY}, configurer vos paramètres comme vous le sentez !"
@@ -80,14 +82,15 @@ PLAYER_FIRST_JOIN: "{+} {BASE}Première connexion de {PRIMARY}{PLAYER} {+}"
 
 FACTION_CREATED: "{SUCCESS_PREFIX}Vous venez de créer la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f {SECONDARY}à nouveau pour gérer la faction"
 
+FACTION_NO_HOME: "{ERROR_PREFIX}Votre faction n'a pas encore de résidence"
 FACTION_NO_INVITATIONS: "{ERROR_PREFIX}Vous n'avez aucunes invitations"
 FACTION_INVITE: "{SUCCESS_PREFIX}Vous venez d'inviter {PRIMARY}{INVITED}"
 FACTION_INVITED: "{SUCCESS_PREFIX}{PRIMARY}{OFFICIER}{SECONDARY}, vous a invité(e) dans la faction {PRIMARY}{FACTION}{SECONDARY}, faite {PRIMARY}/f accept:deny {SECONDARY}pour l'accepter ou refusé l'invitation"
 FACTION_INVITE_JOIN: "{SUCCESS_PREFIX}{PRIMARY}{INVITED} {SECONDARY}a accepter l'invitation, il est maintenant dans la faction !"
-FACTION_INVITE_DENY: "{ERROR_PREFIX}{PRIMARY}{INVITED} {SECONDARY}a refusé(e) l'invitation"
+FACTION_INVITE_DENY: "{ERROR_PREFIX}{ERROR}{INVITED} {SECONDARY}a refusé(e) l'invitation"
 FACTION_INVITE_TIME_OUT: "{ERROR_PREFIX}L'invitation a expirée"
 FACTION_INVITE_PLAYER_DISCONNECTED: "{ERROR_PREFIX}Le joueur est actuellement déconnecté(e)"
-FACTION_PLAYER_ALREADY_FACTION: "{ERROR_PREFIX}Le joueur {PRIMARY}{PLAYER}{SECONDARY} a déjà une faction {SECONDARY}({PRIMARY}{FACTION}{SECONDARY})"
+FACTION_PLAYER_ALREADY_FACTION: "{ERROR_PREFIX}Le joueur {ERROR}{PLAYER}{SECONDARY} a déjà une faction {SECONDARY}({ERROR}{FACTION}{SECONDARY})"
 FACTION_CANT_LEAVE_DISBAND: "{ERROR_PREFIX}Vous ne pouvez pas quitter la faction, supprimer la faction pour pouvoir la quitter, vous êtes le {ERROR}Chef"
 FACTION_NO_ARGUMENTS: "{ERROR_PREFIX}Vous n'avez préciser aucun argument, faite {ERROR}/f help {BASE}pour plus d'aide"
 
@@ -95,8 +98,16 @@ SETTINGS_UPDATED: "{SUCCESS_PREFIX}Vos préférences ont bien été enregistrée
 
 SHOP_BUYED: "{SUCCESS_PREFIX}Vous venez d'acheter {PRIMARY}x{COUNT} {ITEM_BUYED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
 SHOP_SELLED: "{SUCCESS_PREFIX}Vous venez de vendre {PRIMARY}x{COUNT} {ITEM_SELLED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
-SHOP_NO_ENOUGHT_MONEY: "{ERROR_PREFIX}Vous n'avez pas assez d'argent, il vous manque {PRIMARY}{NEEDED}{ECONOMY_SYMBOL}"
-SHOP_NOT_HAVE_ITEM: "{ERROR_PREFIX}Vous n'avez pas {PRIMARY}x{COUNT} {ITEM} {SECONDARY}dans votre inventaire"
+SHOP_NO_ENOUGHT_MONEY: "{ERROR_PREFIX}Vous n'avez pas assez d'argent, il vous manque {ERROR}{NEEDED}{ECONOMY_SYMBOL}"
+SHOP_NOT_HAVE_ITEM: "{ERROR_PREFIX}Vous n'avez pas {ERROR}x{COUNT} {ITEM} {SECONDARY}dans votre inventaire"
 SHOP_INVENTORY_FULL: "{ERROR_PREFIX}Votre inventaire est actuellement plein, vous ne pouvez pas acheter d'item"
 
+MUST_BE_LEADER: "{ERROR_PREFIX}Vous devez être le §cChef §fde la faction pour faire ceci"
+MUST_BE_OFFICIER: "{ERROR_PREFIX}Vous devez être un §cOfficier §fde la faction pour faire ceci"
+
 PLAYER_MANAGE_EDITION: "{SUCCESS_PREFIX}Vous venez de modifié le joueur {PRIMARY}{PLAYER}"
+
+# TIP
+TELEPORT_COOLDOWN: " §fTéléportation dans {SECONDS} secondes §f(§cNe bougez pas§f) "
+TELEPORT_CANCELLED: " §cTéléportation annulé, vous venez de bouger "
+TELEPORT_SUCCESSFULY: " §fTéléportation réussi vers §a{HOME} "
