@@ -2,9 +2,12 @@
 
 namespace Steellg0ld\Museum\base;
 
+use pocketmine\level\Level;
 use pocketmine\level\Position;
+use pocketmine\math\Vector3;
 use pocketmine\Server;
 use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\tasks\CooldownTeleportTask;
 use Steellg0ld\Museum\utils\Utils;
 
 class Faction
@@ -32,6 +35,8 @@ class Faction
     public const POWER_PER_DEATHS = 10;
     public const INVITATION_EXPIRATION_TIME = 60;
     public const DEFAULT_MAX_MEMBERS = 10;
+    public const TELEPORT_COOLDOWN = 6;
+
 
     /**
          /$$      /$$
@@ -49,7 +54,7 @@ class Faction
 
     public static function create(Player $player, string $faction, string $description, string $claim_message): void
     {
-        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message, "roles" => array($player->getName() => 3), "dates" => array($player->getName() => time()), "invests" => array($player->getName() => 0), "home" => null);
+        self::$factions[$faction] = array("players" => array($player->getName()), "power" => self::DEFAULT_POWER, "money" => 0, "allies" => array(), "description" => $description, "claim_message" => $claim_message, "roles" => array($player->getName() => 3), "dates" => array($player->getName() => time()), "invests" => array($player->getName() => 0), "home" => "none");
         self::$claims[$faction] = array();
 
         $player->faction = $faction;
@@ -58,6 +63,33 @@ class Faction
         $player->sendMessage(Utils::getMessage($player, "FACTION_CREATED", ["{FACTION}"],[$faction]));
     }
 
+    public static function disbandFaction(String $faction): void {
+        foreach (self::$factions[$faction]["players"] as $player){
+            $p = Server::getInstance()->getPlayer($player);
+            if($p instanceof Player){
+                $p->faction = "none";
+                $p->faction_role = 0;
+            }else{
+                Database::update("faction","none",$player);
+                Database::update("faction_role",0,$player);
+            }
+        }
+
+        if (isset(self::$factions[$faction]))unset(self::$factions[$faction]);
+    }
+
+    public static function getRoles(String $faction){
+        return self::$factions[$faction]["roles"];
+    }
+
+    public static function getLeader(string $faction): string {
+        foreach (self::getMembers($faction) as $player) {
+            if (self::getRoles($faction) === 3) {
+                return $player;
+            }
+        }
+        return "";
+    }
 
     /**
          /$$      /$$                         /$$
