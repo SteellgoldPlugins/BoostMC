@@ -2,10 +2,12 @@
 
 namespace Steellg0ld\Museum\base;
 
+use pocketmine\math\Vector3;
 use Steellg0ld\Museum\api\Scoreboard;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\tasks\async\RegisterPlayer;
 use Steellg0ld\Museum\utils\Unicode;
+use Steellg0ld\Museum\utils\Utils;
 
 class Player extends \pocketmine\Player
 {
@@ -21,9 +23,10 @@ class Player extends \pocketmine\Player
     public int $money = 0;
     public string $faction = "none";
     public int $faction_role = 0;
-
-    /** * @var string  */
     public string $discordId = "";
+    public Vector3 $oldVector3;
+    public bool $inCombat = false;
+    public int $nextEnderPearl = 5;
 
     /**
      * @param Int ...$ranks
