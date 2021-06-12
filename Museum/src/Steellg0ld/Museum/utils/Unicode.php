@@ -13,23 +13,12 @@ class Unicode {
 
         $GRID = 16;
         $filename = basename("glyph_E1", ".png");
-        $startChar = hexdec(substr($filename, strrpos($filename, "_") + 1) . "00");
         $g = 0;
         $i = 0;
         do {
             $g++;
-            $ci = $startChar + $i;//char index
-            $char = mb_chr($ci);
-            $vv[$g] = $char;
+            var_dump($filename[$g]["identifier"]["minecraft_head_colour"]["1-x3"]++);
         } while (++$i < $GRID ** 2);
-
-        for ($a = 1; ; $a++) {
-            if ($a > 161) {
-                break;
-            }
-            $config->set($a, $vv[$a]);
-            $config->save();
-        }
     }
 
 
