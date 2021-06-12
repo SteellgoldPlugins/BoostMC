@@ -4,11 +4,6 @@ namespace Steellg0ld\Museum;
 
 use muqsit\invmenu\InvMenuHandler;
 use pocketmine\entity\Entity;
-use pocketmine\level\biome\Biome;
-use pocketmine\level\generator\Generator;
-use pocketmine\level\generator\GeneratorManager;
-use pocketmine\level\generator\hell\Nether;
-use pocketmine\level\Level;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
@@ -18,14 +13,12 @@ use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Manage;
-use Steellg0ld\Museum\commands\defaults\Money;
-use Steellg0ld\Museum\commands\defaults\Rank;
 use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\commands\defaults\Shop;
 use Steellg0ld\Museum\commands\defaults\Test;
 use Steellg0ld\Museum\entity\Wither;
+use Steellg0ld\Museum\listeners\player\EnderPearl;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
-use Steellg0ld\Museum\listeners\server\LevelListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
 use Steellg0ld\Museum\tasks\UpdateScoreboard;
 use Steellg0ld\Museum\utils\Unicode;
@@ -52,7 +45,7 @@ class Plugin extends PluginBase
         $this->loadListeners();
         $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
-        $this->getScheduler()->scheduleRepeatingTask(new UpdateScoreboard(),20 * 3);
+        $this->getScheduler()->scheduleRepeatingTask(new UpdateScoreboard(),20);
 
         Unicode::init();
     }
@@ -82,6 +75,7 @@ class Plugin extends PluginBase
 
     private function loadListeners(){
         $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
+        $this->getServer()->getPluginManager()->registerEvents(new EnderPearl(), $this);
     }
 
     private function loadEntitys(){
