@@ -13,7 +13,11 @@ class EnderPearl implements Listener{
         if ($entity instanceof EP){
             $player = $entity->getOwningEntity();
             if ($player instanceof Player and $player->isOnline()) {
-                $player->nextEnderPearl = time() + 5;
+                if(time() >= $player->nextEnderPearl){
+                    $player->nextEnderPearl = time() + 5;
+                }else{
+                    $event->setCancelled();
+                }
             }
         }
     }
