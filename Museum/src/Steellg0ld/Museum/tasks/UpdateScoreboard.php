@@ -3,12 +3,17 @@
 namespace Steellg0ld\Museum\tasks;
 
 use pocketmine\scheduler\Task;
-use Steellg0ld\Museum\Plugin;
+use pocketmine\Server;
+use Steellg0ld\Museum\base\Player;
 
 class UpdateScoreboard extends Task {
 
     public function onRun(int $currentTick)
     {
-        Plugin::getInstance()->getServer()->getAsyncPool()->submitTask(new \Steellg0ld\Museum\tasks\async\UpdateScoreboard());
+        foreach (Server::getInstance()->getOnlinePlayers() as $player){
+            if($player instanceof Player){
+                $player->setScoreboard();
+            }
+        }
     }
 }
