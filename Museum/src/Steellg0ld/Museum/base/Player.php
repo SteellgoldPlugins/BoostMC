@@ -93,5 +93,12 @@ class Player extends \pocketmine\Player
         $scoreboard->setLine($this, 1," " . $this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
         $scoreboard->setLine($this, 2,($this->hasRank(Ranks::HELPER,Ranks::MODERATOR,Ranks::ADMIN) ? Unicode::getMFace($this->settings["unicode"], $this->getRank()) . " " : " ") . Ranks::translate($this,$this->rank));
         $scoreboard->setLine($this, 3," " . ($this->faction == "none" ? "Sans faction" : $this->faction));
+    public function getArmorUnicodes(): array {
+        return [
+            0 => $this->getArmorInventory()->getHelmet()->getId() !== 0 ? Unicode::ARMORS[$this->getArmorInventory()->getHelmet()->getId()] : null,
+            1 => $this->getArmorInventory()->getChestplate()->getId() !== 0 ? Unicode::ARMORS[$this->getArmorInventory()->getChestplate()->getId()] : null,
+            2 => $this->getArmorInventory()->getLeggings()->getId() !== 0 ? Unicode::ARMORS[$this->getArmorInventory()->getLeggings()->getId()] : null,
+            3 => $this->getArmorInventory()->getBoots()->getId() !== 0 ?  Unicode::ARMORS[$this->getArmorInventory()->getBoots()->getId()]  : null
+        ];
     }
 }
