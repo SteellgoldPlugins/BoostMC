@@ -677,7 +677,7 @@ class Item implements ItemIds, \JsonSerializable{
 	}
 
 	/**
-	 * Returns how many armor points can be gained by wearing this item.
+	 * Returns how many custom points can be gained by wearing this item.
 	 */
 	public function getDefensePoints() : int{
 		return 0;
