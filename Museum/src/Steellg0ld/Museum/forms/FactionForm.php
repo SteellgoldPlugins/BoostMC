@@ -61,4 +61,6 @@ class FactionForm{
             $player->sendForm($form);
         }
     }
+
+    public static function
 }
