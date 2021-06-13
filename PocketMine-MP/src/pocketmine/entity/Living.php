@@ -95,7 +95,7 @@ abstract class Living extends Entity implements Damageable{
 		parent::initEntity();
 
 		$this->armorInventory = new ArmorInventory($this);
-		//TODO: load/save armor inventory contents
+		//TODO: load/save custom inventory contents
 		$this->armorInventory->setEventProcessor(new ArmorInventoryEventProcessor($this));
 
 		if($this->namedtag->hasTag("HealF", FloatTag::class)){
