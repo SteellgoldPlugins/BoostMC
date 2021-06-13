@@ -3,6 +3,10 @@
 namespace Steellg0ld\Museum\utils;
 
 use pocketmine\item\ItemIds;
+use Steellg0ld\Museum\custom\armor\NetheriteBoots;
+use Steellg0ld\Museum\custom\armor\NetheriteChestplate;
+use Steellg0ld\Museum\custom\armor\NetheriteHelmet;
+use Steellg0ld\Museum\custom\armor\NetheriteLeggings;
 use Steellg0ld\Museum\Plugin;
 
 class Unicode {
@@ -13,12 +17,23 @@ class Unicode {
 
         $GRID = 16;
         $filename = basename("glyph_E1", ".png");
+        $startChar = hexdec(substr($filename, strrpos($filename, "_") + 1) . "00");
         $g = 0;
         $i = 0;
         do {
             $g++;
-            var_dump($filename[$g]["identifier"]["minecraft_head_colour"]["1-x3"]++);
+            $ci = $startChar + $i;//char index
+            $char = mb_chr($ci);
+            $vv[$g] = $char;
         } while (++$i < $GRID ** 2);
+
+        for ($a = 1; ; $a++) {
+            if ($a > 161) {
+                break;
+            }
+            $config->set($a, $vv[$a]);
+            $config->save();
+        }
     }
 
 
@@ -227,6 +242,10 @@ class Unicode {
         ItemIds::DIAMOND_HELMET => Unicode::DIAMOND_HELMET,
         ItemIds::DIAMOND_CHESTPLATE => Unicode::DIAMOND_CHESTPLATE,
         ItemIds::DIAMOND_LEGGINGS => Unicode::DIAMOND_LEGGINGS,
-        ItemIds::DIAMOND_BOOTS => Unicode::DIAMOND_BOOTS
+        ItemIds::DIAMOND_BOOTS => Unicode::DIAMOND_BOOTS,
+        NetheriteHelmet::NETHERITE_HELMET => Unicode::NETHERITE_HELMET,
+        NetheriteChestplate::NETHERITE_CHESTPLATE => Unicode::NETHERITE_CHESTPLATE,
+        NetheriteLeggings::NETHERITE_LEGGINGS => Unicode::NETHERITE_LEGGINGS,
+        NetheriteBoots::NETHERITE_BOOTS => Unicode::NETHERITE_BOOTS
     ];
 }
