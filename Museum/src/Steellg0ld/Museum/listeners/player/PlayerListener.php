@@ -72,7 +72,40 @@ class PlayerListener implements Listener
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
             if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
         }
+    public function onDamage(EntityDamageByEntityEvent $event){
+        $player = $event->getEntity();
+        $damager = $event->getDamager();
 
-        $p->inCombat = true;
+        if ($player instanceof Player && $damager instanceof Player) {
+            if(!CombatLogger::isInCombat($player)){
+                CombatLogger::setCombat($player);
+                Plugin::getInstance()->getScheduler()->scheduleRepeatingTask(new CombatTask($player),20);
+            }
+
+            if(!CombatLogger::isInCombat($damager)){
+                CombatLogger::setCombat($damager);
+                Plugin::getInstance()->getScheduler()->scheduleRepeatingTask(new CombatTask($damager),20);
+            }
+        }
+    }
+
+    public function onMove(PlayerMoveEvent $event){
+        $p = $event->getPlayer();
+        if(!$p instanceof Player) return;
+        $chunk = $p->getLevel()->getChunkAtPosition($p);
+        $chunkX = $chunk->getX();
+        $chunkZ = $chunk->getZ();
+
+        if(Faction::isInClaim($p->getLevel(),$chunkX,$chunkZ)){
+            if(Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ) !== $p->oldClaim){
+                $p->oldClaim = Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ);
+                $p->inClaim = Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ);
+
+                $p->sendTitle(Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ),Unicode::SHIELD . " ".Faction::$factions[Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ)]["claim_message"]." ".Unicode::SHIELD);
+            }
+        }else{
+            $p->oldClaim = "none";
+            $p->inClaim = "none";
+        }
     }
 }
