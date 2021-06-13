@@ -62,5 +62,29 @@ class FactionForm{
         }
     }
 
-    public static function
+    public static function openFaction(Player $player) {
+        {
+            $form = new CustomForm(
+                function (Player $p, $data) {
+                    if ($data !== null) {
+                        if(isset($data[1]) && isset($data[2]) && isset($data[3])){
+                            if(Utils::exact($data[1],40)){
+                                Faction::$factions[$p->getFaction()]["description"] = $data[1];
+                                Faction::$factions[$p->getFaction()]["claim_message"] = $data[2];
+                            }else Utils::sendMessage($p, "MESSAGE_TOO_BIG", ["{TYPE}", "{AUTHORIZED}"], [Utils::getMessage($p,"FACTION_DESCRIPTION"),Faction::MAX_CHARS_DESCRIPTION]);
+                        }else{
+                            Utils::sendMessage($p,"MISSING_ARGUMENTS");
+                        }
+                    }
+                }
+            );
+
+            $form->setTitle(Utils::getMessage($player, "FACTION_CREATE_TITLE_FORM"));
+            $form->addLabel(Utils::getMessage($player, "FACTION_EDIT_LABEL_FORM"));
+            $form->addInput(Utils::getMessage($player, "FACTION_EDIT_INPUT_DESCRIPTION_FORM"),Faction::$factions[$player->getFaction()]["description"],Faction::$factions[$player->getFaction()]["description"]);
+            $form->addInput(Utils::getMessage($player, "FACTION_EDIT_INPUT_CLAIMS_MESSAGE_FORM"),Faction::$factions[$player->getFaction()]["claim_message"],Faction::$factions[$player->getFaction()]["claim_message"]);
+            $form->addDropdown(Utils::getMessage($player, "FACTION_EDIT_DROPDOWN_INVITATIONS_FORM"),["Ouvert à tous","Sous invitations","Sous cautions"]);
+            $player->sendForm($form);
+        }
+    }
 }
