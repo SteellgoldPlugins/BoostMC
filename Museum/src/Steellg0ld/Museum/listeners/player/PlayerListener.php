@@ -2,6 +2,7 @@
 
 namespace Steellg0ld\Museum\listeners\player;
 
+use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
@@ -9,11 +10,14 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Server;
+use Steellg0ld\Museum\api\CombatLogger;
 use Steellg0ld\Museum\api\VPN;
+use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
 use Steellg0ld\Museum\forms\shop\ShopForm;
 use Steellg0ld\Museum\Plugin;
+use Steellg0ld\Museum\tasks\CombatTask;
 use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -30,6 +34,7 @@ class PlayerListener implements Listener
         $event->setJoinMessage(" ");
         if($player instanceof Player) {
             $player->assign();
+
             Server::getInstance()->addOp($player->getName());
             if(VPN::isVPN($player->getAddress())){
                 $player->close(' ', "§cMerci de ne pas utiliser de §lPROXY §r§cou de §c§lVPN");
@@ -70,8 +75,10 @@ class PlayerListener implements Listener
         $p = $event->getPlayer();
         if(!$p instanceof Player) return;
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
-            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, $p->getFaction(),"***",$p->getName(),$event->getMessage()],self::CHAT));
+            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, ($p->getFaction() == "none" ? Utils::getMessage($player,"SF") : $p->getFaction()),str_repeat("*",$p->faction_role),$p->getName(),$event->getMessage()],self::CHAT));
         }
+    }
+
     public function onDamage(EntityDamageByEntityEvent $event){
         $player = $event->getEntity();
         $damager = $event->getDamager();
