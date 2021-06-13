@@ -61,6 +61,16 @@ class Faction extends Command {
                         case "unclaim":
                             if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::unclaim($sender);
                             break;
+                        case "members":
+                        case "players":
+                            if(!$sender->hasFaction()){
+                                FactionForm::createForm($sender->getFaction());
+                            }elseif($sender->faction_role >= FactionAPI::OFFICIER){
+                                MemberForm::list($sender);
+                            }else{
+                                Utils::sendMessage($sender,"MUST_BE_OFFICIER");
+                            }
+                            break;
                     }
                 }else{
                     FactionForm::createForm($sender);
