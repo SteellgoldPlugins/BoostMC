@@ -172,8 +172,7 @@ class Faction
         return self::$factions[$faction]["home"] !== "none" ? explode(":", self::$factions[$faction]["home"]) : Utils::getSpawn();
     }
 
-    public static function setHome(string $faction, Position $position): string
-    {
+    public static function setHome(string $faction, Position $position): string {
         return self::$factions[$faction]["home"] = $position->getX(). ":".$position->getY().":".$position->getZ();
     }
 
