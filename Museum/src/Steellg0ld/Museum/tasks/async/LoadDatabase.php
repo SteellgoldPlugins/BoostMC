@@ -37,7 +37,7 @@ class LoadDatabase extends AsyncTask {
                 foreach ($result["faction"] as $key => $array) {
                     Faction::$factions[$key] = array("players" => $array[0], "power" => $array[1], "money" => $array[2], "allies" => $array[3], "description" => $array[4], "claim_message" => $array[5], "roles" => $array[7], "dates" => $array[8], "invests" => $array[9], "home" => $array[10]);
                     Faction::$claims[$key] = $array[6];
-                    var_dump($array[9]);
+                    var_dump($array[0]);
                 }
             }
         }
