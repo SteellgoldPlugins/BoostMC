@@ -30,6 +30,8 @@ class Player extends \pocketmine\Player
     public Vector3 $oldVector3;
     public bool $inCombat = false;
     public int $nextEnderPearl = 5;
+    public string $oldClaim = "none";
+    public string $inClaim = "none";
 
     /**
      * @param Int ...$ranks
@@ -104,6 +106,7 @@ class Player extends \pocketmine\Player
             $scoreboard->setLine($this, 2,($this->hasRank(Ranks::HELPER,Ranks::MODERATOR,Ranks::ADMIN) ? Unicode::getMFace($this->settings["unicode"], $this->getRank()) . " " : " ") . Ranks::translate($this,$this->rank));
             $scoreboard->setLine($this, 3,Unicode::GROUP . ($this->faction == "none" ? " Sans faction" : " " .$this->faction));
             if($this->settings["coords"]) $scoreboard->setLine($this, 4,Unicode::MAP . " X: " . round($this->getX()). " Y: " . round($this->getY()). " Z: " . round($this->getZ()));
+            if($this->inClaim !== "none") $scoreboard->setLine($this, 5, Unicode::IDLE . " Claim de: " . $this->inClaim);
         }else{
             $scoreboard->remove($this);
             $scoreboard->new($this,"infos","MUSEUM-PVP");
