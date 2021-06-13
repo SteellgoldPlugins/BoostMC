@@ -65,4 +65,8 @@ class Utils {
     public static function getSpawn(): Position {
         return new Position(312,4,180,Server::getInstance()->getLevelByName("world"));
     }
+
+    public static function exact(String $text, Int $chars) : bool {
+        return strlen($text) <= $chars;
+    }
 }

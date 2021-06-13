@@ -108,7 +108,7 @@ class PlayerListener implements Listener
                 $p->oldClaim = Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ);
                 $p->inClaim = Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ);
 
-                $p->sendTitle(Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ),Unicode::SHIELD . " ".Faction::$factions[Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ)]["claim_message"]." ".Unicode::SHIELD);
+                $p->sendTip(Unicode::SHIELD . " ".Faction::$factions[Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ)]["claim_message"]." ".Unicode::SHIELD);
             }
         }else{
             $p->oldClaim = "none";
