@@ -63,6 +63,6 @@ class Utils {
     }
 
     public static function getSpawn(): Position {
-        return new Position(445,4,198,Server::getInstance()->getLevelByName("world"));
+        return new Position(312,4,180,Server::getInstance()->getLevelByName("world"));
     }
 }
