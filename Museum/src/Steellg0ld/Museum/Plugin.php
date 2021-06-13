@@ -3,7 +3,6 @@
 namespace Steellg0ld\Museum;
 
 use muqsit\invmenu\InvMenuHandler;
-use pocketmine\entity\Entity;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 use pocketmine\utils\Config;
@@ -11,14 +10,6 @@ use Steellg0ld\Museum\api\Scoreboard;
 use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
-use Steellg0ld\Museum\commands\defaults\Faction;
-use Steellg0ld\Museum\commands\defaults\Manage;
-use Steellg0ld\Museum\commands\defaults\Settings;
-use Steellg0ld\Museum\commands\defaults\Shop;
-use Steellg0ld\Museum\commands\defaults\Test;
-use Steellg0ld\Museum\entity\Wither;
-use Steellg0ld\Museum\listeners\player\EnderPearl;
-use Steellg0ld\Museum\listeners\player\PlayerListener;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
 use Steellg0ld\Museum\tasks\UpdateScoreboard;
 use Steellg0ld\Museum\utils\Unicode;
@@ -40,57 +31,40 @@ class Plugin extends PluginBase
             InvMenuHandler::register($this);
         }
 
+        $manager = new Manager();
+        $manager->loadCommands($this);
+        $manager->loadEntitys($this);
+        $manager->loadItems($this);
+        $manager->loadListeners($this);
+        $manager->loadRecipes($this);
+
         $this->getDatabase()->initialize();
-        $this->loadCommands();
-        $this->loadListeners();
-        $this->loadEntitys();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
         $this->getScheduler()->scheduleRepeatingTask(new UpdateScoreboard(),20);
+
+        Unicode::init();
     }
 
-    public function onDisable()
-    {
+    public function onDisable() {
         Utils::saveAll();
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
             if($player instanceof Player) $this->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)),$player->discordId);
         }
     }
 
-    public static function getInstance(): self
-    {
+    public static function getInstance(): self {
         return self::$instance;
-    }
-
-    public function loadCommands(){
-        $this->getServer()->getCommandMap()->registerAll("museum",[
-            new Test("emoticons","Show all emoticons","",["emoticons","png"]),
-            new Faction("faction","Faction command","",["fac","f"]),
-            new Settings("settings","Configure your game","",["configure","setting"]),
-            new Shop("shop","Buy a item simply",""),
-            new Manage("manage","Edit player informations","")
-        ]);
-    }
-
-    private function loadListeners(){
-        $this->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $this);
-        $this->getServer()->getPluginManager()->registerEvents(new EnderPearl(), $this);
-    }
-
-    private function loadEntitys(){
-        Entity::registerEntity(Wither::class, true, ["Wither", "minecraft:wither"]);
     }
 
     public function getDatabase(): Database{
         return new Database();
     }
 
-    public function getMessages(String $file): Config
-    {
+    public function getMessages(String $file): Config {
         return new Config($this->getDataFolder() . "langs/".$file.".yml", Config::YAML);
     }
 
-    public function getConfigFile(String $file): Config
-    {
+    public function getConfigFile(String $file): Config {
         return new Config($this->getDataFolder() . $file.".yml", Config::YAML);
     }
 
