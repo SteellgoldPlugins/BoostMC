@@ -3,6 +3,7 @@
 namespace Steellg0ld\Museum\base;
 
 use pocketmine\math\Vector3;
+use Steellg0ld\Museum\api\CombatLogger;
 use Steellg0ld\Museum\api\Scoreboard;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\tasks\async\RegisterPlayer;
@@ -16,7 +17,8 @@ class Player extends \pocketmine\Player
         "player_status" => 1,
         "economy_symbol" => 1,
         "unicode" => 0,
-        "armor_pvp_status" => false
+        "armor_pvp_status" => false,
+        "coords" => true
     ];
 
 
@@ -59,6 +61,9 @@ class Player extends \pocketmine\Player
         $this->money = 0;
         $this->lang = "fr_FR";
         $this->settings["player_status"] = 1;
+        $this->settings["armor_pvp_status"] = true;
+        $this->settings["coords"] = true;
+        $this->settings["unicode"] = 0;
         Plugin::getInstance()->getServer()->getAsyncPool()->submitTask(new RegisterPlayer($this->getName(), $this->getAddress()));
     }
 
