@@ -71,6 +71,22 @@ class Faction extends Command {
                                 Utils::sendMessage($sender,"MUST_BE_OFFICIER");
                             }
                             break;
+                        case "help":
+                            // TODO
+                            break;
+                        case "manage":
+                            if(!$sender->hasFaction()){
+                                FactionForm::createForm($sender->getFaction());
+                            }elseif($sender->faction_role >= FactionAPI::LEADER){
+                                FactionForm::openFaction($sender);
+                            }else{
+                                Utils::sendMessage($sender,"MUST_BE_LEADER");
+                            }
+                            break;
+                        case "leave":
+                            FactionAPI::leaveFaction($sender);
+                            break;
+
                     }
                 }else{
                     FactionForm::createForm($sender);
