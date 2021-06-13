@@ -2,6 +2,6 @@
 
 namespace Steellg0ld\Museum\base;
 
-class Homes{
+class Homes {
 
 }
