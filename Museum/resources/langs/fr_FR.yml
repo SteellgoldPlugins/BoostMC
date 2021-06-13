@@ -4,6 +4,7 @@ MISSING_ARGUMENTS: "{ERROR}- {SECONDARY}Vous avez oublier des éléments"
 MISSING_DATA: "{ERROR}- {SECONDARY}Vous n'avez choisie aucune option"
 
 SF: "Sans-faction"
+FACTION_DESCRIPTION: "Description de la faction"
 
 RANK_0: "Joueur"
 RANK_1: "VIP"
@@ -43,6 +44,13 @@ FACTION_CREATE_INPUT_CLAIMS_MESSAGE_FORM: "{PREFIX}Message affiché lors ce qu'o
 FACTION_CREATE_INPUT_NAME_PLACEHOLDER_FORM: "LesProduitsLaitiers"
 FACTION_CREATE_INPUT_DESCRIPTION_PLACEHOLDER_FORM: "Une super faction !"
 FACTION_CREATE_INPUT_CLAIMS_MESSAGE_PLACEHOLDER_FORM: "Une super faction !"
+
+FACTION_EDIT_TITLE_FORM: "Modifier votre faction"
+FACTION_EDIT_LABEL_FORM: "{PREFIX}Voici les informations actuelles de votre faction"
+FACTION_EDIT_INPUT_DESCRIPTION_FORM: "Modifier la description de votre faction (40 catactères maximum)"
+FACTION_EDIT_INPUT_CLAIMS_MESSAGE_FORM: "Modifier le message qui s'affiche lors du passage dans vos claims"
+FACTION_EDIT_DROPDOWN_INVITATIONS_FORM: "Modifier le type de nouveau membres"
+
 FACTION_INVITE_LABEL_FORM: "{PREFIX}Invitez des nouveaux membres pour votre faction"
 FACTION_INVITE_INPUT_FORM: "Pseudo du joueur que vous voulez ajouter"
 
@@ -104,7 +112,10 @@ FACTION_UNCLAIM: "{SUCCESS_PREFIX}Vous venez de retiré(e) la protection de la z
 FACTION_ZONE_ALREADY: "{ERROR_PREFIX}Cette zone est déjà protégé par {ERROR}{FACTION}"
 FACTION_SETHOME: "{SUCCESS_PREFIX}Vous venez de définir la nouvelle position pour la résidence de faction"
 FACTION_SETHOME_BROADCAST: "{SUCCESS_PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}viens de définir la nouvelle localisation de la résidence de faction"
+FACTION_MEMBER_LEAVED: "{ERROR_PREFIX}Le joueur {ERROR}{LEAVER} {SECONDARY}à décider de quitter la faction"
+FACTION_LEAVED: "{ERROR_PREFIX}Vous venez de quitter la faction {ERROR}{FACTION}"
 
+MESSAGE_TOO_BIG: "{ERROR_PREFIX}Votre {ERROR}{TYPE} {SECONDARY}contien trop de caractères par rappot au nombre maximal autorisé ({AUTHORIZED})"
 SETTINGS_UPDATED: "{SUCCESS_PREFIX}Vos préférences ont bien été enregistrées"
 
 SHOP_BUYED: "{SUCCESS_PREFIX}Vous venez d'acheter {PRIMARY}x{COUNT} {ITEM_BUYED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
