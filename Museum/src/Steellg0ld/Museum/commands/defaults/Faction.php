@@ -42,7 +42,18 @@ class Faction extends Command {
                             break;
                         case "seth":
                         case "sethome":
-                            if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::teleportHome($sender);
+                            if(!$sender->hasFaction()){
+                                FactionForm::createForm($sender->getFaction());
+                            } else {
+                                Utils::sendMessage($sender, "FACTION_SETHOME");
+                                foreach (FactionAPI::getMembers($sender->getFaction()) as $member){
+                                    $member = Server::getInstance()->getPlayer($member);
+                                    if(!$member instanceof Player) return;
+                                    Utils::sendMessage($member,"FACTION_SETHOME_BROADCAST",["{PLAYER}"], [$sender->getName()]);
+                                }
+
+                                FactionAPI::setHome($sender, $sender->getPosition());
+                            }
                             break;
                         case "claim":
                             if(!$sender->hasFaction()) FactionForm::createForm($sender->getFaction()); else FactionAPI::claim($sender);
