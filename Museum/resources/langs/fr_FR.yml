@@ -3,6 +3,8 @@ NO_RANK_FOUND: "Aucun grade trouvé"
 MISSING_ARGUMENTS: "{ERROR}- {SECONDARY}Vous avez oublier des éléments"
 MISSING_DATA: "{ERROR}- {SECONDARY}Vous n'avez choisie aucune option"
 
+SF: "Sans-faction"
+
 RANK_0: "Joueur"
 RANK_1: "VIP"
 RANK_2: "VIP+"
@@ -96,7 +98,7 @@ FACTION_PLAYER_ALREADY_FACTION: "{ERROR_PREFIX}Le joueur {ERROR}{PLAYER}{SECONDA
 FACTION_CANT_LEAVE_DISBAND: "{ERROR_PREFIX}Vous ne pouvez pas quitter la faction, supprimer la faction pour pouvoir la quitter, vous êtes le {ERROR}Chef"
 FACTION_NO_ARGUMENTS: "{ERROR_PREFIX}Vous n'avez préciser aucun argument, faite {ERROR}/f help {BASE}pour plus d'aide"
 FACTION_ZONE_OUR: "{ERROR_PREFIX}Cette zone protégé n'est pas la votre"
-NO_CLAIM_ZONE: "{ERROR_PREFIX}Vous êtes dans aucune zone protégé"
+NO_CLAIM_ZONE: "{ERROR_PREFIX}Vous n'êtes pas dans aucune zone protégé"
 FACTION_CLAIM: "{SUCCESS_PREFIX}Vous venez de protégé la zone"
 FACTION_UNCLAIM: "{SUCCESS_PREFIX}Vous venez de retiré(e) la protection de la zone"
 FACTION_ZONE_ALREADY: "{ERROR_PREFIX}Cette zone est déjà protégé par {ERROR}{FACTION}"
