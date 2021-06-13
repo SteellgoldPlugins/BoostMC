@@ -177,6 +177,12 @@ class Unicode {
     const NETHERITE_CHESTPLATE = "";
     const NETHERITE_LEGGINGS = "";
     const NETHERITE_BOOTS = "";
+    const COMPASS = "";
+    const MAP = "";
+    const EMPTY_HELMET = "";
+    const EMPTY_CHESTPLATE = "";
+    const EMPTY_LEGGINGS = "";
+    const EMPTY_BOOTS = "";
 
     public static function getMFace(Int $setting, Int $rank): string {
         return [
