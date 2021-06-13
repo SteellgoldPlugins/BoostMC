@@ -36,6 +36,7 @@ class Faction
     public const INVITATION_EXPIRATION_TIME = 60;
     public const DEFAULT_MAX_MEMBERS = 10;
     public const TELEPORT_COOLDOWN = 6;
+    const MAX_CHARS_DESCRIPTION = 40;
 
 
     /**
@@ -91,6 +92,15 @@ class Faction
         return "";
     }
 
+    public static function existsFaction(string $faction): bool {
+        foreach (self::$factions as $key => $value) {
+            if ($key === $faction) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
          /$$      /$$                         /$$
         | $$$    /$$$                        | $$
@@ -101,6 +111,7 @@ class Faction
         | $$ \/  | $$|  $$$$$$$| $$ | $$ | $$| $$$$$$$/|  $$$$$$$| $$       /$$$$$$$/
         |__/     |__/ \_______/|__/ |__/ |__/|_______/  \_______/|__/      |_______/
      */
+
     public static function sendInvitation(Player $player, string $faction): void {
         self::$invitations[$player->getName()] = $faction;
         self::$invitationsTimeout[$player->getName()] = time() + self::INVITATION_EXPIRATION_TIME;
@@ -153,7 +164,22 @@ class Faction
     }
 
     public static function leaveFaction(Player $player): void {
-        // TODO (genre)
+        if(self::existsFaction($player->getFaction())){
+            if(in_array($player->getName(), self::$factions[$player->getFaction()]["players"])){
+                if(!$player->faction_role == 3){
+                    unset(self::$factions[$player->getFaction()]["players"][$player->getName()]);
+                    Utils::sendMessage($player, "FACTION_LEAVED", ["{FACTION}"],[$player->getFaction()]);
+                    $player->faction_role = 0;
+                    $player->faction = "none";
+                }else{
+                    Utils::sendMessage($player,"FACTION_CANT_LEAVE_DISBAND");
+                }
+            }else{
+                $player->sendMessage("cc2");
+            }
+        }else{
+            $player->sendMessage("cc1");
+        }
     }
 
     /**
