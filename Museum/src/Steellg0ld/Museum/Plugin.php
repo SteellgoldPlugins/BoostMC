@@ -19,6 +19,7 @@ class Plugin extends PluginBase
 {
     public static $instance;
     CONST FILE_DB = "data.db";
+    public array $exemptedEntities = [];
 
     public function onEnable()
     {

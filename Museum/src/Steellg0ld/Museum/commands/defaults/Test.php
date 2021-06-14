@@ -23,7 +23,11 @@ class Test extends Command {
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
         if($sender instanceof Player){
-            Emoticons::manage($sender);
+            if($args[0] == "1"){
+                Emoticons::manage($sender);
+            }else{
+                Entity::createEntity(Wither::WITHER,$sender->getLevel(),Entity::createBaseNBT($sender));
+            }
         }
     }
 }

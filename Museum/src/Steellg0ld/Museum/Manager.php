@@ -2,10 +2,12 @@
 
 namespace Steellg0ld\Museum;
 
+use pocketmine\block\BlockFactory;
 use pocketmine\entity\Entity;
 use pocketmine\inventory\ShapelessRecipe;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
+use pocketmine\tile\Tile;
 use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Manage;
 use Steellg0ld\Museum\commands\defaults\Settings;
@@ -15,16 +17,21 @@ use Steellg0ld\Museum\custom\armor\NetheriteBoots;
 use Steellg0ld\Museum\custom\armor\NetheriteChestplate;
 use Steellg0ld\Museum\custom\armor\NetheriteHelmet;
 use Steellg0ld\Museum\custom\armor\NetheriteLeggings;
+use Steellg0ld\Museum\custom\blocks\SpawnerBlock;
 use Steellg0ld\Museum\custom\items\Axe;
 use Steellg0ld\Museum\custom\items\Hoe;
 use Steellg0ld\Museum\custom\items\Pickaxe;
 use Steellg0ld\Museum\custom\items\Shovel;
+use Steellg0ld\Museum\custom\items\SpawnEgg;
 use Steellg0ld\Museum\custom\items\Sword;
 use Steellg0ld\Museum\custom\items\TieredTool;
+use Steellg0ld\Museum\entity\EntityManager;
 use Steellg0ld\Museum\entity\Wither;
-use Steellg0ld\Museum\listeners\player\EnderPearl;
+use Steellg0ld\Museum\listeners\player\ProjectilesListener;
 use Steellg0ld\Museum\listeners\player\Netherite;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
+use Steellg0ld\Museum\listeners\player\SpawnersListener;
+use Steellg0ld\Museum\tiles\SpawnerTile;
 
 class Manager{
     const ITEM_NETHERITE_SCRAP = 752;
@@ -47,12 +54,24 @@ class Manager{
 
     public function loadListeners(Plugin $plugin){
         $plugin->getServer()->getPluginManager()->registerEvents(new PlayerListener(), $plugin);
-        $plugin->getServer()->getPluginManager()->registerEvents(new EnderPearl(), $plugin);
+        $plugin->getServer()->getPluginManager()->registerEvents(new ProjectilesListener(), $plugin);
         $plugin->getServer()->getPluginManager()->registerEvents(new Netherite(), $plugin);
+        $plugin->getServer()->getPluginManager()->registerEvents(new SpawnersListener($plugin), $plugin);
+    }
+
+    /**
+     * @throws \ReflectionException
+     */
+    public function loadTiles(Plugin $plugin){
+        Tile::registerTile(SpawnerTile::class, [Tile::MOB_SPAWNER, "minecraft:mob_spawner"]);
+    }
+
+    public function loadBlocks(Plugin $plugin){
+        BlockFactory::registerBlock(new SpawnerBlock(), true);
     }
 
     public function loadEntitys(Plugin $plugin){
-        Entity::registerEntity(Wither::class, true, ["Wither", "minecraft:wither"]);
+        EntityManager::init();
     }
 
     public function loadItems(Plugin $plugin){
@@ -67,6 +86,7 @@ class Manager{
         ItemFactory::registerItem(new NetheriteChestplate(), true);
         ItemFactory::registerItem(new NetheriteLeggings(), true);
         ItemFactory::registerItem(new NetheriteBoots(), true);
+        ItemFactory::registerItem(new SpawnEgg(), true);
 
         Item::initCreativeItems();
     }
