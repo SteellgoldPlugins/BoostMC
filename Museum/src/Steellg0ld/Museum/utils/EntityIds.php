@@ -63,6 +63,9 @@ class EntityIds {
             121 => "Fox",
             122 => "Bee",
             59 => "Ravager",
+            114 => "Pillager",
+            130 => "Axolotl",
+            128 => "goat"
         ];
 
         return $names[$entityID] ?? "Monster";
@@ -119,7 +122,8 @@ class EntityIds {
             "wolf",
             "zombie",
             "pigzombie",
-            "zombievillager"];
+            "zombievillager"
+        ];
         return $names;
     }
 
@@ -180,6 +184,9 @@ class EntityIds {
             "zombiehorse" => PMEIds::ZOMBIE_HORSE,
             "pigzombie" => PMEIds::ZOMBIE_PIGMAN,
             "zombievillager" => PMEIds::ZOMBIE_VILLAGER,
+            "goat" => 128,
+            "pillager" => 114,
+            "axolotl" => 130,
         ];
 
         return $names[$entityName] ?? null;
