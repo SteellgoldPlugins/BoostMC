@@ -3,11 +3,11 @@
 namespace Steellg0ld\Museum;
 
 use pocketmine\block\BlockFactory;
-use pocketmine\entity\Entity;
 use pocketmine\inventory\ShapelessRecipe;
 use pocketmine\item\Item;
 use pocketmine\item\ItemFactory;
 use pocketmine\tile\Tile;
+use Steellg0ld\Museum\base\Enchantment;
 use Steellg0ld\Museum\commands\defaults\Faction;
 use Steellg0ld\Museum\commands\defaults\Manage;
 use Steellg0ld\Museum\commands\defaults\Settings;
@@ -26,7 +26,6 @@ use Steellg0ld\Museum\custom\items\SpawnEgg;
 use Steellg0ld\Museum\custom\items\Sword;
 use Steellg0ld\Museum\custom\items\TieredTool;
 use Steellg0ld\Museum\entity\EntityManager;
-use Steellg0ld\Museum\entity\Wither;
 use Steellg0ld\Museum\listeners\player\ProjectilesListener;
 use Steellg0ld\Museum\listeners\player\Netherite;
 use Steellg0ld\Museum\listeners\player\PlayerListener;
@@ -59,11 +58,12 @@ class Manager{
         $plugin->getServer()->getPluginManager()->registerEvents(new SpawnersListener($plugin), $plugin);
     }
 
-    /**
-     * @throws \ReflectionException
-     */
     public function loadTiles(Plugin $plugin){
         Tile::registerTile(SpawnerTile::class, [Tile::MOB_SPAWNER, "minecraft:mob_spawner"]);
+    }
+
+    public function loadEnchantments(Plugin $plugin): Enchantment {
+        return new Enchantment();
     }
 
     public function loadBlocks(Plugin $plugin){
