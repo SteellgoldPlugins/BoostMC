@@ -11,6 +11,7 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
+use Steellg0ld\Museum\tasks\ClearLaggTask;
 use Steellg0ld\Museum\tasks\UpdateScoreboard;
 use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
@@ -19,6 +20,7 @@ class Plugin extends PluginBase
 {
     public static $instance;
     CONST FILE_DB = "data.db";
+    public static int $clearLagg = 0;
     public array $exemptedEntities = [];
 
     public function onEnable()
@@ -38,6 +40,7 @@ class Plugin extends PluginBase
         $manager->loadItems($this);
         $manager->loadListeners($this);
         $manager->loadRecipes($this);
+        $manager->loadEnchantments($this)->init();
 
         $this->getDatabase()->initialize();
         $this->getServer()->getAsyncPool()->submitTask(new LoadDatabase());
