@@ -9,9 +9,13 @@ use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\item\enchantment\Enchantment as DefaultEnchantment;
+use pocketmine\item\enchantment\EnchantmentInstance;
+use pocketmine\item\Item;
 use pocketmine\Server;
 use Steellg0ld\Museum\api\CombatLogger;
 use Steellg0ld\Museum\api\VPN;
+use Steellg0ld\Museum\base\Enchantment;
 use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
@@ -113,6 +117,14 @@ class PlayerListener implements Listener
         }else{
             $p->oldClaim = "none";
             $p->inClaim = "none";
+        }
+
+        if($p->getInventory()->getItemInHand()->getId() !== Item::AIR){
+            $enchant = new EnchantmentInstance(DefaultEnchantment::getEnchantment(100));
+            $enchant->setLevel(10);
+            $item = $p->getInventory()->getItemInHand();
+            $item->addEnchantment($enchant);
+            $p->getInventory()->setItemInHand(Enchantment::display($item, $p));
         }
     }
 }
