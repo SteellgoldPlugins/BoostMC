@@ -11,7 +11,6 @@ use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
-use Steellg0ld\Museum\tasks\ClearLaggTask;
 use Steellg0ld\Museum\tasks\UpdateScoreboard;
 use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
@@ -20,7 +19,6 @@ class Plugin extends PluginBase
 {
     public static $instance;
     CONST FILE_DB = "data.db";
-    public static int $clearLagg = 0;
     public array $exemptedEntities = [];
 
     public function onEnable()
@@ -56,11 +54,11 @@ class Plugin extends PluginBase
         }
     }
 
-    public static function getInstance(): self {
+    public static function getInstance(): Plugin {
         return self::$instance;
     }
 
-    public function getDatabase(): Database{
+    public function getDatabase(): Database {
         return new Database();
     }
 
