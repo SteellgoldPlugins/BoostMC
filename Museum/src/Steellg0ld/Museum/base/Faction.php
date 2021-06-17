@@ -101,6 +101,10 @@ class Faction
         return false;
     }
 
+    public static function getPower(string $faction, bool $max = false){
+        return $max == true ? self::getMembers($faction, true) * self::DEFAULT_POWER : self::$factions[$faction]["power"];
+    }
+
     /**
          /$$      /$$                         /$$
         | $$$    /$$$                        | $$
@@ -150,8 +154,8 @@ class Faction
         }
     }
 
-    public static function getMembers(String $faction){
-        return self::$factions[$faction]["players"];
+    public static function getMembers(String $faction, Bool $count = false){
+        return $count == true ? count(self::$factions[$faction]["players"]) : self::$factions[$faction]["players"];
     }
 
     public static function isInvited(Player $invited): bool {
