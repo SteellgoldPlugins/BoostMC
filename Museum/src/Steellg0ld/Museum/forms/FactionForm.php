@@ -7,6 +7,7 @@ use FormAPI\SimpleForm;
 use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\faction\MemberForm;
+use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
 class FactionForm{
@@ -35,6 +36,28 @@ class FactionForm{
         }
     }
 
+    public static function openInfo(Player $player)
+    {
+        {
+            $form = new CustomForm(
+                function (Player $p, $data) {
+                    if ($data !== null) {
+
+                    }
+                }
+            );
+
+            $form->setTitle(Utils::getMessage($player, "FACTION_INFO_TITLE_FORM",["{FACTION}"],[$player->getFaction()]));
+            $form->addLabel(Utils::getMessage($player, "FACTION_INFO_LABEL_FORM",["{POWER_UNI}","{POWER}","{POWER_MAX}","{MEMBERS}"],[
+                Unicode::POWER,
+                Faction::getPower($player->getFaction()),
+                Faction::getPower($player->getFaction(),true),
+                Faction::getMembers($player->getFaction(),true)
+            ]));
+            $player->sendForm($form);
+        }
+    }
+
     public static function manage(Player $player)
     {
         {
@@ -53,7 +76,7 @@ class FactionForm{
             );
 
             $form->setTitle(Utils::getMessage($player, "FACTION_MANAGE_TITLE_FORM"));
-            $form->setContent(Utils::getMessage($player, "FACTION_MANAGE_LABEL_FORM"));
+            $form->setContent(Utils::getMessage($player,"FACTION_MANAGE_LABEL_FORM",["{FACTION}",$player->getFaction()]));
             $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_LEAVE_BUTTON_FORM"));
             $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_FACTION_BUTTON_FORM"));
             $form->addButton(Utils::getMessage($player, "FACTION_MANAGE_MEMBERS_BUTTON_FORM"));
@@ -79,7 +102,7 @@ class FactionForm{
                 }
             );
 
-            $form->setTitle(Utils::getMessage($player, "FACTION_CREATE_TITLE_FORM"));
+            $form->setTitle(Utils::getMessage($player, "FACTION_EDIT_TITLE_FORM"));
             $form->addLabel(Utils::getMessage($player, "FACTION_EDIT_LABEL_FORM"));
             $form->addInput(Utils::getMessage($player, "FACTION_EDIT_INPUT_DESCRIPTION_FORM"),Faction::$factions[$player->getFaction()]["description"],Faction::$factions[$player->getFaction()]["description"]);
             $form->addInput(Utils::getMessage($player, "FACTION_EDIT_INPUT_CLAIMS_MESSAGE_FORM"),Faction::$factions[$player->getFaction()]["claim_message"],Faction::$factions[$player->getFaction()]["claim_message"]);
