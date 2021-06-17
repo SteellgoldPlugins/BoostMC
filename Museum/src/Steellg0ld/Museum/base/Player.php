@@ -46,8 +46,9 @@ class Player extends \pocketmine\Player
     }
 
     public function assign(){
-        $data = Plugin::getInstance()->getDatabase()->getDatabase()->query("SELECT * FROM players WHERE player = '" . $this->getName() . "'");
-        while ($resultAttr = $data->fetchArray(SQLITE3_ASSOC)){
+        $db = new Database();
+        $data = $db->getDatabase()->query("SELECT * FROM players WHERE player = '" . $this->getName() . "'");
+        while ($resultAttr = $data->fetch_array(MYSQLI_ASSOC)){
             $this->faction = $resultAttr['faction'];
             $this->faction_role = $resultAttr['role'];
             $this->rank = $resultAttr['rank'];
