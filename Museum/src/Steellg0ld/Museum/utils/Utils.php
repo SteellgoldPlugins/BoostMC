@@ -6,6 +6,7 @@ use pocketmine\item\ItemIds;
 use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\Server;
+use Steellg0ld\Museum\base\Database;
 use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Faction;
 use Steellg0ld\Museum\base\Player;
@@ -39,8 +40,8 @@ class Utils {
     }
 
     public static function saveAll(): void {
-        $db = new \SQLite3(Plugin::getInstance()->getDataFolder() . Plugin::FILE_DB);
-        $db->query("DELETE FROM faction");
+        $db = new Database();
+        $db->getDatabase()->query("DELETE FROM faction");
 
         $faction = Faction::$factions;
         $claim = Faction::$claims;
@@ -58,7 +59,7 @@ class Utils {
                 $invests = \SQLite3::escapeString(base64_encode(serialize($values["invests"])));
                 $home = \SQLite3::escapeString(base64_encode(serialize($values["home"])));
                 $claims = \SQLite3::escapeString(base64_encode(serialize($claim[$faction])));
-                $db->query("INSERT INTO faction (faction, players, power, money, allies, description, claim_message,claims,roles,dates,invests,home) VALUES ('$faction', '$players', '$power', '$money', '$allies', '$description', '$claim_message', '$claims', '$roles', '$dates', '$invests', '$home')");
+                $db->getDatabase()->query("INSERT INTO faction (faction, players, power, money, allies, description, claim_message,claims,roles,dates,invests,home) VALUES ('$faction', '$players', '$power', '$money', '$allies', '$description', '$claim_message', '$claims', '$roles', '$dates', '$invests', '$home')");
         }
     }
 
