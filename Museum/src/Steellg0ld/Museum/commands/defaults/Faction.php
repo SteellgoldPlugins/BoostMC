@@ -25,7 +25,7 @@ class Faction extends Command {
                 if(in_array($args[0], ["accept", "deny"]) or $sender->hasFaction()){
                     switch ($args[0]){
                         case "create":
-                            if(!$sender->hasFaction()) FactionForm::createForm($sender); else FactionForm::manage($sender);
+                            if(!$sender->hasFaction()) FactionForm::createForm($sender);
                             break;
                         case "invite":
                             if(!$sender->hasFaction()) FactionForm::createForm($sender); else MemberForm::invite($sender);
@@ -74,7 +74,7 @@ class Faction extends Command {
                         case "help":
                             // TODO
                             break;
-                        case "manage":
+                        case "edit":
                             if(!$sender->hasFaction()){
                                 FactionForm::createForm($sender->getFaction());
                             }elseif($sender->faction_role >= FactionAPI::LEADER){
@@ -92,7 +92,11 @@ class Faction extends Command {
                     FactionForm::createForm($sender);
                 }
             }else{
-                Utils::sendMessage($sender,"FACTION_NO_ARGUMENTS");
+                if($sender->hasFaction()){
+                    FactionForm::openInfo($sender);
+                }else{
+                    Utils::sendMessage($sender,"FACTION_NO_ARGUMENTS");
+                }
             }
         }
     }
