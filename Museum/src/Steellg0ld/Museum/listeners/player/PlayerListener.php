@@ -118,13 +118,5 @@ class PlayerListener implements Listener
             $p->oldClaim = "none";
             $p->inClaim = "none";
         }
-
-        if($p->getInventory()->getItemInHand()->getId() !== Item::AIR){
-            $enchant = new EnchantmentInstance(DefaultEnchantment::getEnchantment(100));
-            $enchant->setLevel(10);
-            $item = $p->getInventory()->getItemInHand();
-            $item->addEnchantment($enchant);
-            $p->getInventory()->setItemInHand(Enchantment::display($item, $p));
-        }
     }
 }
