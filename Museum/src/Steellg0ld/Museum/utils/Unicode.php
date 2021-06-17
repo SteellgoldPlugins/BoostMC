@@ -28,7 +28,7 @@ class Unicode {
         } while (++$i < $GRID ** 2);
 
         for ($a = 1; ; $a++) {
-            if ($a > 161) {
+            if ($a > 162) {
                 break;
             }
             $config->set($a, $vv[$a]);
@@ -198,6 +198,7 @@ class Unicode {
     const EMPTY_CHESTPLATE = "";
     const EMPTY_LEGGINGS = "";
     const EMPTY_BOOTS = "";
+    const POWER = "";
 
     public static function getMFace(Int $setting, Int $rank): string {
         return [
