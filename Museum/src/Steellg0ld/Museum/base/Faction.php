@@ -6,6 +6,7 @@ use pocketmine\level\Level;
 use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 use Steellg0ld\Museum\Plugin;
 use Steellg0ld\Museum\tasks\CooldownTeleportTask;
 use Steellg0ld\Museum\utils\Utils;
@@ -16,12 +17,11 @@ class Faction
     public static array $claims = [];
     public static array $invitations = [];
     public static array $invitationsTimeout = [];
-
     public const RECRUE = 0;
+
     public const MEMBER = 1;
     public const OFFICIER = 2;
     public const LEADER = 3;
-
     public const ROLES = [
         0 => "RECRUE",
         1 => "MEMBER",
@@ -29,14 +29,30 @@ class Faction
         3 => "LEADER"
     ];
 
+    const MAXIMUM_CLAIMS = 30;
+
     public const DEFAULT_POWER = 20;
+    public const POWER_PER_PLAYER = 10;
     public const DEFAULT_FACTION_PRICE = 500;
     public const POWER_PER_KILL = 5;
     public const POWER_PER_DEATHS = 10;
+    public const CLAIM_POWER_COST = 5;
     public const INVITATION_EXPIRATION_TIME = 60;
     public const DEFAULT_MAX_MEMBERS = 10;
     public const TELEPORT_COOLDOWN = 6;
-    const MAX_CHARS_DESCRIPTION = 40;
+    public const MAX_CHARS_DESCRIPTION = 40;
+
+    /** @var array $map */
+    public static array $map = [];
+
+    const MAP_KEY_CHARS = "\\/#?ç¬£$%=&^ABCDEFGHJKLMNOPQRSTUVWXYZÄÖÜÆØÅ1234567890abcdeghjmnopqrsuvwxyÿzäöüæøåâêîûô";
+    const MAP_WIDTH = 48;
+    const MAP_HEIGHT = 10;
+    const MAP_KEY_MIDDLE = TextFormat::AQUA . "+";
+    const MAP_KEY_WILDERNESS = TextFormat::GRAY . "-";
+    const MAP_KEY_OVERFLOW = TextFormat::WHITE . "-" . TextFormat::RESET;
+    const COLOR_ACTIVE = TextFormat::GREEN;
+    const COLOR_INACTIVE = TextFormat::RED;
 
 
     /**
@@ -85,7 +101,9 @@ class Faction
 
     public static function getLeader(string $faction): string {
         foreach (self::getMembers($faction) as $player) {
-            if (self::getRoles($faction) === 3) {
+            var_dump($player . " 1");
+            if (self::getRoles($faction)[$player] == 3) {
+                var_dump($player . " 2");
                 return $player;
             }
         }
@@ -102,7 +120,7 @@ class Faction
     }
 
     public static function getPower(string $faction, bool $max = false){
-        return $max == true ? self::getMembers($faction, true) * self::DEFAULT_POWER : self::$factions[$faction]["power"];
+        return $max == true ? 5000 : self::$factions[$faction]["power"];
     }
 
     /**
@@ -254,13 +272,19 @@ class Faction
     }
 
     public static function claimChunk(Player $player, string $faction): void {
-        $chunk = $player->getLevel()->getChunkAtPosition($player);
-        $chunkX = $chunk->getX();
-        $chunkZ = $chunk->getZ();
-        $world = $player->getLevel()->getFolderName();
-        $claims = self::$claims[$faction];
-        array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
-        self::$claims[$faction] = $claims;
+        if(self::getPower($faction) >= self::CLAIM_POWER_COST){
+            $chunk = $player->getLevel()->getChunkAtPosition($player);
+            $chunkX = $chunk->getX();
+            $chunkZ = $chunk->getZ();
+            $world = $player->getLevel()->getFolderName();
+            $claims = self::$claims[$faction];
+            array_push($claims, "{$chunkX}:{$chunkZ}:{$world}");
+            self::$claims[$faction] = $claims;
+            Utils::sendMessage($player, "FACTION_CLAIM");
+            self::$factions[$faction]["power"] = self::$factions[$faction]["power"] - 5;
+        }else{
+            Utils::sendMessage($player,"FACTION_MISSING_POWER_TO_CLAIM");
+        }
     }
 
     public static function deleteClaim(Player $player, string $faction) {
@@ -281,7 +305,6 @@ class Faction
 
             if(!self::isInClaim($sender->getLevel(),$chunkX,$chunkZ)){
                 self::claimChunk($sender,$sender->getFaction());
-                Utils::sendMessage($sender, "FACTION_CLAIM");
             }else{
                 Utils::sendMessage($sender, "FACTION_ZONE_ALREADY", ["{FACTION}"], [self::getFactionClaim($sender->getLevel(),$chunkX, $chunkZ)]);
             }
@@ -305,5 +328,63 @@ class Faction
         }else{
             Utils::sendMessage($sender, "MUST_BE_OFFICIER");
         }
+    }
+
+    public static function getMap(Player $player): array {
+        $center = $player->getLevel()->getChunkAtPosition($player);
+        $height = self::MAP_HEIGHT;
+        $width = self::MAP_WIDTH;
+        $header = "§7--------------------(§f{X}§7:§f{Z}§7)----------------------";
+        $header = str_replace(["{X}", "{Z}"], [$center->getX(), $center->getZ()], $header);
+        $map = [$header];
+        $legend = [];
+        $characterIndex = 0;
+        $overflown = false;
+
+        for ($dz = 0; $dz < $height; $dz++) {
+            $row = "";
+            for ($dx = 0; $dx < $width; $dx++) {
+                $chunkX = $center->getX() - ($width / 2) + $dx;
+                $chunkZ = $center->getZ() - ($height / 2) + $dz;
+                if ($chunkX === $center->getX() && $chunkZ === $center->getZ()) {
+                    $row .= self::MAP_KEY_MIDDLE;
+                    continue;
+                }
+
+                if (self::isInCLaim($player->getLevel(), $chunkX, $chunkZ)) {
+                    $faction = self::getFactionClaim($player->getLevel(), $chunkX, $chunkZ);
+                    if (($symbol = array_search($faction, $legend)) === false && $overflown) {
+                        $row .= self::MAP_KEY_OVERFLOW;
+                    } else {
+                        if ($symbol === false) $legend[($symbol = self::MAP_KEY_CHARS[$characterIndex++])] = $faction;
+                        if ($characterIndex === strlen(self::MAP_KEY_CHARS)) $overflown = true;
+                        $row .= self::getMapColor($player, $faction) . $symbol;
+                    }
+                } else $row .= self::MAP_KEY_WILDERNESS;
+            }
+
+            $map[] = $row;
+        }
+
+        $map[] = implode(" ", array_map(function (string $character, $faction) use ($player): string {
+            return self::getMapColor($player, $faction) . $character . " §f: " . $faction;
+        }, array_keys($legend), $legend));
+        if ($overflown) $map[] = self::MAP_KEY_OVERFLOW . Utils::getMessage($player, "TOO_MUCH_FACTION");
+        return $map;
+    }
+
+    public static function getMapColor(Player $player, string $faction1): string {
+        if ($player->hasFaction()) {
+            $faction2 = $player->getFaction();
+            if ($faction1 !== $faction2) {
+                if (!self::areAllies($faction1, $faction2)) {
+                    return TextFormat::RED;
+                } else return TextFormat::YELLOW;
+            } else return TextFormat::GREEN;
+        } else return TextFormat::RED;
+    }
+
+    public static function areAllies(string $faction1, string $faction2): bool {
+        return in_array($faction2, self::$factions[$faction1]["allies"]);
     }
 }
