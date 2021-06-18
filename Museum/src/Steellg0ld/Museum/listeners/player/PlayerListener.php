@@ -6,22 +6,18 @@ use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerCreationEvent;
+use pocketmine\event\player\PlayerDeathEvent;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\item\enchantment\Enchantment as DefaultEnchantment;
-use pocketmine\item\enchantment\EnchantmentInstance;
-use pocketmine\item\Item;
 use pocketmine\Server;
-use Steellg0ld\Museum\api\CombatLogger;
 use Steellg0ld\Museum\api\VPN;
-use Steellg0ld\Museum\base\Enchantment;
 use Steellg0ld\Museum\base\Faction;
+use Steellg0ld\Museum\base\Faction as FactionAPI;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\base\Ranks;
 use Steellg0ld\Museum\forms\shop\ShopForm;
 use Steellg0ld\Museum\Plugin;
-use Steellg0ld\Museum\tasks\CombatTask;
 use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -83,29 +79,23 @@ class PlayerListener implements Listener
         }
     }
 
-    public function onDamage(EntityDamageByEntityEvent $event){
-        $player = $event->getEntity();
-        $damager = $event->getDamager();
-
-        if ($player instanceof Player && $damager instanceof Player) {
-            if(!CombatLogger::isInCombat($player)){
-                CombatLogger::setCombat($player);
-                Plugin::getInstance()->getScheduler()->scheduleRepeatingTask(new CombatTask($player),20);
-            }
-
-            if(!CombatLogger::isInCombat($damager)){
-                CombatLogger::setCombat($damager);
-                Plugin::getInstance()->getScheduler()->scheduleRepeatingTask(new CombatTask($damager),20);
-            }
-        }
-    }
-
     public function onMove(PlayerMoveEvent $event){
         $p = $event->getPlayer();
         if(!$p instanceof Player) return;
         $chunk = $p->getLevel()->getChunkAtPosition($p);
         $chunkX = $chunk->getX();
         $chunkZ = $chunk->getZ();
+
+
+        if($p->map == true){
+            if($chunkX == $p->oldChunkX && $chunkZ == $p->oldChunkZ) {
+
+            }else{
+                $p->sendMessage(implode("\n", FactionAPI::getMap($p)));
+                $p->oldChunkX = $chunkX;
+                $p->oldChunkZ = $chunkZ;
+            }
+        }
 
         if(Faction::isInClaim($p->getLevel(),$chunkX,$chunkZ)){
             if(Faction::getFactionClaim($p->getLevel(),$chunkX,$chunkZ) !== $p->oldClaim){
@@ -117,6 +107,18 @@ class PlayerListener implements Listener
         }else{
             $p->oldClaim = "none";
             $p->inClaim = "none";
+        }
+    }
+
+    public function onDeath(PlayerDeathEvent $event){
+        $event->setDeathMessage(null);
+        $cause = $event->getEntity()->getLastDamageCause();
+        if ($cause instanceof EntityDamageByEntityEvent) {
+            $killer = $cause->getDamager();
+            $victim = $event->getPlayer();
+            if($killer instanceof Player AND $victim instanceof Player){
+                Server::getInstance()->broadcastTip("§e".$killer->getName() . " ".Unicode::DIAMOND_SWORD . " " . $victim->getName());
+            }
         }
     }
 }
