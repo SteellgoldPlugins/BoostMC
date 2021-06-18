@@ -6,9 +6,11 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\level\Position;
 use pocketmine\Server;
+use pocketmine\utils\TextFormat;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\forms\faction\MemberForm;
 use Steellg0ld\Museum\forms\FactionForm;
+use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 use Steellg0ld\Museum\base\Faction as FactionAPI;
 
@@ -22,10 +24,27 @@ class Faction extends Command {
     {
         if($sender instanceof Player){
             if(isset($args[0])){
-                if(in_array($args[0], ["accept", "deny"]) or $sender->hasFaction()){
+                if(in_array($args[0], ["accept", "deny","map"]) or $sender->hasFaction()){
                     switch ($args[0]){
                         case "create":
                             if(!$sender->hasFaction()) FactionForm::createForm($sender);
+                            break;
+                        case "map":
+                            if(isset($args[1])){
+                                switch ($args[1]){
+                                    case "on":
+                                        Utils::sendMessage($sender,"FACTION_MAP_ENABLED",["{MAP}"],[Unicode::MAP]);
+                                        $sender->map = true;
+                                        break;
+                                    case "off":
+                                        Utils::sendMessage($sender,"FACTION_MAP_DISABLED");
+                                        $sender->map = false;
+                                        break;
+                                    default:
+                                        $sender->sendMessage(implode(TextFormat::EOL, FactionAPI::getMap($sender)));
+                                        break;
+                                }
+                            }
                             break;
                         case "invite":
                             if(!$sender->hasFaction()) FactionForm::createForm($sender); else MemberForm::invite($sender);
@@ -52,7 +71,7 @@ class Faction extends Command {
                                     Utils::sendMessage($member,"FACTION_SETHOME_BROADCAST",["{PLAYER}"], [$sender->getName()]);
                                 }
 
-                                FactionAPI::setHome($sender, $sender->getPosition());
+                                FactionAPI::setHome($sender->getFaction(), $sender->getPosition());
                             }
                             break;
                         case "claim":
