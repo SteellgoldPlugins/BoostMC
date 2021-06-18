@@ -86,7 +86,10 @@ MANAGE_PLAYER_BAN_TITLE_FORM: "Bannir {PLAYER_MANAGE}"
 MANAGE_PLAYER_BAN_LABEL_FORM: "{PREFIX}Choisissez le temp et le type de banissement du joueur"
 
 FACTION_INFO_TITLE_FORM: "Faction: {FACTION}"
-FACTION_INFO_LABEL_FORM: "{POWER_UNI} Puissance: {POWER}/{POWER_MAX}{l}{MEMBERS_UNI} Nombres de joueurs: {MEMBERS}{l}"
+FACTION_INFO_LABEL_FORM: "§f§l»§r §7Puissance de: §f{POWER} §7sur§f {POWER_MAX}{l}§f§l»§r §7Nombres de membres dans la faction: §f{MEMBERS}{l}§f§l»§r §7Nombres de zone protégé par la faction: §f{CLAIMS_COUNT}§7 sur §f{CLAIMS_MAX}{l}§f§l»§r §7Résidence: §f{HOME}{l}§f§l»§r §7Chef: §f{LEADER}"
+
+FACTION_RESIDENCE_DEFINED_FORM: "Les positions on étées défini"
+FACTION_RESIDENCE_NOT_DEFINED_FORM: "La faction n'a pas encore défini de position"
 
 # MESSAGES
 PLAYER_DISCONNECTED: "{ERROR_PREFIX}Le joueur {ERROR}{DISCONNECTED_PLAYER} {SECONDARY}est actuellement déconnecté(e)"
@@ -117,9 +120,14 @@ FACTION_SETHOME: "{SUCCESS_PREFIX}Vous venez de définir la nouvelle position po
 FACTION_SETHOME_BROADCAST: "{SUCCESS_PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDARY}viens de définir la nouvelle localisation de la résidence de faction"
 FACTION_MEMBER_LEAVED: "{ERROR_PREFIX}Le joueur {ERROR}{LEAVER} {SECONDARY}à décider de quitter la faction"
 FACTION_LEAVED: "{ERROR_PREFIX}Vous venez de quitter la faction {ERROR}{FACTION}"
+FACTION_MISSING_POWER_TO_CLAIM: "{ERROR_PREFIX}La faction n'a pas asser de puissance pour protéger cette zone, faite des meurtres pour en gagner, mais ne mourrez surtout pas soldat !"
+
+FACTION_MAP_ENABLED: "{SUCCESS_PREFIX}A partir de maintenant quand vous changerai de chunk, la §7Carte {MAP} §fsera automatiquement envoyé !"
+FACTION_MAP_DISABLED: "{SUCCESS_PREFIX}La carte est maintenant en mode manuel (Vous devez executer la commande pour récuperer les claims aux alentours"
 
 MESSAGE_TOO_BIG: "{ERROR_PREFIX}Votre {ERROR}{TYPE} {SECONDARY}contien trop de caractères par rappot au nombre maximal autorisé ({AUTHORIZED})"
 SETTINGS_UPDATED: "{SUCCESS_PREFIX}Vos préférences ont bien été enregistrées"
+TOO_MUCH_FACTION: "Trop de factions sur la carte !"
 
 SHOP_BUYED: "{SUCCESS_PREFIX}Vous venez d'acheter {PRIMARY}x{COUNT} {ITEM_BUYED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
 SHOP_SELLED: "{SUCCESS_PREFIX}Vous venez de vendre {PRIMARY}x{COUNT} {ITEM_SELLED} {SECONDARY}pour un total de {PRIMARY}{PRICE}{ECONOMY_SYMBOL}"
