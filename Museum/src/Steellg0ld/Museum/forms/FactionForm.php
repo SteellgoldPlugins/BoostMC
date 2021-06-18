@@ -39,7 +39,7 @@ class FactionForm{
     public static function openInfo(Player $player)
     {
         {
-            $form = new CustomForm(
+            $form = new SimpleForm(
                 function (Player $p, $data) {
                     if ($data !== null) {
 
@@ -48,11 +48,18 @@ class FactionForm{
             );
 
             $form->setTitle(Utils::getMessage($player, "FACTION_INFO_TITLE_FORM",["{FACTION}"],[$player->getFaction()]));
-            $form->addLabel(Utils::getMessage($player, "FACTION_INFO_LABEL_FORM",["{POWER_UNI}","{POWER}","{POWER_MAX}","{MEMBERS}"],[
+            $form->setContent(Utils::getMessage($player, "FACTION_INFO_LABEL_FORM",["{POWER_UNI}","{POWER}","{POWER_MAX}","{MEMBERS_UNI}","{MEMBERS}","{CLAIMS_UNI}","{CLAIMS_COUNT}","{CLAIMS_MAX}","{HOME_UNI}","{HOME}","{LEADER}"],[
                 Unicode::POWER,
                 Faction::getPower($player->getFaction()),
                 Faction::getPower($player->getFaction(),true),
-                Faction::getMembers($player->getFaction(),true)
+                Unicode::GROUP,
+                Faction::getMembers($player->getFaction(),true),
+                Unicode::SHIELD,
+                Faction::getClaimCount($player->getFaction()),
+                Faction::MAXIMUM_CLAIMS,
+                Unicode::MAP,
+                Faction::$factions[$player->getFaction()] !== "none" ? Utils::getMessage($player,"FACTION_RESIDENCE_DEFINED_FORM") : Utils::getMessage($player,"FACTION_RESIDENCE_NOT_DEFINED_FORM"),
+                Faction::getLeader($player->getFaction())
             ]));
             $player->sendForm($form);
         }
