@@ -32,6 +32,9 @@ class Player extends \pocketmine\Player
     public int $nextEnderPearl = 5;
     public string $oldClaim = "none";
     public string $inClaim = "none";
+    public bool $map = false;
+    public string $oldChunkX = "none";
+    public string $oldChunkZ = "none";
 
     /**
      * @param Int ...$ranks
