@@ -15,6 +15,11 @@ RANK_5: "Guide"
 RANK_6: "Modérateur"
 RANK_7: "Administrateur"
 
+FACTION_RANK_0: "Recrue"
+FACTION_RANK_1: "Membre"
+FACTION_RANK_2: "Officier"
+FACTION_RANK_3: "Chef"
+
 FACTION_RESIDENCE: "Résidence de la faction"
 
 # FORMS
@@ -121,6 +126,9 @@ FACTION_SETHOME_BROADCAST: "{SUCCESS_PREFIX}Le joueur {PRIMARY}{PLAYER} {SECONDA
 FACTION_MEMBER_LEAVED: "{ERROR_PREFIX}Le joueur {ERROR}{LEAVER} {SECONDARY}à décider de quitter la faction"
 FACTION_LEAVED: "{ERROR_PREFIX}Vous venez de quitter la faction {ERROR}{FACTION}"
 FACTION_MISSING_POWER_TO_CLAIM: "{ERROR_PREFIX}La faction n'a pas asser de puissance pour protéger cette zone, faite des meurtres pour en gagner, mais ne mourrez surtout pas soldat !"
+
+FACTION_CHAT_ENABLED: "{SUCCESS_PREFIX}Vous venez d'activer la discussion de faction"
+FACTION_CHAT_DISABLED: "{SUCCESS_PREFIX}Vous venez de ressortir de la discussion entre faction"
 
 FACTION_MAP_ENABLED: "{SUCCESS_PREFIX}A partir de maintenant quand vous changerai de chunk, la §7Carte {MAP} §fsera automatiquement envoyé !"
 FACTION_MAP_DISABLED: "{SUCCESS_PREFIX}La carte est maintenant en mode manuel (Vous devez executer la commande pour récuperer les claims aux alentours"
