@@ -2,10 +2,14 @@
 
 namespace Steellg0ld\Museum\listeners\player;
 
+use pocketmine\entity\Effect;
+use pocketmine\entity\EffectInstance;
 use pocketmine\entity\object\ItemEntity;
+use pocketmine\event\entity\EntityArmorChangeEvent;
 use pocketmine\event\entity\EntityDamageByBlockEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerItemHeldEvent;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\custom\armor\NetheriteBoots;
 use Steellg0ld\Museum\custom\armor\NetheriteChestplate;
