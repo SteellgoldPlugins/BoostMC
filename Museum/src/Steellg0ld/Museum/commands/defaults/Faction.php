@@ -105,6 +105,15 @@ class Faction extends Command {
                         case "leave":
                             FactionAPI::leaveFaction($sender);
                             break;
+                        case "chat":
+                            if($sender->faction_chat == true){
+                                Utils::sendMessage($sender,"FACTION_CHAT_DISABLED");
+                                $sender->faction_chat = false;
+                            }else{
+                                Utils::sendMessage($sender,"FACTION_CHAT_ENABLED");
+                                $sender->faction_chat = true;
+                            }
+                            break;
 
                     }
                 }else{
