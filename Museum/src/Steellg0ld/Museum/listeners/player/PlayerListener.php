@@ -74,8 +74,12 @@ class PlayerListener implements Listener
         $event->setCancelled();
         $p = $event->getPlayer();
         if(!$p instanceof Player) return;
-        foreach (Server::getInstance()->getOnlinePlayers() as $player){
-            if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, ($p->getFaction() == "none" ? Utils::getMessage($player,"SF") : $p->getFaction()),str_repeat("*",$p->faction_role),$p->getName(),$event->getMessage()],self::CHAT));
+        if(!$p->faction_chat){
+            foreach (Server::getInstance()->getOnlinePlayers() as $player){
+                if($player instanceof Player) $player->sendMessage(str_replace(["{PRIMARY}", "{SECONDARY}", "{RANK}", "{FACTION}", "{FACTION_RANK}", "{PLAYER_NAME}", "{MESSAGE}"],[Ranks::$ranks[$p->getRank()]["p"], Ranks::$ranks[$p->getRank()]["s"], $p->hasRank(Ranks::HELPER, Ranks::MODERATOR, Ranks::ADMIN) ? Unicode::getMFace($p->settings["unicode"],$p->rank) : Unicode::COW, ($p->getFaction() == "none" ? Utils::getMessage($player,"SF") : $p->getFaction()),str_repeat("*",$p->faction_role),$p->getName(),$event->getMessage()],self::CHAT));
+            }
+        }else{
+            FactionAPI::sendMessage($p, $event->getMessage());
         }
     }
 
