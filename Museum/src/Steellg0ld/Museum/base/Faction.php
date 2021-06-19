@@ -387,4 +387,11 @@ class Faction
     public static function areAllies(string $faction1, string $faction2): bool {
         return in_array($faction2, self::$factions[$faction1]["allies"]);
     }
+
+    public static function sendMessage(Player $p, string $getMessage) {
+        foreach(self::getMembers($p->getFaction()) as $member){
+            $player = Server::getInstance()->getPlayer($member);
+            if($player instanceof Player) $player->sendMessage("§7[§f".$p->getFactionRank(true)."§7] §2".$p->getName() . ": §7" . $getMessage);
+        }
+    }
 }
