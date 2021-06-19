@@ -35,6 +35,7 @@ class Player extends \pocketmine\Player
     public bool $map = false;
     public string $oldChunkX = "none";
     public string $oldChunkZ = "none";
+    public bool $faction_chat = false;
 
     /**
      * @param Int ...$ranks
@@ -134,5 +135,9 @@ class Player extends \pocketmine\Player
             2 => $this->getArmorInventory()->getLeggings()->getId() !== 0 ? Unicode::ARMORS[$this->getArmorInventory()->getLeggings()->getId()] : null,
             3 => $this->getArmorInventory()->getBoots()->getId() !== 0 ?  Unicode::ARMORS[$this->getArmorInventory()->getBoots()->getId()]  : null
         ];
+    }
+
+    public function getFactionRank(bool $text) {
+        return $text == true ? Utils::getMessage($this,"FACTION_RANK_".$this->faction_role) : $this->faction_role;
     }
 }
