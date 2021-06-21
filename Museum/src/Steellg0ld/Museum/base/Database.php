@@ -17,9 +17,9 @@ class Database
         Plugin::getInstance()->getDatabase()->getDatabase()->query("CREATE TABLE IF NOT EXISTS players (player VARCHAR(255) PRIMARY KEY, address TEXT, faction TEXT, role int, rank int, money int, lang TEXT, settings TEXT, discordId TEXT);");
     }
 
-    public function player_update(String $player, String $address, String $faction, Int $role, Int $rank, Int $money, String $lang, String $settings, String $discordId)
+    public function player_update(String $player, String $address, String $faction, Int $role, Int $rank, Int $money, String $lang, String $settings)
     {
-        Plugin::getInstance()->getDatabase()->getDatabase()->query("UPDATE players SET address = '$address', faction = '$faction', role = '$role', rank = '$rank', money= '$money', lang = '$lang', settings = '$settings', discordId = '$discordId' WHERE player = '$player'");
+        Plugin::getInstance()->getDatabase()->getDatabase()->query("UPDATE players SET address = '$address', faction = '$faction', role = '$role', rank = '$rank', money= '$money', lang = '$lang', settings = '$settings' WHERE player = '$player'");
     }
 
     public static function update(String $colum, String $value, String $player)
