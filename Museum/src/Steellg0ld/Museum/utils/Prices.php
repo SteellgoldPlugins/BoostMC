@@ -3,46 +3,44 @@
 namespace Steellg0ld\Museum\utils;
 
 use pocketmine\item\Item;
+use pocketmine\item\ItemIds;
+use Steellg0ld\Museum\base\Player;
 
 class Prices {
-    CONST DECORATIVES = 0;
-    CONST CONSTRUCTION = 1;
-    CONST ORES = 2;
-    CONST MISC = 3;
-
-    public static array $decoratives = [];
-    public static array $constructions = [];
-    public static array $ores = [
-        0 => ["o" => Item::COAL, "b"=>2, "s" => 1, "i" => "textures/items/coal"],
-        1 => ["o" => Item::IRON_INGOT,"b"=>2, "s" => 1, "i" => "textures/items/iron_ingot"],
-        2 => ["o" => Item::GOLD_INGOT,"b"=>2, "s" => 1, "i" => "textures/items/gold_ingot"],
-        3 => ["o" => Item::REDSTONE,"b"=>2, "s" => 1, "i" => "textures/items/redstone_dust"],
-        4 => ["o" => Item::EMERALD,"b"=>2, "s" => 1, "i" => "textures/items/emerald"],
-        5 => ["o" => Item::DIAMOND,"b"=>2, "s" => 1, "i" => "textures/items/diamond"],
+    public static array $ORES = [
+        0 => ["id" => ItemIds::COAL, "price" => 64, "buy" => 32, "sell" => 16, "image" => "textures/items/coal", "key" => 0, "cBuy" => 0, "cSell" => 0, "old" => 0, "meta" => 0, "custom_name" => false],
+        1 => ["id" => ItemIds::IRON_INGOT, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/iron_ingot", "key" => 1, "cBuy" => 0, "cSell" => 0, "old" => 1, "meta" => 0, "custom_name" => false],
+        2 => ["id" => ItemIds::GOLD_INGOT, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/gold_ingot", "key" => 2, "cBuy" => 0, "cSell" => 0, "old" => 2, "meta" => 0, "custom_name" => false],
+        3 => ["id" => ItemIds::REDSTONE, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/redstone_dust", "key" => 3, "cBuy" => 0, "cSell" => 0, "old" => 3, "meta" => 0, "custom_name" => false],
+        4 => ["id" => ItemIds::DYE, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/dye_powder_blue", "key" => 4, "cBuy" => 0, "cSell" => 0, "old" => 4, "meta" => 4, "custom_name" => "Lapis-Lazuli"],
+        5 => ["id" => ItemIds::DIAMOND, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/diamond", "key" => 5, "cBuy" => 0, "cSell" => 0, "old" => 5, "meta" => 0, "custom_name" => false],
+        6 => ["id" => ItemIds::EMERALD, "price" => 64, "buy" => 64, "sell" => 32, "image" => "textures/items/emerald", "key" => 6, "cBuy" => 0, "cSell" => 0, "old" => 6, "meta" => 0, "custom_name" => false]
     ];
 
-    public static array $misc = [
-        0 => ["o" => Item::ENDER_PEARL, "b" => 300, "s" => 20, "i" => "textures/items/ender_pearl"],
-        1 => ["o" => Item::GOLDEN_APPLE, "b" => 500, "s" => 0, "i" => "textures/items/apple_golden"],
-        2 => ["o" => Item::BONE, "b" => 50, "s" => 25, "i" => "textures/items/bone"],
-        3 => ["o" => Item::BOTTLE_O_ENCHANTING, "b" => 450, "s" => 100, "i" => "textures/items/experience_bottle"],
-        4 => ["o" => Item::STEAK, "b" => 10, "s" => 0, "i" => "textures/items/beef_cooked"]
-    ];
+    public static function getName(array $item) {
+        return $item["custom_name"] == false ? Item::get($item["id"],$item["id"] == 0 ? 0 : $item["id"])->getName():$item["custom_name"];
+    }
 
-    public static function update(Int $type, Int $id, String $action, Int $new){
-        switch ($type){
-            case self::DECORATIVES:
-                self::$decoratives[$id][$action] = $new;
-                break;
-            case self::CONSTRUCTION:
-                self::$constructions[$id][$action] = $new;
-                break;
-            case self::ORES:
-                self::$ores[$id][$action] = $new;
-                break;
-            case self::MISC:
-                self::$misc[$id][$action] = $new;
-                break;
+    public static function getStatus(Player $player, array $item, bool $asText = false) : string {
+        $unicode = $item["price"] > $item["old"] ? " ".Unicode::UP : " ".Unicode::RED_DOWN;;
+        $text = $item["price"] > $item["old"] ? Utils::getMessage($player,"PRODUCT_STATUS_UP") . Unicode::UP : Utils::getMessage($player,"PRODUCT_STATUS_DOWN") . Unicode::RED_DOWN;
+        return $asText ? $text : $unicode;
+    }
+
+    public static function update($key, $count, bool $sell){
+        if($sell){ // vente
+            self::$ORES[$key]["price"] = self::$ORES[$key]["price"] + $count;
+            self::$ORES[$key]["cSell"] += $count;
+        } else { // achat
+            if((self::$ORES[$key]["price"] - $count) < 0){
+                self::$ORES[$key]["price"] = 1;
+            }else{
+                self::$ORES[$key]["price"] = self::$ORES[$key]["price"] - $count;
+            }
+            self::$ORES[$key]["cBuy"] += $count;
         }
+
+        self::$ORES[$key]["old"] = self::$ORES[$key]["price"];
+        self::$ORES[$key]["old"] = self::$ORES[$key]["price"];
     }
 }
