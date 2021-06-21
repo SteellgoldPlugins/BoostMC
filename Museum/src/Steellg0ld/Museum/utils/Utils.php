@@ -17,8 +17,8 @@ use Steellg0ld\Museum\custom\armor\NetheriteLeggings;
 use Steellg0ld\Museum\Plugin;
 
 class Utils {
-    CONST SEARCH = ["{l}","{n}","{PREFIX}", "{SUCCESS_PREFIX}", "{ERROR_PREFIX}", "{SUCCESS_HELP}", "{ERROR_HELP}", "{+}", "{-}", "{PRIMARY}", "{SECONDARY}", "{TERTIARY}", "{BASE}",  "{ERROR}", "{DARK_ERROR}", "{DEFAULT_FACTION_PRICE}"];
-    CONST REPLACE = ["\n","\n","§l» §r§f", Unicode::EXCLAMATION." ", Unicode::RED_EXCLAMATION." ", Unicode::HELP." ", Unicode::RED_HELP." ", Unicode::PLUS." ", Unicode::LESS." ", "§a", "§f", "§7", "§f", "§c", "§4", Faction::DEFAULT_FACTION_PRICE];
+    CONST SEARCH = ["{l}","{n}","{PREFIX}", "{SUCCESS_PREFIX}", "{ERROR_PREFIX}", "{SUCCESS_HELP}", "{ERROR_HELP}", "{+}", "{-}", "{PRIMARY}", "{SECONDARY}", "{TERTIARY}", "{BASE}",  "{ERROR}", "{DARK_ERROR}", "{DEFAULT_FACTION_PRICE}","{DISCORD_UNI}"];
+    CONST REPLACE = ["\n","\n","§l» §r§f", Unicode::EXCLAMATION." ", Unicode::RED_EXCLAMATION." ", Unicode::HELP." ", Unicode::RED_HELP." ", Unicode::PLUS." ", Unicode::LESS." ", "§a", "§f", "§7", "§f", "§c", "§4", Faction::DEFAULT_FACTION_PRICE, Unicode::DISCORD." "];
     CONST LANGS = [0 => "fr_FR", 1 => "en_EN", 2 => "es_ES", 3 => "it_IT", 4 => "ch_CH"];
 
     CONST HELMET = [ItemIds::LEATHER_HELMET => 55, ItemIds::CHAIN_HELMET => 165, ItemIds::IRON_HELMET => 165, ItemIds::GOLDEN_HELMET => 77, ItemIds::DIAMOND_HELMET => 363, NetheriteHelmet::NETHERITE_HELMET => 407];
@@ -100,5 +100,26 @@ class Utils {
             }
         }
         return $romanString;
+    }
+
+    public static function kConverter($number) {
+        $number = preg_replace('/[^\d]+/', '', $number);
+
+        if (!is_numeric($number)) {
+            return 0;
+        }
+
+        if ($number < 1000) {
+            return $number;
+        }
+
+        $unit = intval(log($number, 1000));
+        $units = ['', 'K', 'M', 'B', 'T', 'Q'];
+
+        if (array_key_exists($unit, $units)) {
+            return sprintf('%s%s', rtrim(number_format($number / pow(1000, $unit), 1), '.0'), $units[$unit]);
+        }
+
+        return $number;
     }
 }
