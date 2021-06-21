@@ -29,6 +29,6 @@ class RegisterPlayer extends AsyncTask {
             "armor_pvp_status" => false,
             "coords" => true
         ]));
-        $db->getDatabase()->query("INSERT INTO players (player, address, faction, role, rank, money, lang, settings) VALUES ('$name', '$adress', 'none', 0, 0, 0, 'fr_FR', '$settings')");
+        $db->getDatabase()->query("INSERT INTO players (player, address, faction, role, rank, money, lang, settings,discordId) VALUES ('$name', '$adress', 'none', 0, 0, 0, 'fr_FR', '$settings','none')");
     }
 }
