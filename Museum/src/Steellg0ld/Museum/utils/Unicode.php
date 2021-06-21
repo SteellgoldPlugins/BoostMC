@@ -199,6 +199,7 @@ class Unicode {
     const EMPTY_LEGGINGS = "";
     const EMPTY_BOOTS = "";
     const POWER = "";
+    const DISCORD = "";
 
     public static function getMFace(Int $setting, Int $rank): string {
         return [
