@@ -26,7 +26,7 @@ class Player extends \pocketmine\Player
     public int $money = 0;
     public string $faction = "none";
     public int $faction_role = 0;
-    public string $discordId = "";
+    public string $discordId = "none";
     public Vector3 $oldVector3;
     public bool $inCombat = false;
     public int $nextEnderPearl = 5;
