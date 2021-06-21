@@ -7,4 +7,5 @@ class MySQL {
     const USER = "boostmc";
     const PASSWORD = "ecsvhAw2RN#?d9&mVMK0QxQeVJVVQENIvlj4DEgc";
     const DATABASE = "faction";
+
 }
