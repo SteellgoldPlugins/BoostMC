@@ -9,6 +9,7 @@ use pocketmine\item\ItemFactory;
 use pocketmine\tile\Tile;
 use Steellg0ld\Museum\base\Enchantment;
 use Steellg0ld\Museum\commands\defaults\Faction;
+use Steellg0ld\Museum\commands\defaults\Link;
 use Steellg0ld\Museum\commands\defaults\Manage;
 use Steellg0ld\Museum\commands\defaults\Settings;
 use Steellg0ld\Museum\commands\defaults\Shop;
@@ -47,6 +48,7 @@ class Manager{
             new Faction("faction","Faction command","",["fac","f"]),
             new Settings("settings","Configure your game","",["configure","setting"]),
             new Shop("shop","Buy a item simply",""),
+            new Link("discord","Link a discord account with your gamertag","",["link","discordlink","getcode"]),
             new Manage("manage","Edit player informations","")
         ]);
     }
