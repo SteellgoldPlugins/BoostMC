@@ -28,7 +28,7 @@ class SettingsForm{
 
             $form->setTitle(Unicode::SETTINGS . " " . Utils::getMessage($player, "SETTINGS_TITLE_FORM"));
             $form->addLabel(Utils::getMessage($player, "SETTINGS_LABEL_FORM", ["{RANK}"], [Ranks::translate($player,$player->getRank())]));
-            $form->addDropdown(Utils::getMessage($player, "SETTINGS_DROPDOWN_0"),[Economy::DOL,Economy::EUR,Economy::ARO,Economy::YEN]);
+            $form->addDropdown(Utils::getMessage($player, "SETTINGS_DROPDOWN_0"),[Economy::UNICODE,Economy::DOL,Economy::EUR,Economy::ARO,Economy::YEN]);
             $form->addDropdown(Utils::getMessage($player, "SETTINGS_DROPDOWN_1"),[Utils::getMessage($player, "SETTINGS_DROPDOWN_1_0"),Utils::getMessage($player, "SETTINGS_DROPDOWN_1_1"),Utils::getMessage($player, "SETTINGS_DROPDOWN_1_2"),Utils::getMessage($player, "SETTINGS_DROPDOWN_1_3"),Utils::getMessage($player, "SETTINGS_DROPDOWN_1_4")],array_search($player->lang,Utils::LANGS));
             $form->addToggle(Utils::getMessage($player, "SETTINGS_TOGGLE_1"),$player->settings["armor_pvp_status"]);
             $form->addToggle(Utils::getMessage($player, "SETTINGS_TOGGLE_2"), $player->settings["coords"]);
