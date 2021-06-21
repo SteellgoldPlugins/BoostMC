@@ -114,6 +114,18 @@ class Faction extends Command {
                                 $sender->faction_chat = true;
                             }
                             break;
+                        case "ally":
+                            switch ($args[1]){
+                                case "invite":
+                                case "add":
+                                    FactionAPI::allyInvite($sender, $sender->getFaction(), $args[2]);
+                                break;
+                                case "remove":
+                                case "del":
+                                    FactionAPI::allyRemove($sender, $sender->getFaction(), $args[2]);
+                                    break;
+                            }
+                            break;
 
                     }
                 }else{
