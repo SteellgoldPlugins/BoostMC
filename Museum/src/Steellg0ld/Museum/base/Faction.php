@@ -394,4 +394,21 @@ class Faction
             if($player instanceof Player) $player->sendMessage("§7[§f".$p->getFactionRank(true)."§7] §2".$p->getName() . ": §7" . $getMessage);
         }
     }
+
+    public static function allyInvite(Player $sender, string $faction1, $faction2) {
+        if($sender->faction_role >= self::OFFICIER){
+            if(!self::areAllies($faction1, $faction2)){
+                // self::setAlly($faction1, $faction2);
+                // Merci d'attendre la réponse du chef de la faction à la quel vous avez demander l'aliance
+            }else{
+                // déjà aliées
+            }
+        }else{
+            // pas les permissions
+        }
+    }
+
+    public static function allyRemove(Player $sender, string $getFaction, $int) {
+
+    }
 }
