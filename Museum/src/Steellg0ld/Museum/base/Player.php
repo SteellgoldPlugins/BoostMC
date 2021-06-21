@@ -107,7 +107,7 @@ class Player extends \pocketmine\Player
         if(!$this->inCombat){
             $scoreboard->remove($this);
             $scoreboard->new($this,"infos","MUSEUM");
-            $scoreboard->setLine($this, 1,Unicode::COIN . " " . $this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
+            $scoreboard->setLine($this, 1," ".$this->money . " " . Economy::SYMBOLS[$this->settings["economy_symbol"]]);
             $scoreboard->setLine($this, 2,($this->hasRank(Ranks::HELPER,Ranks::MODERATOR,Ranks::ADMIN) ? Unicode::getMFace($this->settings["unicode"], $this->getRank()) . " " : " ") . Ranks::translate($this,$this->rank));
             $scoreboard->setLine($this, 3,Unicode::GROUP . ($this->faction == "none" ? " Sans faction" : " " .$this->faction));
             if($this->settings["coords"]) $scoreboard->setLine($this, 4,Unicode::MAP . " X: " . round($this->getX()). " Y: " . round($this->getY()). " Z: " . round($this->getZ()));
