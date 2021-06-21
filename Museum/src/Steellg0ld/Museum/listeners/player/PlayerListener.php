@@ -61,7 +61,7 @@ class PlayerListener implements Listener
         $player = $event->getPlayer();
         $event->setQuitMessage("");
         if ($player instanceof Player) {
-            Plugin::getInstance()->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)),$player->discordId);
+            Plugin::getInstance()->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)));
             foreach (Server::getInstance()->getOnlinePlayers() as $players) {
                 if ($players instanceof Player) {
                     if ($players->settings["player_status"]) Utils::sendMessage($players, "PLAYER_LEAVE", ["{PLAYER}"], [$player->getName()], false, true);
