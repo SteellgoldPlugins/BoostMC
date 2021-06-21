@@ -12,6 +12,7 @@ use Steellg0ld\Museum\base\Economy;
 use Steellg0ld\Museum\base\Player;
 use Steellg0ld\Museum\tasks\async\LoadDatabase;
 use Steellg0ld\Museum\tasks\UpdateScoreboard;
+use Steellg0ld\Museum\utils\Prices;
 use Steellg0ld\Museum\utils\Unicode;
 use Steellg0ld\Museum\utils\Utils;
 
@@ -27,7 +28,6 @@ class Plugin extends PluginBase
 
         @mkdir($this->getDataFolder() . "langs/");
         $this->saveResource("langs/fr_FR.yml");
-
         if (!InvMenuHandler::isRegistered()) {
             InvMenuHandler::register($this);
         }
@@ -50,7 +50,7 @@ class Plugin extends PluginBase
     public function onDisable() {
         Utils::saveAll();
         foreach (Server::getInstance()->getOnlinePlayers() as $player){
-            if($player instanceof Player) $this->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)),$player->discordId);
+            if($player instanceof Player) $this->getDatabase()->player_update($player->getName(),base64_encode(base64_encode(base64_encode($player->getAddress()))),$player->faction,$player->faction_role,$player->rank,$player->money,$player->lang,base64_encode(serialize($player->settings)));
         }
     }
 
