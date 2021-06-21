@@ -19,100 +19,62 @@ class ShopForm{
     {
         {
             $form = new SimpleForm(
-                function (Player $p, $data) {
+                function (Player $player, $data) {
                     if ($data !== null) {
                         switch ($data){
                             case 0:
-                                self::list($p, Prices::$decoratives, 0);
-                                break;
-                            case 1:
-                                self::list($p, Prices::$constructions, 1);
-                                break;
-                            case 2:
-                                self::list($p, Prices::$ores,2);
-                                break;
-                            case 3:
-                                self::list($p, Prices::$misc,3);
+                                self::list($player,Prices::$ORES);
                                 break;
                         }
                     }
                 }
             );
 
-            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setTitle(Unicode::NETHERITE_SWORD . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
             $form->setContent(Utils::getMessage($player, "SHOP_LABEL_FORM"));
-            $form->addButton(Utils::getMessage($player, "SHOP_DECORATIVE_BLOCKS_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$decoratives)]),0,"textures/items/painting");
-            $form->addButton(Utils::getMessage($player, "SHOP_CONSTRUCTION_BLOCKS_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$constructions)]),0,"textures/items/brick");
-            $form->addButton(Utils::getMessage($player, "SHOP_ORES_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$ores)]),0,"textures/items/iron_ingot");
-            $form->addButton(Utils::getMessage($player, "SHOP_MISC_BUTTON_FORM", ["{AVAIBLES}"],[count(Prices::$misc)]),0,"textures/items/bucket_empty");
+            $form->addButton(Utils::getMessage($player,"SHOP_CATEGORY_2",["{AVAIBLE}"],[count(Prices::$ORES)]),0,"textures/items/iron_ingot");
             $player->sendForm($form);
         }
     }
 
-    public static function list(Player $player, Array $products, Int $category)
+    public static function list(Player $player, Array $list)
     {
         {
-            $array = [];
-            foreach ($products as $c){
-                array_push($array, $c);
-            }
-
             $form = new SimpleForm(
-                function (Player $p, $data) use ($array, $category) {
+                function (Player $player, $data) use ($list) {
                     if ($data !== null) {
-                        self::product($p,$category, $data, Item::get($array[$data]["o"]),$array[$data]["b"],$array[$data]["s"]);
-                    }else{
-                        self::open($p);
+                        switch ($data){
+                            default:
+                                self::product($player, $list[$data]);
+                                break;
+                        }
                     }
                 }
             );
 
-            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->setTitle(Unicode::NETHERITE_SWORD . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
             $form->setContent(Utils::getMessage($player, "SHOP_LABEL_FORM"));
-            foreach ($array as $item){
-                $form->addButton(Item::get($item["o"])->getName() . "\n§a".$item["b"].Economy::SYMBOLS[$player->settings["economy_symbol"]] ." §r- §c".$item['s']."$",0,$item['i']);
+            foreach ($list as $item){
+                $form->addButton(Prices::getName($item) ."\n".$item["price"]."$",0,$item["image"]);
             }
             $player->sendForm($form);
         }
     }
 
-    public static function product(Player $player, $category, $place, Item $item, Int $buy_price, Int $sell_price)
-    {
+    public static function product(Player $player, Array $product){
         {
             $form = new CustomForm(
-                function (Player $p, $data) use ($item, $buy_price, $sell_price, $place, $category) {
+                function (Player $player, $data) use ($product) {
                     if ($data !== null) {
-                        $price = ($data[1] == true ? $sell_price * $data[2] : $buy_price * $data[2]);
-                        if($data[1] == false){
-                            if($p->getInventory()->canAddItem(Item::get($item->getId(),$item->getDamage(),$data[2]))){
-                                if(Plugin::getInstance()->getEconomyAPI()->delMoney($p,$price)){
-                                    $p->getInventory()->addItem(Item::get($item->getId(),$item->getDamage(),$data[2]));
-                                    Utils::sendMessage($p, "SHOP_BUYED", ["{ITEM_BUYED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
-                                }else{
-                                    Utils::sendMessage($p, "SHOP_NO_ENOUGHT_MONEY", ["{NEEDED}"],[$price - $p->money],false);
-                                }
-                            }else{
-                                Utils::sendMessage($p, "SHOP_INVENTORY_FULL", ["{ITEM}","{COUNT}"],[$item->getName(),$data[2]],false);
-                            }
-                        }else{
-                            if($p->getInventory()->contains(Item::get($item->getId(), $item->getDamage(), $data[2]))){
-                                Plugin::getInstance()->getEconomyAPI()->addMoney($p,$price);
-                                $p->getInventory()->removeItem(Item::get($item->getId(), $item->getDamage(), $data[2]));
-                                Utils::sendMessage($p, "SHOP_SELLED", ["{ITEM_SELLED}", "{COUNT}", "{PRICE}"], [$item->getName(), $data[2], $price],false);
-                            }else{
-                                Utils::sendMessage($p, "SHOP_NOT_HAVE_ITEM", ["{ITEM}", "{COUNT}"], [$item->getName(), $data[2]]);
-                            }
-                        }
-                    }else{
-                        self::open($p);
+                        Prices::update($product["key"],(int)$data[2],$data[1]);
                     }
                 }
             );
 
-            $form->setTitle(Unicode::CACTUS . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
-            $form->addLabel(str_replace(["{ITEM}","{BUY_PRICE}","{SELL_PRICE}"],[$item->getName(), $buy_price, $sell_price],Utils::getMessage($player, "SHOP_PRODUCT_LABEL_FORM")));
-            $form->addToggle(Utils::getMessage($player, "SHOP_PRODUCT_TOGGLE_FORM"));
-            $form->addSlider(Utils::getMessage($player, "SHOP_PRODUCT_SLIDER_FORM"),1,128);
+            $form->setTitle(Unicode::NETHERITE_SWORD . " " . Utils::getMessage($player, "SHOP_TITLE_FORM"));
+            $form->addLabel(Utils::getMessage($player, "SHOP_LABEL_FORM_PRODUCT",["{ITEM}", "{BUY}","{SELL}","{BUY_COUNT}","{SELL_COUNT}","{STATUS}"],[Prices::getName($product),$product["buy"],$product["sell"],Utils::kConverter($product["cBuy"]),Utils::kConverter($product["cSell"]),Prices::getStatus($player, $product,true)]));
+            $form->addToggle(Utils::getMessage($player,"SHOP_PRODUCT_TOGGLE_FORM"));
+            $form->addInput(Utils::getMessage($player,"SHOP_PRODUCT_SLIDER_FORM"));
             $player->sendForm($form);
         }
     }
