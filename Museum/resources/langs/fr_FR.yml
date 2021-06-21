@@ -22,6 +22,9 @@ FACTION_RANK_3: "Chef"
 
 FACTION_RESIDENCE: "Résidence de la faction"
 
+PRODUCT_STATUS_UP: "en hausse "
+PRODUCT_STATUS_DOWN: "en baisse "
+
 # FORMS
 SETTINGS_TITLE_FORM: "Paramètres"
 SETTINGS_LABEL_FORM: "{PREFIX}Vous êtes {PRIMARY}{RANK}{SECONDARY}, configurer vos paramètres comme vous le sentez !"
@@ -73,16 +76,19 @@ FACTION_MANAGE_FACTION_BUTTON_FORM: "Gérer la faction"
 FACTION_MANAGE_MEMBERS_BUTTON_FORM: "Gérer les membres"
 FACTION_MANAGE_LOGS_BUTTON_FORM: "Voir les logs"
 
-SHOP_DECORATIVE_BLOCKS_BUTTON_FORM: "Blocs de décorations{l}{AVAIBLES} disponibles"
-SHOP_CONSTRUCTION_BLOCKS_BUTTON_FORM: "Blocs de constructions{l}{AVAIBLES} disponibles"
-SHOP_ORES_BUTTON_FORM: "Minerais{l}{AVAIBLES} disponibles"
-SHOP_MISC_BUTTON_FORM: "Divers et variées{l}{AVAIBLES} disponibles"
-
 SHOP_TITLE_FORM: "Boutique d'objets"
-SHOP_LABEL_FORM: "{PREFIX}Vous avez actuellemnt {PRIMARY}{MONEY}{ECONOMY_SYMBOL}"
-SHOP_PRODUCT_LABEL_FORM: "{PREFIX}L'item {PRIMARY}{ITEM}{SECONDARY}, est actuellement à {PRIMARY}{BUY_PRICE}{ECONOMY_SYMBOL} {SECONDARY}à l'achat, et à {PRIMARY}{SELL_PRICE}{ECONOMY_SYMBOL} {SECONDARY}à la vente"
+SHOP_LABEL_FORM: "{PREFIX}Vous avez actuellement {PRIMARY}{MONEY}{ECONOMY_SYMBOL}"
+SHOP_LABEL_FORM_PRODUCT: "{PREFIX}{PRIMARY}{ITEM}{SECONDARY}, son prix est {STATUS}{l}{l}Coût {PREFIX}{SELL}{ECONOMY_SYMBOL}/u{l}{SUCCESS_HELP}Cet item a été acheté {PRIMARY}x{BUY_COUNT} fois {SECONDARY}et vendu {PRIMARY}x{SELL_COUNT} fois{SECONDARY} ces dernières {PRIMARY}24 heures"
 SHOP_PRODUCT_TOGGLE_FORM: "Voulez-vous le vendre ?"
 SHOP_PRODUCT_SLIDER_FORM: "Combien voulez vous acheter/vendre cette item"
+SHOP_PRODUCT_INPUT_PLACEHOLDER_FORM: "Entrez un montant "
+
+SHOP_CATEGORY_0: "Blocs{l}{AVAIBLE} disponibles"
+SHOP_CATEGORY_1: "Bois{l}{AVAIBLE} disponibles"
+SHOP_CATEGORY_2: "Minerais{l}{AVAIBLE} disponibles"
+SHOP_CATEGORY_3: "Redstone{l}{AVAIBLE} disponibles"
+SHOP_CATEGORY_4: "Combat{l}{AVAIBLE} disponibles"
+SHOP_CATEGORY_5: "Divers{l}{AVAIBLE} disponibles"
 
 MANAGE_PLAYER_TITLE_FORM: "Gérer le joueur {PLAYER_MANAGE}"
 MANAGE_PLAYER_LABEL_FORM: "{PREFIX}Grade: {PRIMARY}{RANK}"
@@ -147,6 +153,9 @@ MUST_BE_LEADER: "{ERROR_PREFIX}Vous devez être le §cChef §fde la faction pour
 MUST_BE_OFFICIER: "{ERROR_PREFIX}Vous devez être un §cOfficier §fde la faction pour faire ceci"
 
 PLAYER_MANAGE_EDITION: "{SUCCESS_PREFIX}Vous venez de modifié le joueur {PRIMARY}{PLAYER}"
+
+LINK_CODE: "{DISCORD_UNI}Voici votre code liaison §9{CODE}§f, ne le donnez surtout pas !"
+LINK_ALREADY_LINK: "{ERROR_PREFIX}Votre compte est déjà lié sur discord"
 
 # TIP
 TELEPORT_COOLDOWN: " §fTéléportation dans {SECONDS} secondes §f(§cNe bougez pas§f) "
